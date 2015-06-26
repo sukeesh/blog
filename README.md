@@ -1,3 +1,4 @@
 # vsukeeshbabu.github.io
-My <font color="red">First WebPage</font>, <br>
-Still developing . . 
+This is my First WebPage, <br>
+Code is in the index.html file. <br>
+Ignore remaining Folders.<br>
