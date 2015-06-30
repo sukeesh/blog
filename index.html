@@ -40,8 +40,21 @@ h1{
 <body>
 <img src="http://i.imgur.com/H072UAD.png" height="250" width="250">
  <h1><font color="#C35817">Sukeesh</font></h1>
-<p><font color="#307D7E">Undergrad Student @ IIT Roorkee
+<p><font id="ch"  onmouseover="text1()" onmouseout="text2()" color="#307D7E">Sophomore @ IIT Roorkee
 </font> </p>
+<script>
+function text1()
+{
+  var cc1=document.getElementById('ch');
+  cc1.innerHTML="self-taught Programmer and Developer";
+}
+function text2()
+{
+  var cc2=document.getElementById('ch');
+  cc2.innerHTML="Sophomore @ IIT Roorkee";
+}
+
+</script>
 <p><font color="#F62817" style="font-family: 'Lobster', cursive;">Fork me:</font></p>
   <a href="https://github.com/vsukeeshbabu"> 
   <img src="http://i.imgur.com/a1sOdMj.png"  breadth="46" height="46">
