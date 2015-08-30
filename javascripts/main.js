@@ -25,8 +25,9 @@ function createXmlHttpRequestObject(){
 
 function process(){
 	if(xmlHttp.readyState==0 || xmlHttp.readyState==4){
-		food = encodeURIComponent(document.getElementById("userInput").value);
-		xmlHttp.open("GET","",true);
+		user1 = encodeURIComponent(document.getElementById("user1").value);
+		user2 = encodeURIComponent(document.getElementById("user2").value);
+		xmlHttp.open("GET","../SUC.py",true);
 		xmlHttp.onreadystatechange = handleServerResponse;
 		xmlHttp.send(null);
 	}else{
