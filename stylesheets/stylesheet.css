@@ -211,6 +211,10 @@ hr {
   opacity: 0.6;
   background: url("../images/wordpress.png") 0 0 no-repeat;
 }
+.btn-about .icon {
+  opacity: 0.6;
+  background: url("../images/about.png") 0 0 no-repeat;
+}
 /* Links
    a, a:hover, a:visited
 */
