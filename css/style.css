@@ -1,0 +1,99 @@
+@import url('BebasNeue Light.ttf');
+
+@font-face {
+    font-family: "nokia-pure-headline-ultralight";
+    src: url("nokiapure.woff") format('woff');
+}
+html {
+	border-top: 4px solid #777;
+	height: 98%;
+	margin-top: 2px;
+}
+
+body {
+	margin-top: 0;
+	font-family: "nokia-pure-headline-ultralight";
+	font-weight: 100;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+#main {
+	width: 90%;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 2%;	
+	text-align: left;
+}
+
+#name {
+	font-size: 70px;
+}
+
+#school {
+	font-size: 20px;
+	margin-top: 10px;
+	color: rgba(0, 0, 0, 0.55);
+}
+
+#social {
+	width: 50%;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 0%;	
+	text-align: right;
+	font-size: 20px;
+}
+
+#social ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+
+}
+
+#social ul li {
+	display: inline;
+	padding: 10px 0 10px 0;
+}
+
+
+#social ul li a {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+::selection {
+    color: black; 
+    background: rgba(235, 203, 79, 0.66);
+}
+
+#social ul li:hover {
+	background-color: rgba(235, 203, 79, 0.66);
+}
+
+#tutorial a{
+	margin: 0;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	width: 300px;
+	font-size: 18px;
+	border: 2px solid rgba(235, 203, 79, 0.66);
+	color: #000;
+}
+
+#tutorial a:hover {
+	background-color: rgba(235, 203, 79, 0.66);
+	border: 2px solid #000;	
+}
+
+#tutorial {
+	position: absolute;
+	top: 80px;
+	right: 80px;
+}
