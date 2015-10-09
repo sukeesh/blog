@@ -1,3 +1,0 @@
-<?php
-	python SUC.py
-?>
