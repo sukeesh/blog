@@ -57,8 +57,10 @@ a {
 }
 
 #social ul li {
-	display: inline;
+	display: inline-block;
 	padding: 10px 0 10px 0;
+	background-color: rgba(255,255,255,1);
+	transition: all 0.35s ease-in-out;
 }
 
 
@@ -68,13 +70,18 @@ a {
 }
 
 ::selection {
-    color: black; 
     background: rgba(235, 203, 79, 0.66);
 }
 
 #social ul li:hover {
+	color: rgba(255,255,255,0.7);
 	background-color: rgba(47, 97, 157, 0.66);
 }
+
+#social ul li a:hover {
+	color: white;
+}
+
 #header:after {
     display: block;
     content: '';
@@ -84,7 +91,7 @@ a {
     background-color: #d5d5d5;
 }
 #footer {
-	background-color: rgba(30, 96, 176, 0.66);
+	background-color: rgba(44, 62, 80,1.0);
 	color: #FDFDFD;
 	text-align : center;
 	padding :0.6667em 0;
