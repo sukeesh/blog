@@ -1,0 +1,135 @@
+@import url('BebasNeue Light.ttf');
+@import url(https://fonts.googleapis.com/css?family=Roboto:300italic);
+@font-face {
+    font-family: "nokia-pure-headline-ultralight";
+    src: url("nokiapure.woff") format('woff');
+}
+html {
+	border-top: 4px solid #777;
+	height: 98%;
+	margin-top: 2px;
+}
+
+body {
+	margin-top: 0;
+	font-family: "nokia-pure-headline-ultralight";
+	font-weight: 100;
+	text-align: center;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+#main {
+	width: 90%;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 2%;	
+	text-align: center;
+}
+
+#name {
+	font-size: 50px;
+}
+
+#school {
+	font-size: 20px;
+	margin-top: 10px;
+	color: rgba(0, 0, 0, 0.55);
+}
+
+#social {
+	width: 50%;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 1%;	
+	text-align: center;
+	font-size: 20px;
+}
+
+#social ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+
+}
+
+#social ul li {
+	display: inline-block;
+	padding: 10px 0 10px 0;
+	background-color: rgba(255,255,255,1);
+	transition: all 0.35s ease-in-out;
+}
+#Rating{
+	font-weight: 50;
+}
+
+#CF_img{
+	margin-right: 2%;
+	display: inline-block;
+}
+
+#profiles {
+	margin-top: 2%;
+	margin-bottom: 2%;
+	margin-left: 2%;
+	margin-right: 2%;
+}
+
+#profiles p {
+	display: inline-block;
+	font-weight: 50;
+}
+
+.right-border {
+	display: inline-flex;
+	border-right: 1px solid black;
+	padding-right: 10px;
+	margin-right: 1%;
+}
+.left-border {
+	display: inline-flex;
+	margin-left: 1%;
+	
+}
+#social ul li a {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+::selection {
+    background: rgba(235, 203, 79, 0.66);
+}
+
+#social ul li:hover {
+	color: rgba(255,255,255,0.7);
+	background-color: rgba(47, 97, 157, 0.66);
+}
+
+#social ul li a:hover {
+	color: white;
+}
+
+#header:after {
+    display: block;
+    content: '';
+    width: 11rem;
+    height: 1px;
+    margin: 23px auto;
+    background-color: #d5d5d5;
+}
+#footer {
+	background-color: rgba(44, 62, 80,1.0);
+	color: #FDFDFD;
+	text-align : center;
+	padding :0.6667em 0;
+	width:100%;
+	font-size: 18px;
+	height:15px;
+	position: fixed;
+	position:absolute;
+	bottom:0;
+	left:0;
+}
