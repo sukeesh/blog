@@ -5,7 +5,7 @@
     src: url("nokiapure.woff") format('woff');
 }
 html {
-	border-top: 4px solid #FF7372;
+	border-top: 4px solid #777;
 	height: 98%;
 	margin-top: 2px;
 }
@@ -31,7 +31,7 @@ a {
 }
 
 #name {
-	font-size: 70px;
+	font-size: 40px;
 }
 
 #school {
@@ -75,7 +75,7 @@ a {
 
 #social ul li:hover {
 	color: rgba(255,255,255,0.7);
-	background-color: #FF7372;
+	background-color: rgba(47, 97, 157, 0.66);
 }
 
 #social ul li a:hover {
@@ -90,15 +90,32 @@ a {
     margin: 23px auto;
     background-color: #d5d5d5;
 }
+
+#wrapper {
+	width: 100%;
+	margin-left: 25px;
+}
+
+#code {
+	width: 60%;
+	text-align: center;
+	float: left;
+}
+
+#gsearch {
+	width: 35%;
+	float: right;
+}
+
 #footer {
-	background-color: #FF7372;
+	background-color: rgba(44, 62, 80,1.0);
 	color: #FDFDFD;
 	text-align : center;
 	padding :0.6667em 0;
 	width:100%;
 	font-size: 18px;
-	height:20px;
-	position: fixed;
+	height:18px;
 	bottom:0;
 	left:0;
+	position: fixed;
 }
