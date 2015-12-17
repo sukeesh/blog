@@ -114,6 +114,7 @@ a {
 #font2 {
 	font-family: 'Dosis', sans-serif;
 }
+
 #map {
     width: 360px;
     height: 330px;
@@ -127,7 +128,7 @@ a {
 	padding :0.6667em 0;
 	width:100%;
 	font-size: 18px;
-	height:20px;
+	height:15px;
 	position: fixed;
 	bottom:0;
 	left:0;

@@ -1,4 +1,9 @@
 @import url('BebasNeue Light.ttf');
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300italic);
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+@import url(https://fonts.googleapis.com/css?family=Advent+Pro:500);
+@import url(https://fonts.googleapis.com/css?family=Dosis);
+
 
 @font-face {
     font-family: "nokia-pure-headline-ultralight";
@@ -32,6 +37,7 @@ a {
 
 #name {
 	font-size: 40px;
+	font-weight: bold;
 }
 
 #school {
@@ -46,6 +52,7 @@ a {
 	margin-left: auto;
 	margin-top: 1%;	
 	text-align: center;
+	font-weight: normal;
 	font-size: 20px;
 }
 
@@ -75,7 +82,7 @@ a {
 
 #social ul li:hover {
 	color: rgba(255,255,255,0.7);
-	background-color: rgba(47, 97, 157, 0.66);
+	background-color: #FF7373;
 }
 
 #social ul li a:hover {
@@ -107,8 +114,28 @@ a {
 	float: right;
 }
 
+ul {
+    list-style: '#' inside none;
+}
+
+#leftm {
+	text-align: left;
+}
+
+#lr {
+	font-family: 'Montserrat', sans-serif;
+}
+
+#font1 {
+	font-family: 'Advent Pro', sans-serif;
+}
+
+#font2 {
+	font-family: 'Dosis', sans-serif;
+}
+
 #footer {
-	background-color: rgba(44, 62, 80,1.0);
+	background-color: #FF7373;
 	color: #FDFDFD;
 	text-align : center;
 	padding :0.6667em 0;
