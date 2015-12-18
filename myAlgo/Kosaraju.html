@@ -5,7 +5,7 @@
 	<link rel="shortcut icon" href="../css/favicon.ico"/>
 	<script type="text/javascript" src="../script/script.js"></script>
 	<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-	<title>Algorithm | C++ | Sukeesh</title>
+	<title> Kosaraju Algorithm Implementation | C++ | Sukeesh</title>
 
 
 <style type="text/css">
@@ -60,14 +60,89 @@
 			</header>
 <div id="wrapper">
 
-	<div id="code" style ="text-align:left;">
+	<div id="code">
+
+<b>Kosaraju's Algorithm for finding Strongly Connected Components</b>
+<pre style="text-align:left;"class="prettyprint">
+#include "bits/stdc++.h"
+
+using namespace std;
+
+#define N 100000
+vector < int > graph[N], rgraph[N];
+stack< int > S;
+bool visited[N];
+
+inline void pre()
+{
+	memset(visited,0,sizeof(visited));
+}
+
+inline void fillOrder(int node)
+{
+	visited[node]=true;
+	for(int i = 0 ; i < graph[node].size(); i++ )
+	{
+		if(!visited[graph[node][i]])
+		{
+			fillOrder(graph[node][i]);
+		}
+	}
+	S.push(node);
+}
 
 
-	<b>Algorithms :</b> 
-	<ul>
-		<li>Kosaraju Algorithm for Strongly Connected Components</li>
-		<li>Topological Sorting Algorithm</li>
-	</ul>
+inline void rdfs(int node)
+{
+	visited[node]=true;
+	cout << node << " ";
+	for(int i=0;i< rgraph[node].size();i++)
+	{
+		if(!visited[rgraph[node][i]])
+		{
+			rdfs(rgraph[node][i]);
+		}
+	}
+}
+
+int main()
+{
+	int i,j;
+	int vertices;
+	cin >> vertices;
+	int edges;
+	cin >> edges;
+	for(i=0;i< edges;i++)
+	{
+		int u,v;
+		// directed from  u->v 
+		cin >> u >> v;
+		graph[u].push_back(v);
+		rgraph[v].push_back(u);
+	}
+	pre();
+	for(i=1;i< =vertices;i++)
+	{
+		if(visited[i]==false)
+		{
+			fillOrder(i);
+		}	
+	}
+	pre();
+	while(!S.empty())
+	{
+		int v=S.top();
+		S.pop();
+		if(visited[v]==false)
+		{
+			rdfs(v);
+			cout << "\n";
+		}
+	}
+	return 0;
+}
+</pre>
+
 
 </div>
 

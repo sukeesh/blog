@@ -5,7 +5,7 @@
 	<link rel="shortcut icon" href="../css/favicon.ico"/>
 	<script type="text/javascript" src="../script/script.js"></script>
 	<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-	<title>Algorithm | C++ | Sukeesh</title>
+	<title> Topological Sorting | C++ | Sukeesh</title>
 
 
 <style type="text/css">
@@ -60,14 +60,87 @@
 			</header>
 <div id="wrapper">
 
-	<div id="code" style ="text-align:left;">
+	<div id="code">
 
+<b>Topological Sorting Algorithm</b>
+<pre style="text-align:left;"class="prettyprint">
 
-	<b>Algorithms :</b> 
-	<ul>
-		<li>Kosaraju Algorithm for Strongly Connected Components</li>
-		<li>Topological Sorting Algorithm</li>
-	</ul>
+#include "bits/stdc++.h"
+
+using namespace std;
+
+#define N 10000
+
+vector<int> graph[N], topo;
+bool visited[N];
+stack<int> S;
+
+inline void dfs(int node)
+{
+	visited[node]=true;
+	if(graph[node].size()==0)
+	{
+		S.push(node);
+		return;
+	}
+	for(int i=0;i< graph[node].size();i++)
+	{
+		int v=graph[node][i];
+		if(!visited[v])
+		{
+			dfs(v);
+		}
+	}
+	bool nomore=false;
+	for(int i=0;i< graph[node].size();i++)
+	{
+		int v=graph[node][i];
+		if(visited[v]==false)
+		{
+			nomore=1;
+		}
+	}
+	if(!nomore)
+	{
+		S.push(node);
+	}
+}
+
+int main()
+{
+	int vertices,edges,i,j;
+	cin >> vertices;
+	cin >> edges;
+	for(i=0;i < edges;i++)
+	{
+		// directed from u->v
+		int u,v;
+		cin >> u >> v;
+		graph[u].push_back(v);
+	}
+	memset(visited,0,sizeof(visited));
+	for(i=1;i <= vertices;i++)
+	{
+		if(visited[i]==false)
+		{
+			dfs(i);
+		}
+	}
+	
+	while(!S.empty())
+	{
+		topo.push_back(S.top());
+		S.pop();	
+	}
+	for(i=topo.size()-1;i >=0 ;i--)
+	{
+		cout << topo[i] << " "; 
+	}
+	cout << "\n";
+	return 0;
+}
+</pre>
+
 
 </div>
 
