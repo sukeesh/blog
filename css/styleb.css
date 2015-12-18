@@ -1,8 +1,5 @@
 @import url('BebasNeue Light.ttf');
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,300italic);
-@import url(https://fonts.googleapis.com/css?family=Montserrat);
-@import url(https://fonts.googleapis.com/css?family=Advent+Pro:500);
-@import url(https://fonts.googleapis.com/css?family=Dosis);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
 
 @font-face {
@@ -101,12 +98,16 @@ a {
 #wrapper {
 	width: 100%;
 	margin-left: 25px;
+	
 }
 
 #code {
 	width: 60%;
 	text-align: center;
 	float: left;
+	border-radius: 10px;
+    border: 1px solid #585858;
+    padding: 10px; 
 }
 
 #gsearch {
@@ -127,11 +128,12 @@ ul {
 }
 
 #font1 {
-	font-family: 'Advent Pro', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 }
 
 #font2 {
 	font-family: 'Dosis', sans-serif;
+	text-align: left;
 }
 
 #footer {

@@ -58,95 +58,153 @@
 </div>	
 <header id="header">
 			</header>
-<div id="wrapper">
+	<div id="wrapper">
 
-	<div id="code">
+		<div id="code">
+	<h3><div id="font1">Kosaraju's Algorithm for finding Strongly Connected Components</div></h3>
 
-<b>Kosaraju's Algorithm for finding Strongly Connected Components</b>
-<pre style="text-align:left;"class="prettyprint">
-#include "bits/stdc++.h"
+	<br><br>
 
-using namespace std;
+	<div id="font1">Explanation by Tushar Roy</div>
 
-#define N 100000
-vector < int > graph[N], rgraph[N];
-stack< int > S;
-bool visited[N];
 
-inline void pre()
-{
-	memset(visited,0,sizeof(visited));
-}
 
-inline void fillOrder(int node)
-{
-	visited[node]=true;
-	for(int i = 0 ; i < graph[node].size(); i++ )
+
+
+
+
+
+
+
+	<div id="player"></div>
+
+	    <script>
+	      // 2. This code loads the IFrame Player API code asynchronously.
+	      var tag = document.createElement('script');
+
+	      tag.src = "https://www.youtube.com/iframe_api";
+	      var firstScriptTag = document.getElementsByTagName('script')[0];
+	      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+	      // 3. This function creates an <iframe> (and YouTube player)
+	      //    after the API code downloads.
+	      var player;
+	      function onYouTubeIframeAPIReady() {
+	        player = new YT.Player('player', {
+	          height: '390',
+	          width: '640',
+	          videoId: 'RpgcYiky7uw',
+	          events: {
+	            'onReady': onPlayerReady,
+	            'onStateChange': onPlayerStateChange
+	          }
+	        });
+	      }
+
+	      // 4. The API will call this function when the video player is ready.
+	      function onPlayerReady(event) {
+	        event.target.playVideo();
+	      }
+
+	      // 5. The API calls this function when the player's state changes.
+	      //    The function indicates that when playing a video (state=1),
+	      //    the player should play for six seconds and then stop.
+	      var done = false;
+	      function onPlayerStateChange(event) {
+	        if (event.data == YT.PlayerState.PLAYING && !done) {
+	          done = true;
+	        }
+	      }
+	    </script>
+
+
+
+
+
+	<pre style="text-align:left;"class="prettyprint">
+	#include "bits/stdc++.h"
+
+	using namespace std;
+
+	#define N 100000
+	vector < int > graph[N], rgraph[N];
+	stack< int > S;
+	bool visited[N];
+
+	inline void pre()
 	{
-		if(!visited[graph[node][i]])
+		memset(visited,0,sizeof(visited));
+	}
+
+	inline void fillOrder(int node)
+	{
+		visited[node]=true;
+		for(int i = 0 ; i < graph[node].size(); i++ )
 		{
-			fillOrder(graph[node][i]);
+			if(!visited[graph[node][i]])
+			{
+				fillOrder(graph[node][i]);
+			}
+		}
+		S.push(node);
+	}
+
+
+	inline void rdfs(int node)
+	{
+		visited[node]=true;
+		cout << node << " ";
+		for(int i=0;i< rgraph[node].size();i++)
+		{
+			if(!visited[rgraph[node][i]])
+			{
+				rdfs(rgraph[node][i]);
+			}
 		}
 	}
-	S.push(node);
-}
 
-
-inline void rdfs(int node)
-{
-	visited[node]=true;
-	cout << node << " ";
-	for(int i=0;i< rgraph[node].size();i++)
+	int main()
 	{
-		if(!visited[rgraph[node][i]])
+		int i,j;
+		int vertices;
+		cin >> vertices;
+		int edges;
+		cin >> edges;
+		for(i=0;i< edges;i++)
 		{
-			rdfs(rgraph[node][i]);
+			int u,v;
+			// directed from  u->v 
+			cin >> u >> v;
+			graph[u].push_back(v);
+			rgraph[v].push_back(u);
 		}
-	}
-}
-
-int main()
-{
-	int i,j;
-	int vertices;
-	cin >> vertices;
-	int edges;
-	cin >> edges;
-	for(i=0;i< edges;i++)
-	{
-		int u,v;
-		// directed from  u->v 
-		cin >> u >> v;
-		graph[u].push_back(v);
-		rgraph[v].push_back(u);
-	}
-	pre();
-	for(i=1;i< =vertices;i++)
-	{
-		if(visited[i]==false)
+		pre();
+		for(i=1;i< =vertices;i++)
 		{
-			fillOrder(i);
-		}	
-	}
-	pre();
-	while(!S.empty())
-	{
-		int v=S.top();
-		S.pop();
-		if(visited[v]==false)
-		{
-			rdfs(v);
-			cout << "\n";
+			if(visited[i]==false)
+			{
+				fillOrder(i);
+			}	
 		}
+		pre();
+		while(!S.empty())
+		{
+			int v=S.top();
+			S.pop();
+			if(visited[v]==false)
+			{
+				rdfs(v);
+				cout << "\n";
+			}
+		}
+		return 0;
 	}
-	return 0;
-}
-</pre>
+	</pre>
 
 
-</div>
+	</div>
 
-</div>
+	</div>
 
 <div id="gsearch">
 		<script>
