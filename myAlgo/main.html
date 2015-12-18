@@ -4,7 +4,8 @@
 	<link rel="stylesheet" type="text/css" href="../css/styleb.css">
 	<link rel="shortcut icon" href="../css/favicon.ico"/>
 	<script type="text/javascript" src="../script/script.js"></script>
-	<title> Blog | Sukeesh</title>
+	<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	<title> Kosaraju Algorithm Implementation | C++ | Sukeesh</title>
 
 
 <style type="text/css">
@@ -36,7 +37,7 @@
 	<div id="main">
 		<div id="name">
 			<a href="http://www.sukeesh.me">
-			Sukeesh <font style="font-weight:normal;">|&nbsp;&nbsp;&nbsp; Blog</font>
+			Sukeesh  | &nbsp;&nbsp;&nbsp;<font style="font-weight:normal;"> Algorithms</font>
 			</a>
 		</div>
 	</div>
@@ -48,54 +49,105 @@
 				</a>
 			</li>
 			<li>
-				<a href="main.html" target="blank">
+				<a href="../blog/main.html" target="blank">
 					Back
 				</a>
 			</li>
 		</ul>
 	</div>
 </div>	
-
+<header id="header">
+			</header>
 <div id="wrapper">
 
 	<div id="code">
-		<form>
-	  
-								Not this ?   &nbsp;
-	  		<select onchange="location = this.options[this.selectedIndex].value;">
-			  	  <option value="s">-Select-</option>
-		  <option value="ajob.html">AJOB</option>
-		  <option value="BYTESM2.html">BYTESM2</option>
-		  <option value="DCEPC11B.html">DCEPC11B</option>
-		  <option value="DIVFACT.html">DIVFACT</option>
-		  <option value="FIBOSUM.html">FIBOSUM</option>
-		  <option value="GCD2.html">GCD2</option>
-		  <option value="HISTOGRA.html">HISTOGRA</option>
-		  <option value="horrible.html">HORRIBLE</option>
-		  <option value="HOTELS.html">HOTELS</option>
-		  <option value="JAVAC.html">JAVAC</option>
-		  <option value="MAY99_2.html">MAY99_2</option>
-		  <option value="NDIV.html">NDIV</option>
-		  <option value="NITT2.html">NITT2</option>
-		  <option value="PT07Y.html">PT07Y</option>
-		  <option value="PT07Z.html">PT07Z</option>
-		  <option value="SMALL.html">SMALL</option>
-		  <option value="SOCIALNE.html">SOCIALNE</option>
-		  <option value="stpar.html">STPAR</option>
-		  <option value="TSHOW1.html">TSHOW1</option>
-		  <option value="VENOM.html">VENOM</option>
-		  <option value="">--</option>
-			</select>
-		</form>
 
-	<p>
-	<b>Problem Statement : </b>NITT2<br>
-	<b>My AC Code : </b><br>
-	<script src="https://gist.github.com/173e7bfdf847271e686f.js"> </script>
 
-	</p>
+<pre style="text-align:left;"class="prettyprint">
+#include "bits/stdc++.h"
+
+using namespace std;
+
+#define N 100000
+vector < int > graph[N], rgraph[N];
+stack< int > S;
+bool visited[N];
+
+inline void pre()
+{
+	memset(visited,0,sizeof(visited));
+}
+
+inline void fillOrder(int node)
+{
+	visited[node]=true;
+	for(int i = 0 ; i < graph[node].size(); i++ )
+	{
+		if(!visited[graph[node][i]])
+		{
+			fillOrder(graph[node][i]);
+		}
+	}
+	S.push(node);
+}
+
+
+inline void rdfs(int node)
+{
+	visited[node]=true;
+	cout << node << " ";
+	for(int i=0;i< rgraph[node].size();i++)
+	{
+		if(!visited[rgraph[node][i]])
+		{
+			rdfs(rgraph[node][i]);
+		}
+	}
+}
+
+int main()
+{
+	int i,j;
+	int vertices;
+	cin >> vertices;
+	int edges;
+	cin >> edges;
+	for(i=0;i< edges;i++)
+	{
+		int u,v;
+		// directed from  u->v 
+		cin >> u >> v;
+		graph[u].push_back(v);
+		rgraph[v].push_back(u);
+	}
+	pre();
+	for(i=1;i< =vertices;i++)
+	{
+		if(visited[i]==false)
+		{
+			fillOrder(i);
+		}	
+	}
+	pre();
+	while(!S.empty())
+	{
+		int v=S.top();
+		S.pop();
+		if(visited[v]==false)
+		{
+			rdfs(v);
+			cout << "\n";
+		}
+	}
+	return 0;
+}
+</pre>
+
+
 </div>
+
 </div>
+
 <div id="gsearch">
 		<script>
 	  (function() {
@@ -130,14 +182,6 @@
 		</script>
 		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>	
 </div>
-	</div>
-	<div id="footer">
-	<span>
-			<b>Sukeesh</b>
-		</span>
-		<span> 
-			&copy; 2015 
-		</span>
 	</div>
 	<a href="http://www.freecounterstat.com" target="_Blank" title="free hit counters"></a>
 			<script type="text/javascript" src="http://counter8.fcs.ovh/private/countertab.js?c=981e182eebf799de5531492c619db751"></script>

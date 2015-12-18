@@ -134,6 +134,14 @@ ul {
 	font-family: 'Dosis', sans-serif;
 }
 
+#no {
+	text-align: left;
+}
+
+#rand {
+	font-weight: normal;
+}
+
 #footer {
 	background-color: #FF7373;
 	color: #FDFDFD;
