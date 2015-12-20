@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../css/styleb.css">
+	<link rel="shortcut icon" href="../css/favicon.ico"/>
+	<script type="text/javascript" src="../script/script.js"></script>
+	<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	<title> Grahams Scan Convex Hull Algorithm | C++ | Sukeesh</title>
+
+
+<style type="text/css">
+	
+	.no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.se-pre-con {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url(loading/loader-64x/Preloader_7.gif) center no-repeat #fff;
+}
+</style>
+
+<script type="text/javascript">
+	$(window).load(function() {
+		// Animate loader off screen
+		$(".se-pre-con").fadeOut("slow");;
+	});
+</script>
+
+
+</head>
+<body>
+<div id="bfixd">
+	<div id="main">
+		<div id="name">
+			<a href="http://www.sukeesh.me">
+			Sukeesh  | &nbsp;&nbsp;&nbsp;<font style="font-weight:normal;"> Algorithms</font>
+			</a>
+		</div>
+	</div>
+	<div id="social">
+		<ul>
+			<li>
+				<a href="http://sukeesh.wordpress.com" target="blank">
+					Old Blog
+				</a>
+			</li>
+			<li>
+				<a href="../blog/main.html" target="blank">
+					Back
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>	
+<header id="header">
+			</header>
+	<div id="wrapper">
+
+		<div id="code">
+	<h3><div id="font1">Grahams Scan Convex Hull Algorithm</div></h3>
+
+	<br>
+	<img src="ch.png">
+	<br><br>
+	<b>Code Implementation </b>
+	<pre style="text-align:left;"class="prettyprint">
+
+#include "bits/stdc++.h"
+
+using namespace std;
+
+#define N 10
+#define inf 1000000
+#define mp make_pair
+#define sz size()
+#define pb push_back
+
+double x[N],y[N];
+double px0,py0;
+stack < pair< double,double> >S;
+vector < pair< double, pair< double,double> > > myAngles;
+
+double dist(double x, double y){
+	return (abs(x-px0)*abs(x-px0))+(abs(y-py0)*abs(y-py0));
+}
+
+bool myfunction (pair< double,pair< double,double> >i,pair< double, pair< double,double> > j) {
+
+    if(i.first==j.first){
+        return dist(i.second.first,i.second.second)>dist(j.second.first,j.second.second);
+    }
+    return (i.first< j.first);
+}
+
+bool orientation(pair< double,double> p,pair< double,double> q,pair< double,double> r)
+{
+	int val = (q.second - p.second) * (r.first - q.first)
+					-(q.first - p.first) * (r.second - q.second);
+	if(val< 0){
+		return 1;
+	}
+	return 0;
+}
+
+bool check(int pos)
+{
+	pair< double,double > x1=S.top();
+	S.pop();
+	pair< double,double> x2=S.top();
+	S.push(x1);
+	if(orientation(x2,x1,myAngles[pos].second)){
+		return 1;
+	}
+	return 0;
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+	int i,j;
+	int inpoints[10][10];
+	memset(inpoints,0,sizeof(inpoints));
+	for(i=0;i<n;i++)
+	{
+		cin >> x[i] >> y[i];
+		inpoints[int(x[i])][int(y[i])]=1;
+	}
+	cout << "initial points\n";
+	for(i=0;i< 10;i++)
+	{
+		for(j=0;j< 10;j++)
+		{
+			if(inpoints[i][j]==1)
+			{
+				cout << "*";
+			}
+			else
+			{
+				cout << " ";
+			}
+		}
+		cout << "\n";
+	}
+	cout << " final points\n";
+	double leasty=inf ,leastx=inf;
+	int leastindex = -1;
+	for(i=0;i< n;i++)
+	{
+		if(y[i]< leasty)
+		{
+			leasty = y[i];
+			leastx = x[i];
+			leastindex = i;
+		}
+		else if(y[i]==leasty)
+		{
+			if(x[i]>leastx)
+			{
+				leastx = x[i];
+				leastindex = i;
+			}
+		}
+	}
+	px0=leastx;
+	py0=leasty;
+	pair< double, pair< double,double > > angle[N];
+	for(i=0;i< n;i++)
+	{
+		angle[i]=mp(atan(y[i]/x[i]), mp(x[i],y[i]));
+	}
+	swap(angle[leastindex],angle[0]);
+	sort(angle+1,angle+n,myfunction);
+	for(i=0;i< n;i++)
+	{
+		if(i>0 && angle[i].first!=angle[i-1].first)
+		{
+			myAngles.pb(angle[i]);
+		}
+		else
+		{
+			myAngles.pb(angle[i]);
+		}
+	}
+	if(myAngles.sz< 3)
+	{
+		cout << "Impossible! \n";
+		return 0;
+	}
+	S.push(myAngles[0].second);
+	S.push(myAngles[1].second);
+	S.push(myAngles[2].second);
+	for(i=3;i< myAngles.sz;i++)
+	{
+		while(!check(i))
+		{
+			S.pop();
+		}
+		S.push(myAngles[i].second);
+	}
+	int plot[10][10];
+	memset(plot,0,sizeof(plot));
+	while(!S.empty())
+	{
+		int u=S.top().first;
+		int v=S.top().second;
+		S.pop();
+		plot[u][v]=1;
+	}
+	for(i=0;i< 10;i++)
+	{
+		for(j=0;j< 10;j++)
+		{
+			if(plot[i][j]==1)
+			{
+				cout << "*";
+			}
+			else if(inpoints[i][j]==1)
+			{
+				cout << ".";
+			}
+			else
+			{
+				cout << " ";
+			}
+		}
+		cout << "\n";
+	}
+	for(i=0;i< 10;i++)
+	{
+		for(j=0;j< 10;j++)
+		{
+			if(plot[i][j]==1)
+			{
+				cout << i << " " << j << "\n";
+			}
+		}
+	}
+	return 0;
+}
+
+
+
+	</pre>
+
+
+	</div>
+
+	</div>
+
+<div id="gsearch">
+		<script>
+	  (function() {
+	    var cx = '015130930685929674816:jvixyvvlvtu';
+	    var gcse = document.createElement('script');
+	    gcse.type = 'text/javascript';
+	    gcse.async = true;
+	    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+	        '//cse.google.com/cse.js?cx=' + cx;
+	    var s = document.getElementsByTagName('script')[0];
+	    s.parentNode.insertBefore(gcse, s);
+	  })();
+	</script>
+	<gcse:search></gcse:search>
+<div id="comment_section">
+	<div id="disqus_thread"></div>
+		<script>
+
+		var disqus_config = function () {
+		this.page.url = www.sukeesh.me; // Replace PAGE_URL with your page's canonical URL variable
+		this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+		};
+
+		(function() { // DON'T EDIT BELOW THIS LINE
+		var d = document, s = d.createElement('script');
+
+		s.src = 'https://sukeesh.disqus.com/embed.js';
+
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+		})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>	
+</div>
+	</div>
+	<a href="http://www.freecounterstat.com" target="_Blank" title="free hit counters"></a>
+			<script type="text/javascript" src="http://counter8.fcs.ovh/private/countertab.js?c=981e182eebf799de5531492c619db751"></script>
+</body>
+</html>
