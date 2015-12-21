@@ -5,7 +5,7 @@
 	<link rel="shortcut icon" href="../css/favicon.ico"/>
 	<script type="text/javascript" src="../script/script.js"></script>
 	<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-	<title> Topological Sorting | C++ | Sukeesh</title>
+	<title> Union-Find | C++ | Sukeesh</title>
 
 
 <style type="text/css">
@@ -58,93 +58,74 @@
 </div>	
 <header id="header">
 			</header>
-<div id="wrapper">
+	<div id="wrapper">
 
-	<div id="code">
+		<div id="code">
+	<h3><div id="font1">Union Find</div></h3>
 
-<b>Topological Sorting Algorithm</b>
-<pre style="text-align:left;"class="prettyprint">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- sukeesh.me -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9846685626761600"
+     data-ad-slot="2418729118"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
-#include "bits/stdc++.h"
+	<br>
+	<b>Code Implementation </b>
+	<pre style="text-align:left;"class="prettyprint">
 
-using namespace std;
+#define ll long long 
+ll Parent[10000],N;
+ll rank[10000];
 
-#define N 10000
-
-vector<int> graph[N], topo;
-bool visited[N];
-stack<int> S;
-
-inline void dfs(int node)
+void make_set()
 {
-	visited[node]=true;
-	if(graph[node].size()==0)
+	for(ll i=1;i<=N;i++)
 	{
-		S.push(node);
-		return;
-	}
-	for(int i=0;i< graph[node].size();i++)
-	{
-		int v=graph[node][i];
-		if(!visited[v])
-		{
-			dfs(v);
-		}
-	}
-	bool nomore=false;
-	for(int i=0;i< graph[node].size();i++)
-	{
-		int v=graph[node][i];
-		if(visited[v]==false)
-		{
-			nomore=1;
-		}
-	}
-	if(!nomore)
-	{
-		S.push(node);
+		Parent[x]=x;
+		rank[x]=0;
 	}
 }
 
-int main()
-{
-	int vertices,edges,i,j;
-	cin >> vertices;
-	cin >> edges;
-	for(i=0;i < edges;i++)
+ll find(ll x)
+{	
+	if(x!=Parent[x]) 
 	{
-		// directed from u->v
-		int u,v;
-		cin >> u >> v;
-		graph[u].push_back(v);
+		Parent[x]=find(Parent[x]);
 	}
-	memset(visited,0,sizeof(visited));
-	for(i=1;i <= vertices;i++)
-	{
-		if(visited[i]==false)
-		{
-			dfs(i);
-		}
-	}
-	
-	while(!S.empty())
-	{
-		topo.push_back(S.top());
-		S.pop();	
-	}
-	for(i=topo.size()-1;i >=0 ;i--)
-	{
-		cout << topo[i] << " "; 
-	}
-	cout << "\n";
-	return 0;
+    return Parent[x];
 }
-</pre>
+
+void uunion(ll &x,ll &y){
+    ll PX=find(x),PY=find(y);
+    if(PX==PY)
+    { 
+    	return;
+    }
+    if(rank[PX]>rank[PY])
+    {
+        Parent[PY]=PX;
+    }
+    else
+    {
+        Parent[PX]=PY;
+        if(rank[PX]==rank[PY])
+        {
+            rank[PY]++;
+        }
+    }
+}
+
+	</pre>
 
 
-</div>
+	</div>
 
-</div>
+	</div>
 
 <div id="gsearch">
 		<script>
