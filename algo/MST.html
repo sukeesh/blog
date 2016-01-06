@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../css/styleb.css">
+	<link rel="shortcut icon" href="../css/favicon.ico"/>
+	<script type="text/javascript" src="../script/script.js"></script>
+	<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	<script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+	<title> Minimum Spanning Tree | C++ | Sukeesh</title>
+
+
+<style type="text/css">
+	
+	.no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.se-pre-con {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url(Preloader_7.gif) center no-repeat #fff;
+}
+</style>
+
+<script type="text/javascript">
+	$(window).load(function() {
+		// Animate loader off screen
+		$(".se-pre-con").fadeOut("slow");;
+	});
+</script>
+
+
+</head>
+<body>
+<div id="bfixd">
+	<div id="main">
+		<div id="name">
+			<a href="http://www.sukeesh.me">
+			Sukeesh  | &nbsp;&nbsp;&nbsp;<font style="font-weight:normal;"> Algorithms</font>
+			</a>
+		</div>
+	</div>
+	<div id="social">
+		<ul>
+			<li>
+				<a href="http://sukeesh.wordpress.com" target="blank">
+					Old Blog
+				</a>
+			</li>
+			<li>
+				<a href="index.html" target="blank">
+					Back
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>	
+<header id="header">
+			</header>
+	<div id="wrapper">
+
+		<div id="code">
+	<h3><div id="font1">Minimum Spanning Tree SPOJ (MST)</div></h3>
+
+	<br><br>
+
+Solving Problem using <b>Prim's Algorithm</b> <br>
+<b>Time Complexity :</b>
+<br> <div lang="latex">O(E*log V)</div> Minimum Edge Weight Data Structure  <br>
+	<pre style="text-align:left;"class="prettyprint">
+#include < bits/stdc++.h>
+#define mp make_pair
+#define pb push_back      
+#define F first
+#define S second
+#define sqr(x) ((x)*(x))
+#define sz size()
+#define all(a)   a.begin(),a.end()
+#define m0(x) memset(x,0,sizeof(x))
+#define buli(x) __builtin_popcountll(x)
+#define inf 1000000000
+#define mod 10000007
+#define eps 1e-9
+//map iterator
+#define mit(x,mymap) for(auto x:mymap)
+
+using namespace std;
+
+typedef long long LL;
+typedef pair< LL,LL> PLI;
+typedef map< LL,LL> MLI;
+
+bool cmp(int x,int y){
+	return x< y;
+}
+
+set< pair< long long, int >, greater< pair< long long, int> > >pQ;
+LL N, d[100010];
+vector< LL> adj[100010];
+map< PLI,LL> graph;
+map< LL, PLI> res;
+vector< PLI> mst;
+bool vis[100010];
+
+inline void pre(){
+	LL i;
+	d[1] = 0;
+	pQ.insert(mp(d[1],1));
+	for(i=2;i<=N;i++){
+		d[i] = inf;
+		pQ.insert(mp(d[i],i));
+	}
+	memset(vis,0,sizeof(vis));
+}
+
+int main()
+{
+	LL M;
+	cin >> N >> M;
+	LL i;
+	for(i=0;i< M;i++){
+		LL u,v;
+		cin >> u >> v;
+		adj[u].pb(v);
+		adj[v].pb(u);
+		LL w;
+		cin >> w;
+		graph[mp(u,v)] = w;
+		graph[mp(v,u)] = w;
+	}
+	pre();
+	bool f = false;
+	while(!pQ.empty()){
+		PLI top = *(pQ.rbegin());
+		pQ.erase(mp(d[top.S], top.S));
+		if(vis[top.S]==true){
+			continue;
+		}
+		vis[top.S] = true;
+		f = true;
+		LL from = top.S;
+		for(LL j=0;j< adj[from].sz;j++){
+			LL to = adj[from][j];
+			if(vis[to]==false &&  d[to] > graph[mp(from,to)]){
+				pQ.erase(mp(d[to], to));
+				d[to] = graph[mp(from, to)];
+				pQ.insert(mp(d[to], to));
+				res[to] = mp(to,from);
+			}
+		}
+	}
+	LL ans = 0;
+	for(LL i=2;i<=N;i++){
+		ans+=graph[res[i]];
+	}
+	cout << ans << "\n";
+    return 0;
+}
+	</pre>
+
+
+
+Solving Problem using <b>Kruskal's Algorithm</b> <br>
+<b>Time Complexity :</b>
+<br> <div lang="latex">O(E*log E + V)</div>
+	<pre style="text-align:left;"class="prettyprint">
+#include < bits/stdc++.h>
+#define mp make_pair
+#define pb push_back      
+#define F first
+#define S second
+#define sqr(x) ((x)*(x))
+#define sz size()
+#define all(a)   a.begin(),a.end()
+#define m0(x) memset(x,0,sizeof(x))
+#define buli(x) __builtin_popcountll(x)
+#define inf 1000000000
+#define mod 10000007
+#define eps 1e-9
+//map iterator
+#define mit(x,mymap) for(auto x:mymap)
+
+using namespace std;
+
+typedef long long LL;
+typedef pair< LL,LL> PLI;
+typedef map< LL,LL> MLI;
+
+bool cmp(int x,int y){
+	return x< y;
+}
+
+set< pair< long long, int >, greater< pair< long long, int> > >pQ;
+LL N, d[100010];
+vector< LL> adj[100010];
+map< PLI,LL> graph;
+map< LL, PLI> res;
+vector< PLI> mst;
+bool vis[100010];
+
+inline void pre(){
+	LL i;
+	d[1] = 0;
+	pQ.insert(mp(d[1],1));
+	for(i=2;i<=N;i++){
+		d[i] = inf;
+		pQ.insert(mp(d[i],i));
+	}
+	memset(vis,0,sizeof(vis));
+}
+
+int main()
+{
+	LL M;
+	cin >> N >> M;
+	LL i;
+	for(i=0;i< M;i++){
+		LL u,v;
+		cin >> u >> v;
+		adj[u].pb(v);
+		adj[v].pb(u);
+		LL w;
+		cin >> w;
+		graph[mp(u,v)] = w;
+		graph[mp(v,u)] = w;
+	}
+	pre();
+	bool f = false;
+	while(!pQ.empty()){
+		PLI top = *(pQ.rbegin());
+		pQ.erase(mp(d[top.S], top.S));
+		if(vis[top.S]==true){
+			continue;
+		}
+		vis[top.S] = true;
+		f = true;
+		LL from = top.S;
+		for(LL j=0;j< adj[from].sz;j++){
+			LL to = adj[from][j];
+			if(vis[to]==false &&  d[to] > graph[mp(from,to)]){
+				pQ.erase(mp(d[to], to));
+				d[to] = graph[mp(from, to)];
+				pQ.insert(mp(d[to], to));
+				res[to] = mp(to,from);
+			}
+		}
+	}
+	LL ans = 0;
+	for(LL i=2;i<=N;i++){
+		ans+=graph[res[i]];
+	}
+	cout << ans << "\n";
+    return 0;
+}
+	</pre>
+
+	</div>
+
+	</div>
+
+<div id="gsearch">
+		<script>
+	  (function() {
+	    var cx = '015130930685929674816:jvixyvvlvtu';
+	    var gcse = document.createElement('script');
+	    gcse.type = 'text/javascript';
+	    gcse.async = true;
+	    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+	        '//cse.google.com/cse.js?cx=' + cx;
+	    var s = document.getElementsByTagName('script')[0];
+	    s.parentNode.insertBefore(gcse, s);
+	  })();
+	</script>
+	<gcse:search></gcse:search>
+<div id="comment_section">
+	<div id="disqus_thread"></div>
+		<script>
+
+		var disqus_config = function () {
+		this.page.url = www.sukeesh.me; // Replace PAGE_URL with your page's canonical URL variable
+		this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+		};
+
+		(function() { // DON'T EDIT BELOW THIS LINE
+		var d = document, s = d.createElement('script');
+
+		s.src = 'https://sukeesh.disqus.com/embed.js';
+
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+		})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>	
+</div>
+	</div>
+	<a href="http://www.freecounterstat.com" target="_Blank" title="free hit counters"></a>
+			<script type="text/javascript" src="http://counter8.fcs.ovh/private/countertab.js?c=981e182eebf799de5531492c619db751"></script>
+</body>
+</html>
