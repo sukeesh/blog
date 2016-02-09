@@ -1,0 +1,149 @@
+@import url('BebasNeue Light.ttf');
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+
+@font-face {
+    font-family: "nokia-pure-headline-ultralight";
+    src: url("nokiapure.woff") format('woff');
+}
+html {
+	border-top: 4px solid #777;
+	height: 98%;
+	margin-top: 2px;
+}
+
+body {
+	margin-top: 0;
+	font-family: "nokia-pure-headline-ultralight";
+	font-weight: 100;
+	text-align: center;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+#main {
+	width: 90%;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 2%;	
+	text-align: center;
+}
+
+#name {
+	font-size: 40px;
+	font-weight: bold;
+}
+
+#school {
+	font-size: 20px;
+	margin-top: 10px;
+	color: rgba(0, 0, 0, 0.55);
+}
+
+#social {
+	width: 50%;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 1%;	
+	text-align: center;
+	font-weight: normal;
+	font-size: 20px;
+}
+
+#social ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+
+}
+
+#social ul li {
+	display: inline-block;
+	padding: 10px 0 10px 0;
+	background-color: rgba(255,255,255,1);
+	transition: all 0.35s ease-in-out;
+}
+
+
+#social ul li a {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+::selection {
+    background: rgba(235, 203, 79, 0.66);
+}
+
+#social ul li:hover {
+	color: rgba(255,255,255,0.7);
+	background-color: #FF7373;
+}
+
+#social ul li a:hover {
+	color: white;
+}
+
+#header:after {
+    display: block;
+    content: '';
+    width: 11rem;
+    height: 1px;
+    margin: 23px auto;
+    background-color: #d5d5d5;
+}
+
+#wrapper {
+	width: 100%;
+	margin-left: 25px;
+	
+}
+
+#code {
+	width: 60%;
+	text-align: center;
+	float: left;
+    border: 1px solid #585858;
+    padding: 10px; 
+}
+
+#gsearch {
+	width: 35%;
+	float: right;
+}
+
+ul {
+    list-style: '#' inside none;
+}
+
+#leftm {
+	text-align: left;
+}
+
+#lr {
+	font-family: 'Montserrat', sans-serif;
+}
+
+#font1 {
+	font-family: 'Open Sans', sans-serif;
+}
+
+#font2 {
+	font-family: 'Dosis', sans-serif;
+	text-align: left;
+}
+
+#footer {
+	background-color: #FF7373;
+	color: #FDFDFD;
+	text-align : center;
+	padding :0.6667em 0;
+	width:100%;
+	font-size: 18px;
+	height:18px;
+	bottom:0;
+	left:0;
+	position: fixed;
+}

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="css/estyle.css">
+	<link rel="shortcut icon" href="css/favicon.ico"/>
+	<script type="text/javascript" src="script/script.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+	<script>
+  		function initialize() {
+        var mapCanvas = document.getElementById('map');
+        var mapOptions = {
+          center: new google.maps.LatLng(29.864582, 77.892903),
+          zoom: 18,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var map = new google.maps.Map(mapCanvas, mapOptions)
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
+	<title> Contact me | [Sukeesh] </title>
+
+<style type="text/css">
+	
+	.no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.se-pre-con {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url(loading/loader-64x/Preloader_2.gif) center no-repeat #fff;
+}
+</style>
+
+<script type="text/javascript">
+	$(window).load(function() {
+		// Animate loader off screen
+		$(".se-pre-con").fadeOut("slow");;
+	});
+</script>
+
+</head>
+<body>
+<div class="se-pre-con"></div>
+	<div id="main">
+		<div id="name">
+			<a href="http://www.sukeesh.me/">
+			Sukeesh
+			</a>
+
+			<div id="social">
+		<ul>
+			<li>
+				<a href="https://github.com/vsukeeshbabu" target="blank">
+					Github
+				</a>
+			</li>
+			<li>
+				<a href="blog/index.html" target="blank">
+					Blog
+				</a>
+			</li>
+            <li>
+				<a href="algo/index.html" target="blank">
+					Algorithms
+				</a>
+			</li>
+		</ul>
+	</div>
+
+		</div>
+		<header id="header">
+			</header>
+	</div>
+
+	<div id="cbody" style="width: 100%; display: table;">
+    	<div style="display: table-row">
+        
+
+        <div style="width: 300px; display: table-cell;">
+        <div id="lr">Ping me Quickly  </div><br>
+        
+       <div id="font1">Email : </div>
+
+        <div id="font2">vsukeeshbabu@gmail.com</div>
+        <br>
+        
+        <div id="font1">Phone : </div>
+        <div id="font2">+91 8791 726 566</div>
+
+        <br>
+        
+        <div id="font1">IRC : </div>
+        <div id="font2">#sukeesh @ xchat</div>
+
+        
+
+        </div>
+        <div style="display: table-cell;">
+	        <div id="font1">Or Visit me : </div>
+	        <div id="font2">#S-145, Ravindra Bhawan,<br>IIT Roorkee - 247 667,<br>Uttaranchal, India</div>
+	        <div id="map"></div>
+	    </div>
+        
+        <div style="display: table-cell;"> 
+        <div id="lr">Find me on Web </div><br>
+        <div id="font1">Quora : </div>
+        <div id="font2"><a href="https://www.quora.com/profile/Sukeesh-Babu">Sukeesh Babu</a></div>
+
+
+        <br>
+        <div id="font1">Facebook : </div>
+        <div id="font2">Sukeesh</div>
+
+
+        <br>
+        <div id="font1">Google+ : </div>
+        <div id="font2">Sukeesh Babu</div>
+
+        <br>
+        <div id="font1">Twitter : </div>
+        <div id="font2"><a href="https://twitter.com/sukeeshbabu">@sukeeshbabu</a></div>
+
+        <br>
+        </div>
+    
+
+    </div>
+</div>
+
+
+	
+</body>
+</html>
