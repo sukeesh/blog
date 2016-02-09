@@ -1,23 +1,124 @@
----
-layout: default
----
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../css/styleb.css">
+	<link rel="shortcut icon" href="../css/favicon.ico"/>
+	<script type="text/javascript" src="../script/script.js"></script>
+	<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	<title> Blog | Sukeesh</title>
 
-<div class="home">
 
-  <h1 class="page-heading">Posts</h1>
+<style type="text/css">
+	
+	.no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.se-pre-con {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url(Preloader_7.gif) center no-repeat #fff;
+}
+</style>
 
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+<script type="text/javascript">
+	$(window).load(function() {
+		// Animate loader off screen
+		$(".se-pre-con").fadeOut("slow");;
+	});
+</script>
 
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
 
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+</head>
+<body>
+	
+<div id="main">
+		<div id="name">
+			<a href="http://www.sukeesh.me/">
+			Sukeesh  | &nbsp;&nbsp;&nbsp;<font style="font-weight:normal;"> Blog</font>
+
+			</a>
+
+			<div id="social">
+		<ul>
+			<li>
+				<a href="https://github.com/vsukeeshbabu" target="blank">
+					Github
+				</a>
+			</li>
+			<li>
+				<a href="../algo/index.html" target="blank">
+					Algorithms
+				</a>
+			</li>
+			<li>
+				<a href="http://sukeesh.wordpress.com" target="blank">
+					Old Blog
+				</a>
+			</li>
+            <li>
+				<a href="../contact.html" target="blank">
+					Contact
+				</a>
+			</li>
+		</ul>
+	</div>
+	</div>
+<header id="header">
+			</header>
+<div id="wrapper">
+
+	<div id="code" style ="text-align:left;">
+
+
+	<b>Blog :</b> 
+	<ul>
+		<a href="../algo/index.html"><li>Algorithm Implementation</li></a>
+		<a href="spojmain.html"><li>SPOJ Solutions</li></a>
+		</ul>
 
 </div>
+
+</div>
+
+<div id="gsearch">
+		<script>
+	  (function() {
+	    var cx = '015130930685929674816:jvixyvvlvtu';
+	    var gcse = document.createElement('script');
+	    gcse.type = 'text/javascript';
+	    gcse.async = true;
+	    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+	        '//cse.google.com/cse.js?cx=' + cx;
+	    var s = document.getElementsByTagName('script')[0];
+	    s.parentNode.insertBefore(gcse, s);
+	  })();
+	</script>
+	<gcse:search></gcse:search>
+<div id="comment_section">
+	<div id="disqus_thread"></div>
+		<script>
+
+		var disqus_config = function () {
+		this.page.url = www.sukeesh.me; // Replace PAGE_URL with your page's canonical URL variable
+		this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+		};
+
+		(function() { // DON'T EDIT BELOW THIS LINE
+		var d = document, s = d.createElement('script');
+
+		s.src = 'https://sukeesh.disqus.com/embed.js';
+
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+		})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>	
+</div>
+	</div>
+	<a href="http://www.freecounterstat.com" target="_Blank" title="free hit counters"></a>
+			<script type="text/javascript" src="http://counter8.fcs.ovh/private/countertab.js?c=981e182eebf799de5531492c619db751"></script>
+</body>
+</html>
