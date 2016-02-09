@@ -1,23 +1,90 @@
----
-layout: default
----
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="shortcut icon" href="css/favicon.ico"/>
+	<script type="text/javascript" src="script/script.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+	<title> [Sukeesh] </title>
 
-<div class="home">
 
-  <h1 class="page-heading">Posts</h1>
+<style type="text/css">
+	
+	.no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.se-pre-con {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url(Preloader_7.gif) center no-repeat #fff;
+}
+</style>
 
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+<script type="text/javascript">
+	$(window).load(function() {
+		// Animate loader off screen
+		$(".se-pre-con").fadeOut("slow");;
+	});
+</script>
+</head>
+<body>
+<div class="se-pre-con"></div>
 
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
 
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
-
-</div>
+	<br/>
+	<br/>
+	<div id="main">
+		<div id="name">
+			<a href="http://www.sukeesh.me">
+			Sukeesh
+			</a>
+		</div>
+		<header id="header">
+			</header>
+		<div id="school">
+				Nothing is impossible; impossible itself says /I m possible/
+		</div>
+	</div>
+	<div id="social">
+		<ul>
+			<li>
+				<a href="https://github.com/vsukeeshbabu" target="blank">
+					Github
+				</a>
+			</li>
+			<li>
+				<a href="algo/index.html" target="blank">
+					Algorithms
+				</a>
+			</li>
+			<li>
+				<a href="blog/index.html" target="blank">
+					Blog
+				</a>
+			</li>
+			
+            <li>
+				<a href="contact.html" target="blank">
+					Contact
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div id="profile_body">
+		***<br>
+		Website is in development mode. <br>
+	</div>
+	<div id="footer">
+	<span>
+			<b>Sukeesh</b>
+		</span>
+		<span> 
+			&copy; 2015 
+		</span>
+	</div>
+</body>
+</html>
