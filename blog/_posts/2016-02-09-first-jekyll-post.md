@@ -5,8 +5,8 @@ date:   2016-02-09 18:36:24
 categories: new-post
 ---
 
-Now, finally my blog is Jekyll Powered. Easy to post :) .
-It's easy to add code snippets,
+Now, finally my blog is Jekyll Powered. Easy to post :) .</br>
+It's easy to add code snippets,</br>
 
 {% highlight cpp %}
 #include <bits/stdc++.h>
@@ -42,7 +42,7 @@ int main()
 	return 0;
 }
 {% endhighlight %}
-
+</br>
 and lot many features!!
 
 [jekyll]:      http://jekyllrb.com
