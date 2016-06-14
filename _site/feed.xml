@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sukeesh</title>
+    <description>A simple and awesome blog theme powered by jekyll.</description>
+    <link>/</link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 14 Jun 2016 10:46:02 +0200</pubDate>
+    <lastBuildDate>Tue, 14 Jun 2016 10:46:02 +0200</lastBuildDate>
+    <generator>Jekyll v2.5.0</generator>
+    
+      <item>
+        <title>First Post</title>
+        <description>&lt;p&gt;I Hope, This would be my final blog template.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hello world&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+</description>
+        <pubDate>Tue, 14 Jun 2016 17:07:19 +0200</pubDate>
+        <link>/sample/2016/06/14/first-post.html</link>
+        <guid isPermaLink="true">/sample/2016/06/14/first-post.html</guid>
+        
+        
+        <category>sample</category>
+        
+      </item>
+    
+  </channel>
+</rss>

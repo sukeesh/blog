@@ -1,0 +1,65 @@
+# 
+###################################
+# Site wide configuration
+####################################
+#
+title: Sukeesh
+email: vsukeeshbabu@gmail.com
+description: A simple and awesome blog theme powered by jekyll.
+# url: http://sukeesh.github.io/blog # the base hostname & protocol for your site
+
+
+#
+###################################
+# Jekyll configuration
+####################################
+#
+markdown:           kramdown
+highlighter:        rouge
+excerpt_separator:  <!--more-->
+timezone:           Europe/Paris
+
+kramdown:
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  enable_coderay: false
+
+#
+###################################
+# Site Owner configuration
+####################################
+#
+owner:
+  name: Sukeesh
+  # avatar: leonids-logo.png
+  job: "Developer. Programmer"
+  bio: "Undergrad Student at Indian Institute of Technology Roorkee"
+  email: vsukeeshbabu@gmail.com
+  disqus-shortname: sukeeshv
+  twitter: sukeeshbabu #username
+  facebook: 100001115883149 #username
+  google:
+    plus: SukeeshViitr #username
+    analytics: UA-73546079-1
+    verify:
+    ad-client:
+    ad-slot:
+  bing-verify:
+  github: sukeesh #username
+  stackoverflow: 5464518/sukeesh #123456/username   from a "http://stackoverflow.com/users/123456/username" link
+  linkedin: v-sukeesh-babu-ba602630 #username
+  xing: #username
+  instagram: sukeesh #username
+  lastfm: #username
+  tumblr: sukeesh #username
+  pinterest: #username
+  foursquare: #username
+  steam: #username
+  dribbble: #username
+  youtube: SukeeshViitr #username
+  soundcloud: #username
+  weibo: #username
+  flickr: #username
+  codepen: #username
