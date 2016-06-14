@@ -1,4 +1,4 @@
-# 
+
 ###################################
 # Site wide configuration
 ####################################
@@ -6,7 +6,9 @@
 title: Sukeesh
 email: vsukeeshbabu@gmail.com
 description: A simple and awesome blog theme powered by jekyll.
-# url: http://sukeesh.github.io/blog # the base hostname & protocol for your site
+url: //sukeesh.github.io
+baseurl: 
+devurl: http://localhost:4000
 
 
 #
@@ -17,7 +19,7 @@ description: A simple and awesome blog theme powered by jekyll.
 markdown:           kramdown
 highlighter:        rouge
 excerpt_separator:  <!--more-->
-timezone:           Europe/Paris
+timezone:           Asia/Calcutta
 
 kramdown:
   auto_ids: true
