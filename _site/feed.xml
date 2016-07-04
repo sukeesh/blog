@@ -5,8 +5,8 @@
     <description>A simple and awesome blog theme powered by jekyll.</description>
     <link>//sukeesh.github.io/</link>
     <atom:link href="//sukeesh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 04 Jul 2016 19:11:35 +0530</pubDate>
-    <lastBuildDate>Mon, 04 Jul 2016 19:11:35 +0530</lastBuildDate>
+    <pubDate>Mon, 04 Jul 2016 19:13:51 +0530</pubDate>
+    <lastBuildDate>Mon, 04 Jul 2016 19:13:51 +0530</lastBuildDate>
     <generator>Jekyll v2.5.0</generator>
     
       <item>
@@ -149,11 +149,11 @@
 
 </description>
         <pubDate>Tue, 05 Jul 2016 00:19:20 +0530</pubDate>
-        <link>//sukeesh.github.io/graph/2016/07/05/lcatormq.html</link>
-        <guid isPermaLink="true">//sukeesh.github.io/graph/2016/07/05/lcatormq.html</guid>
+        <link>//sukeesh.github.io/sample/2016/07/05/lcatormq.html</link>
+        <guid isPermaLink="true">//sukeesh.github.io/sample/2016/07/05/lcatormq.html</guid>
         
         
-        <category>graph</category>
+        <category>sample</category>
         
       </item>
     
