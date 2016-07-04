@@ -7,13 +7,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>LCA to RMQ</title>
-  <meta name="description" content="  Lowest common ancestor problem can be reduced to RMQ.Refer topcoder tutorial.My C++ Code:#include &lt;bits/stdc++.h&gt;using namespace std;typedef long lon...">
+  <meta name="description" content="  Lowest common ancestor problem can be reduced to RMQ and also vice versa.Below is my code explanation to find LCA of two nodes using Euler Tour and RMQ.Tim...">
 
   <!-- CSS files -->
   <link rel="stylesheet" href="//sukeesh.github.io/css/font-awesome.min.css">
   <link rel="stylesheet" href="//sukeesh.github.io/css/main.css">
 
-  <link rel="canonical" href="//sukeesh.github.io/graphs/2016/07/15/lca-to-rmq.html">
+  <link rel="canonical" href="//sukeesh.github.io/graphs/2016/07/05/lca-to-rmq.html">
   <link rel="alternate" type="application/rss+xml" title="Sukeesh" href="//sukeesh.github.io /feed.xml " />
 
   <!-- Icons -->
@@ -98,13 +98,13 @@
     <h1 title="LCA to RMQ">LCA to RMQ</h1>
     <span class="post-meta">
       <span class="post-date">
-        15 JUL 2016
+        5 JUL 2016
       </span>
       •
       <span class="read-time" title="Estimated read time">
   
   
-    5 mins read
+    6 mins read
   
 </span>
 
@@ -114,12 +114,33 @@
 
   <article class="post-content">
     <blockquote>
-  <p>Lowest common ancestor problem can be reduced to RMQ.</p>
+  <p>Lowest common ancestor problem can be reduced to RMQ and also vice versa.</p>
 </blockquote>
 
-<p>Refer <a href="https://www.topcoder.com/community/data-science/data-science-tutorials/range-minimum-query-and-lowest-common-ancestor/#Reduction%20from%20LCA%20to%20RMQ">topcoder tutorial</a>.</p>
+<p>Below is my code explanation to find LCA of two nodes using Euler Tour and RMQ.</p>
 
-<p>My C++ Code:</p>
+<p><strong>Time Complexity:</strong></p>
+
+<ul>
+  <li>Euler tour: Number of nodes is V. For a tree, E = V-1. Euler tour(DFS) will take O(V+E) which is O(2*V) which can be written as O(V).</li>
+  <li>Segment Tree construction : O(n) where n = V + E = 2*V – 1.</li>
+  <li>Range Minimum query: O(log(n))</li>
+</ul>
+
+<p>Overall this method takes O(n) time for preprocssing, but takes O(log(n)) time for query. Therefore, it can be useful when we have a single tree on which we want to perform large number of LCA queries.</p>
+
+<p>Another observation is that the adjacent elements in level array differ by 1. This can be used to convert a RMQ problem to a LCA problem.</p>
+
+<ul>
+  <li>Refer <a href="https://www.topcoder.com/community/data-science/data-science-tutorials/range-minimum-query-and-lowest-common-ancestor/#Reduction%20from%20LCA%20to%20RMQ">topcoder tutorial</a> for complete explanation.</li>
+  <li>Refer <a href="https://en.wikipedia.org/wiki/Euler_tour_technique">Wikipedia</a> for Euler tour technique.</li>
+</ul>
+
+<p><strong>Detailed explanation will be added later</strong>.</p>
+
+<p>Please feel free to report bugs / ask doubts in the comments section or mail me at vsukeeshbabu [at] gmail [dot] com</p>
+
+<p>C++ Code:</p>
 
 <div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include &lt;bits/stdc++.h&gt;
 </span>
@@ -247,19 +268,19 @@
   <h6>Share on: </h6>
   <ul>
     <li>
-      <a href="https://twitter.com/intent/tweet?text=//sukeesh.github.io/graphs/2016/07/15/lca-to-rmq.html" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+      <a href="https://twitter.com/intent/tweet?text=//sukeesh.github.io/graphs/2016/07/05/lca-to-rmq.html" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
     </li>
     <li>
-      <a href="https://www.facebook.com/sharer/sharer.php?u=//sukeesh.github.io/graphs/2016/07/15/lca-to-rmq.html" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=//sukeesh.github.io/graphs/2016/07/05/lca-to-rmq.html" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
     </li>
     <li>
-      <a href="https://plus.google.com/share?url=//sukeesh.github.io/graphs/2016/07/15/lca-to-rmq.html" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+      <a href="https://plus.google.com/share?url=//sukeesh.github.io/graphs/2016/07/05/lca-to-rmq.html" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
     </li>
     <li>
-      <a href="https://news.ycombinator.com/submitlink?u=//sukeesh.github.io/graphs/2016/07/15/lca-to-rmq.html" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
+      <a href="https://news.ycombinator.com/submitlink?u=//sukeesh.github.io/graphs/2016/07/05/lca-to-rmq.html" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
     </li>
     <li>
-      <a href="https://www.reddit.com/submit?url=//sukeesh.github.io/graphs/2016/07/15/lca-to-rmq.html" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
+      <a href="https://www.reddit.com/submit?url=//sukeesh.github.io/graphs/2016/07/05/lca-to-rmq.html" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
     </li>
   </ul>
 </div><!-- end share-buttons -->
