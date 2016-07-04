@@ -5,8 +5,8 @@
     <description>A simple and awesome blog theme powered by jekyll.</description>
     <link>//sukeesh.github.io/</link>
     <atom:link href="//sukeesh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 04 Jul 2016 18:47:15 +0530</pubDate>
-    <lastBuildDate>Mon, 04 Jul 2016 18:47:15 +0530</lastBuildDate>
+    <pubDate>Mon, 04 Jul 2016 18:50:01 +0530</pubDate>
+    <lastBuildDate>Mon, 04 Jul 2016 18:50:01 +0530</lastBuildDate>
     <generator>Jekyll v2.5.0</generator>
     
       <item>
@@ -138,12 +138,12 @@
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 </description>
-        <pubDate>Tue, 14 Jun 2016 20:37:19 +0530</pubDate>
-        <link>//sukeesh.github.io/graph%20trees%20lca%20rmq/2016/06/14/lca-to-rmq.html</link>
-        <guid isPermaLink="true">//sukeesh.github.io/graph%20trees%20lca%20rmq/2016/06/14/lca-to-rmq.html</guid>
+        <pubDate>Fri, 15 Jul 2016 00:19:20 +0530</pubDate>
+        <link>//sukeesh.github.io/graphs/2016/07/15/lca-to-rmq.html</link>
+        <guid isPermaLink="true">//sukeesh.github.io/graphs/2016/07/15/lca-to-rmq.html</guid>
         
         
-        <category>graph trees lca rmq</category>
+        <category>graphs</category>
         
       </item>
     
