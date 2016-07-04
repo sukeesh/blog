@@ -5,8 +5,8 @@
     <description>A simple and awesome blog theme powered by jekyll.</description>
     <link>//sukeesh.github.io/</link>
     <atom:link href="//sukeesh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 04 Jul 2016 19:13:51 +0530</pubDate>
-    <lastBuildDate>Mon, 04 Jul 2016 19:13:51 +0530</lastBuildDate>
+    <pubDate>Mon, 04 Jul 2016 19:16:45 +0530</pubDate>
+    <lastBuildDate>Mon, 04 Jul 2016 19:16:45 +0530</lastBuildDate>
     <generator>Jekyll v2.5.0</generator>
     
       <item>
@@ -34,9 +34,7 @@
   &lt;li&gt;Refer &lt;a href=&quot;https://en.wikipedia.org/wiki/Euler_tour_technique&quot;&gt;Wikipedia&lt;/a&gt; for Euler tour technique.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;strong&gt;Detailed explanation will be added later&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Please feel free to report bugs / ask doubts in the comments section or mail me at vsukeeshbabu [at] gmail [dot] com&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Detailed explanation will be added later&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;C++ Code:&lt;/p&gt;
 
@@ -147,6 +145,7 @@
 	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
+&lt;p&gt;Please feel free to report bugs / ask doubts in the comments section or mail me at vsukeeshbabu [at] gmail [dot] com.&lt;/p&gt;
 </description>
         <pubDate>Tue, 05 Jul 2016 00:19:20 +0530</pubDate>
         <link>//sukeesh.github.io/sample/2016/07/05/lcatormq.html</link>
