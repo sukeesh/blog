@@ -29,7 +29,7 @@
 
       <section class="navigation">
   <div class="holder">
-    Sukeesh
+    VS
     <div class="nav">
       <a href="/">Home</a> <br>
       <a href="/blog">Blog</a> <br>
@@ -38,6 +38,7 @@
     </div>
   </div>
 </section>
+
 
       <section class="post">
   <div class="back">
@@ -53,144 +54,138 @@
     June 29, 2016
   </section>
 
-  <blockquote><p>Lowest common ancestor problem can be reduced to RMQ and also vice versa.</p></blockquote>
+  <blockquote>
+  <p>Lowest common ancestor problem can be reduced to RMQ and also vice versa.</p>
+</blockquote>
 
 <p>Below is my code explanation to find LCA of two nodes using Euler Tour and RMQ.</p>
 
 <p><strong>Time Complexity:</strong></p>
 
 <ul>
-<li>Euler tour: Number of nodes is V. For a tree, E = V-1. Euler tour(DFS) will take O(V+E) which is O(2*V) which can be written as O(V).</li>
-<li>Segment Tree construction : O(n) where n = V + E = 2*V – 1.</li>
-<li>Range Minimum query: O(log(n))</li>
+  <li>Euler tour: Number of nodes is V. For a tree, E = V-1. Euler tour(DFS) will take O(V+E) which is O(2*V) which can be written as O(V).</li>
+  <li>Segment Tree construction : O(n) where n = V + E = 2*V – 1.</li>
+  <li>Range Minimum query: O(log(n))</li>
 </ul>
-
 
 <p>Overall this method takes O(n) time for preprocssing, but takes O(log(n)) time for query. Therefore, it can be useful when we have a single tree on which we want to perform large number of LCA queries.</p>
 
 <p>Another observation is that the adjacent elements in level array differ by 1. This can be used to convert a RMQ problem to a LCA problem.</p>
 
 <ul>
-<li>Refer <a href="https://www.topcoder.com/community/data-science/data-science-tutorials/range-minimum-query-and-lowest-common-ancestor/#Reduction%20from%20LCA%20to%20RMQ">topcoder tutorial</a> for complete explanation.</li>
-<li>Refer <a href="https://en.wikipedia.org/wiki/Euler_tour_technique">Wikipedia</a> for Euler tour technique.</li>
+  <li>Refer <a href="https://www.topcoder.com/community/data-science/data-science-tutorials/range-minimum-query-and-lowest-common-ancestor/#Reduction%20from%20LCA%20to%20RMQ">topcoder tutorial</a> for complete explanation.</li>
+  <li>Refer <a href="https://en.wikipedia.org/wiki/Euler_tour_technique">Wikipedia</a> for Euler tour technique.</li>
 </ul>
-
 
 <p><strong>Detailed explanation will be added later</strong></p>
 
 <p>My C++ Code:</p>
 
-<p><figure class="highlight"><pre><code class="language-cpp" data-lang="cpp">#include &lt;bits/stdc++.h&gt;</p>
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include &lt;bits/stdc++.h&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
-<p>using namespace std;</p>
+<span class="k">typedef</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">ll</span><span class="p">;</span>
 
-<p>typedef long long ll;</p>
+<span class="cp">#define mp make_pair
+#define F first
+#define S second
+#define pb push_back
+#define sz size()
+</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">inf</span> <span class="o">=</span> <span class="mf">1e9</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="mf">1e5</span><span class="p">;</span>
 
-<h1>define mp make_pair</h1>
+<span class="n">vector</span><span class="o">&lt;</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">adj</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
+<span class="kt">int</span> <span class="n">timer</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> 
+<span class="kt">int</span> <span class="n">E</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="n">Eidx</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
+<span class="n">pair</span><span class="o">&lt;</span> <span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">L</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="n">tree</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
 
-<h1>define F first</h1>
+<span class="kt">void</span> <span class="n">build</span><span class="p">(</span><span class="kt">int</span> <span class="n">node</span><span class="p">,</span><span class="kt">int</span> <span class="n">start</span><span class="p">,</span><span class="kt">int</span> <span class="n">end</span><span class="p">){</span>
+	<span class="k">if</span><span class="p">(</span><span class="n">start</span> <span class="o">==</span> <span class="n">end</span><span class="p">){</span>
+		<span class="n">tree</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">mp</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="n">start</span><span class="p">].</span><span class="n">F</span><span class="p">,</span> <span class="n">start</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="k">else</span><span class="p">{</span>
+		<span class="n">ll</span> <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">end</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+		<span class="n">build</span><span class="p">(</span> <span class="mi">2</span><span class="o">*</span> <span class="n">node</span> <span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">mid</span><span class="p">);</span>
+		<span class="n">build</span><span class="p">(</span> <span class="mi">2</span><span class="o">*</span> <span class="n">node</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">end</span><span class="p">);</span>
+		<span class="k">if</span> <span class="p">(</span> <span class="n">tree</span><span class="p">[</span><span class="n">node</span><span class="o">*</span><span class="mi">2</span><span class="p">].</span><span class="n">F</span> <span class="o">&lt;</span> <span class="n">tree</span><span class="p">[</span><span class="n">node</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">].</span><span class="n">F</span> <span class="p">){</span>
+			<span class="n">tree</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">tree</span><span class="p">[</span><span class="n">node</span><span class="o">*</span><span class="mi">2</span><span class="p">];</span>
+		<span class="p">}</span>
+		<span class="k">else</span><span class="p">{</span>
+			<span class="n">tree</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">tree</span><span class="p">[</span><span class="n">node</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
 
-<h1>define S second</h1>
+<span class="n">pair</span><span class="o">&lt;</span> <span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">query</span><span class="p">(</span><span class="n">ll</span> <span class="n">node</span><span class="p">,</span> <span class="n">ll</span> <span class="n">start</span><span class="p">,</span> <span class="n">ll</span> <span class="n">end</span><span class="p">,</span> <span class="n">ll</span> <span class="n">l</span><span class="p">,</span> <span class="n">ll</span> <span class="n">r</span><span class="p">){</span>
+	<span class="k">if</span><span class="p">(</span><span class="n">r</span> <span class="o">&lt;</span> <span class="n">start</span> <span class="o">||</span> <span class="n">end</span> <span class="o">&lt;</span> <span class="n">l</span><span class="p">){</span>
+		<span class="k">return</span> <span class="n">mp</span><span class="p">(</span><span class="n">inf</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="k">if</span><span class="p">(</span><span class="n">l</span> <span class="o">&lt;=</span> <span class="n">start</span> <span class="o">&amp;&amp;</span> <span class="n">end</span> <span class="o">&lt;=</span><span class="n">r</span><span class="p">){</span>
+		<span class="k">return</span> <span class="n">tree</span><span class="p">[</span><span class="n">node</span><span class="p">];</span>
+	<span class="p">}</span>
+	<span class="n">ll</span> <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">end</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+	<span class="n">pair</span><span class="o">&lt;</span> <span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">query</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">node</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
+	<span class="n">pair</span><span class="o">&lt;</span> <span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">query</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">node</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span> <span class="n">p1</span><span class="p">.</span><span class="n">F</span> <span class="o">&lt;</span> <span class="n">p2</span><span class="p">.</span><span class="n">F</span> <span class="p">){</span>
+		<span class="k">return</span> <span class="n">p1</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">else</span><span class="p">{</span>
+		<span class="k">return</span> <span class="n">p2</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
 
-<h1>define pb push_back</h1>
+<span class="kt">void</span> <span class="n">dfs</span><span class="p">(</span><span class="kt">int</span> <span class="n">node</span><span class="p">,</span> <span class="kt">int</span> <span class="n">par</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lvl</span><span class="p">){</span>
+	<span class="n">E</span><span class="p">[</span><span class="n">timer</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span>
+	<span class="n">Eidx</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">timer</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> 
+	<span class="n">L</span><span class="p">[</span><span class="n">timer</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">mp</span><span class="p">(</span><span class="n">lvl</span><span class="p">,</span> <span class="n">node</span><span class="p">);</span>
+	<span class="k">for</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">adj</span><span class="p">[</span><span class="n">node</span><span class="p">].</span><span class="n">sz</span> <span class="p">;</span> <span class="n">j</span> <span class="o">++</span> <span class="p">){</span>
+		<span class="kt">int</span> <span class="n">top</span> <span class="o">=</span> <span class="n">adj</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="p">[</span><span class="n">j</span><span class="p">];</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">top</span> <span class="o">!=</span> <span class="n">par</span><span class="p">)</span>
+			<span class="n">dfs</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">lvl</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="p">(</span> <span class="n">par</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="p">){</span>
+		<span class="n">E</span><span class="p">[</span><span class="n">timer</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">par</span><span class="p">;</span>
+		<span class="n">L</span><span class="p">[</span><span class="n">timer</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">mp</span><span class="p">(</span><span class="n">lvl</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">par</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">}</span>
 
-<h1>define sz size()</h1>
+<span class="kt">int</span> <span class="n">lca</span><span class="p">(</span><span class="kt">int</span> <span class="n">u</span><span class="p">,</span> <span class="kt">int</span> <span class="n">v</span><span class="p">){</span>
+	<span class="n">u</span> <span class="o">=</span> <span class="n">Eidx</span><span class="p">[</span><span class="n">u</span><span class="p">];</span>
+	<span class="n">v</span> <span class="o">=</span> <span class="n">Eidx</span><span class="p">[</span><span class="n">v</span><span class="p">];</span>
+	<span class="kt">int</span> <span class="n">ans</span> <span class="o">=</span> <span class="n">E</span><span class="p">[</span><span class="n">query</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">timer</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">).</span><span class="n">S</span><span class="p">];</span>
+	<span class="k">return</span> <span class="n">ans</span><span class="p">;</span>
+<span class="p">}</span>
 
-<p>const int inf = 1e9;
-const int N = 1e5;</p>
+<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+	<span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">;</span>
+	<span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="n">m</span><span class="p">;</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="p">;</span> <span class="n">i</span> <span class="o">++</span> <span class="p">){</span>
+		<span class="kt">int</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">;</span>
+		<span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">u</span> <span class="o">&gt;&gt;</span> <span class="n">v</span><span class="p">;</span>
+		<span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">].</span><span class="n">pb</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+		<span class="n">adj</span><span class="p">[</span><span class="n">v</span><span class="p">].</span><span class="n">pb</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+	<span class="p">}</span>
 
-<p>vector&lt; int&gt; adj[N];
-int timer = 1;
-int E[N], Eidx[N];
-pair&lt; int,int&gt; L[N], tree[N];</p>
+	<span class="c1">// DFS to find Euler path
+</span>	<span class="n">dfs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 
-<p>void build(int node,int start,int end){
-    if(start == end){
-        tree[node] = mp(L[start].F, start);
-    }
-    else{
-        ll mid = (start + end) / 2;
-        build( 2<em> node , start, mid);
-        build( 2</em> node + 1, mid + 1, end);
-        if ( tree[node<em>2].F &lt; tree[node</em>2+1].F ){
-            tree[node] = tree[node<em>2];
-        }
-        else{
-            tree[node] = tree[node</em>2+1];
-        }
-    }
-}</p>
+	<span class="c1">// Build a tree to answer queries in O(logn) time
+</span>	<span class="n">build</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">timer</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
 
-<p>pair&lt; int,int&gt; query(ll node, ll start, ll end, ll l, ll r){
-    if(r &lt; start || end &lt; l){
-        return mp(inf, 0);
-    }
-    if(l &lt;= start &amp;&amp; end &lt;=r){
-        return tree[node];
-    }
-    ll mid = (start + end) / 2;
-    pair&lt; int,int&gt; p1 = query(2 * node, start, mid, l, r);
-    pair&lt; int,int&gt; p2 = query(2 * node + 1, mid + 1, end, l, r);
-    if ( p1.F &lt; p2.F ){
-        return p1;
-    }
-    else{
-        return p2;
-    }
-}</p>
-
-<p>void dfs(int node, int par, int lvl){
-    E[timer++] = node;
-    Eidx[node] = timer - 1;
-    L[timer-1] = mp(lvl, node);
-    for ( int j = 0 ; j &lt; adj[node].sz ; j ++ ){
-        int top = adj[node] [j];
-        if(top != par)
-            dfs(top, node, lvl + 1);
-    }
-    if ( par != -1 ){
-        E[timer++] = par;
-        L[timer-1] = mp(lvl - 1, par);
-    }
-}</p>
-
-<p>int lca(int u, int v){
-    u = Eidx[u];
-    v = Eidx[v];
-    int ans = E[query(1, 1, timer-1, u, v).S];
-    return ans;
-}</p>
-
-<p>int main(){
-    int n, m;
-    cin &gt;&gt; n &gt;&gt; m;
-    for (int i = 0 ; i &lt; m ; i ++ ){
-        int u, v;
-        cin &gt;&gt; u &gt;&gt; v;
-        adj[u].pb(v);
-        adj[v].pb(u);
-    }</p>
-
-<pre><code>// DFS to find Euler path
-dfs(1, -1, 0);
-
-// Build a tree to answer queries in O(logn) time
-build(1, 1, timer-1);
-
-// lca queries !!
-int q;
-cin &amp;gt;&amp;gt; q;
-
-while ( q -- ){
-    int u, v;
-    cin &amp;gt;&amp;gt; u &amp;gt;&amp;gt; v;
-    cout &amp;lt;&amp;lt; lca(u, v) &amp;lt;&amp;lt; &amp;quot;\n&amp;quot;;
-}
-
-return 0;
-</code></pre>
-
-<p>}</code></pre></figure></p>
+	<span class="c1">// lca queries !!
+</span>	<span class="kt">int</span> <span class="n">q</span><span class="p">;</span>
+	<span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">q</span><span class="p">;</span>
+	
+	<span class="k">while</span> <span class="p">(</span> <span class="n">q</span> <span class="o">--</span> <span class="p">){</span>
+		<span class="kt">int</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">;</span>
+		<span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">u</span> <span class="o">&gt;&gt;</span> <span class="n">v</span><span class="p">;</span>
+		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lca</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+	<span class="p">}</span>
+	
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
 
 <p>Please feel free to report bugs / ask doubts in the comments section or mail me at vsukeeshbabu [at] gmail [dot] com.</p>
 
