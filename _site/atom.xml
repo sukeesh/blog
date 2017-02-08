@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>Sukeesh</title>
+ <link href="http://localhost:4000/atom.xml" rel="self"/>
+ <link href="http://localhost:4000/"/>
+ <updated>2017-02-08T14:04:41+00:00</updated>
+ <id>http://localhost:4000</id>
+ <author>
+   <name>Sukeesh</name>
+ </author>
+ 
+ 
+ <entry>
+   <title>LCA to RMQ</title>
+   <link href="http://localhost:4000/archive/2016/lcatormq.html"/>
+   <updated>2016-06-29T18:49:20+00:00</updated>
+   <id>http://localhost:4000/archive/2016/lcatormq</id>
+   <content type="html">&lt;blockquote&gt;&lt;p&gt;Lowest common ancestor problem can be reduced to RMQ and also vice versa.&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;Below is my code explanation to find LCA of two nodes using Euler Tour and RMQ.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Time Complexity:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Euler tour: Number of nodes is V. For a tree, E = V-1. Euler tour(DFS) will take O(V+E) which is O(2*V) which can be written as O(V).&lt;/li&gt;
+&lt;li&gt;Segment Tree construction : O(n) where n = V + E = 2*V – 1.&lt;/li&gt;
+&lt;li&gt;Range Minimum query: O(log(n))&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;Overall this method takes O(n) time for preprocssing, but takes O(log(n)) time for query. Therefore, it can be useful when we have a single tree on which we want to perform large number of LCA queries.&lt;/p&gt;
+
+&lt;p&gt;Another observation is that the adjacent elements in level array differ by 1. This can be used to convert a RMQ problem to a LCA problem.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Refer &lt;a href=&quot;https://www.topcoder.com/community/data-science/data-science-tutorials/range-minimum-query-and-lowest-common-ancestor/#Reduction%20from%20LCA%20to%20RMQ&quot;&gt;topcoder tutorial&lt;/a&gt; for complete explanation.&lt;/li&gt;
+&lt;li&gt;Refer &lt;a href=&quot;https://en.wikipedia.org/wiki/Euler_tour_technique&quot;&gt;Wikipedia&lt;/a&gt; for Euler tour technique.&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Detailed explanation will be added later&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;My C++ Code:&lt;/p&gt;
+
+&lt;p&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-cpp&quot; data-lang=&quot;cpp&quot;&gt;#include &amp;lt;bits/stdc++.h&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;using namespace std;&lt;/p&gt;
+
+&lt;p&gt;typedef long long ll;&lt;/p&gt;
+
+&lt;h1&gt;define mp make_pair&lt;/h1&gt;
+
+&lt;h1&gt;define F first&lt;/h1&gt;
+
+&lt;h1&gt;define S second&lt;/h1&gt;
+
+&lt;h1&gt;define pb push_back&lt;/h1&gt;
+
+&lt;h1&gt;define sz size()&lt;/h1&gt;
+
+&lt;p&gt;const int inf = 1e9;
+const int N = 1e5;&lt;/p&gt;
+
+&lt;p&gt;vector&amp;lt; int&amp;gt; adj[N];
+int timer = 1;
+int E[N], Eidx[N];
+pair&amp;lt; int,int&amp;gt; L[N], tree[N];&lt;/p&gt;
+
+&lt;p&gt;void build(int node,int start,int end){
+    if(start == end){
+        tree[node] = mp(L[start].F, start);
+    }
+    else{
+        ll mid = (start + end) / 2;
+        build( 2&lt;em&gt; node , start, mid);
+        build( 2&lt;/em&gt; node + 1, mid + 1, end);
+        if ( tree[node&lt;em&gt;2].F &amp;lt; tree[node&lt;/em&gt;2+1].F ){
+            tree[node] = tree[node&lt;em&gt;2];
+        }
+        else{
+            tree[node] = tree[node&lt;/em&gt;2+1];
+        }
+    }
+}&lt;/p&gt;
+
+&lt;p&gt;pair&amp;lt; int,int&amp;gt; query(ll node, ll start, ll end, ll l, ll r){
+    if(r &amp;lt; start || end &amp;lt; l){
+        return mp(inf, 0);
+    }
+    if(l &amp;lt;= start &amp;amp;&amp;amp; end &amp;lt;=r){
+        return tree[node];
+    }
+    ll mid = (start + end) / 2;
+    pair&amp;lt; int,int&amp;gt; p1 = query(2 * node, start, mid, l, r);
+    pair&amp;lt; int,int&amp;gt; p2 = query(2 * node + 1, mid + 1, end, l, r);
+    if ( p1.F &amp;lt; p2.F ){
+        return p1;
+    }
+    else{
+        return p2;
+    }
+}&lt;/p&gt;
+
+&lt;p&gt;void dfs(int node, int par, int lvl){
+    E[timer++] = node;
+    Eidx[node] = timer - 1;
+    L[timer-1] = mp(lvl, node);
+    for ( int j = 0 ; j &amp;lt; adj[node].sz ; j ++ ){
+        int top = adj[node] [j];
+        if(top != par)
+            dfs(top, node, lvl + 1);
+    }
+    if ( par != -1 ){
+        E[timer++] = par;
+        L[timer-1] = mp(lvl - 1, par);
+    }
+}&lt;/p&gt;
+
+&lt;p&gt;int lca(int u, int v){
+    u = Eidx[u];
+    v = Eidx[v];
+    int ans = E[query(1, 1, timer-1, u, v).S];
+    return ans;
+}&lt;/p&gt;
+
+&lt;p&gt;int main(){
+    int n, m;
+    cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m;
+    for (int i = 0 ; i &amp;lt; m ; i ++ ){
+        int u, v;
+        cin &amp;gt;&amp;gt; u &amp;gt;&amp;gt; v;
+        adj[u].pb(v);
+        adj[v].pb(u);
+    }&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// DFS to find Euler path
+dfs(1, -1, 0);
+
+// Build a tree to answer queries in O(logn) time
+build(1, 1, timer-1);
+
+// lca queries !!
+int q;
+cin &amp;amp;gt;&amp;amp;gt; q;
+
+while ( q -- ){
+    int u, v;
+    cin &amp;amp;gt;&amp;amp;gt; u &amp;amp;gt;&amp;amp;gt; v;
+    cout &amp;amp;lt;&amp;amp;lt; lca(u, v) &amp;amp;lt;&amp;amp;lt; &amp;amp;quot;\n&amp;amp;quot;;
+}
+
+return 0;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;}&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;Please feel free to report bugs / ask doubts in the comments section or mail me at vsukeeshbabu [at] gmail [dot] com.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ 
+</feed>

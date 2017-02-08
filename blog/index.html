@@ -1,0 +1,28 @@
+---
+layout: blog
+title: "Blog Archives"
+---
+
+{% for post in site.posts reverse %}
+	
+	{% capture date %}{{ post.date }}{% endcapture %}
+	{% capture this_year %}{{ date | date: "%Y" }}{% endcapture %}
+	{% unless year == this_year %}
+		{% assign year = this_year %}
+		{% unless forloop.first %}
+			</section>
+		{% endunless %}
+		<section class="archives">
+			<h1 class="year">
+				{{ date | date: "%Y" }}
+			</h1>
+	{% endunless %}
+		<article class="pure-g" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+			<div class="meta pure-u-1-8">
+				<h3 class="date"><time datetime="{{ date | datetime | date_to_xmlschema }}" itemprop="datePublished">{{ date | date: "%b %e" }}</time></h3>
+			</div>
+			<div class="title pure-u-7-8">
+				<h1 class="title" itemprop="name"><a href="{{ root_url }}{{ post.url }}">{{post.title}}</a></h1>
+			</div>
+		</article>
+{% endfor %}
