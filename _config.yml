@@ -1,4 +1,4 @@
-markdown: rdiscount
+kmarkdown: rdiscount
 highlighter: true
 permalink: /archive/:year/:title.html
 rdiscount:
