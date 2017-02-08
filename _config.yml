@@ -1,5 +1,5 @@
 kmarkdown: rdiscount
-highlighter: true
+rouge: true
 permalink: /archive/:year/:title.html
 rdiscount:
   extensions: [smart]
