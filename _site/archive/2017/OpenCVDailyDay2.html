@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <title>
+    
+      OpenCV Daily : Day 2 &ndash;
+    
+    Sukeesh
+  </title>
+
+  <meta name="author" content="Sukeesh" />
+  <meta name="description" content="Software Developer and Metallurgy undergrad at IIT Roorkee" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link href="/favicon.png" rel="shortcut icon">
+  <link rel="alternate" type="application/rss+xml" href="/atom.xml" />
+
+  <link rel="stylesheet" href="/css/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="/css/pure.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="/css/base.css" type="text/css" media="screen, projection" />
+  <script type="text/javascript" src="/js/application.js"></script>
+  <meta name="google-site-verification" content="re_t7ja4IZq6BYH_gOXHam-1xYP0BMy5qiUygvzYW6U" />
+</head>
+
+<body ontouchstart="" class="blog">
+  
+  <section class="pure-g-r">
+    <div class='pure-u-1-2 content'>
+
+      <section class="navigation">
+  <div class="holder">
+    VS
+    <div class="nav">
+      <a href="/">Home</a> <br>
+      <a href="/blog">Blog</a> <br>
+      <a href="/about">About</a> <br>
+      <a href="/projects">Projects</a> <br>
+    </div>
+  </div>
+</section>
+
+
+      <section class="post">
+  <div class="back">
+    <a href="/blog">&larr; Back</a>
+  </div>
+
+
+  <h1 class="title">
+    <a href="/archive/2017/OpenCVDailyDay2.html">OpenCV Daily : Day 2</a>
+  </h1>
+
+  <section class="byline">
+    February  9, 2017
+  </section>
+
+  <blockquote>
+  <p><strong>Images are Matrices</strong></p>
+</blockquote>
+
+<p>We have an image, which is 300x300 pixels.</p>
+
+<p><img src="/images/posts/opencv/day2/sf.jpg" alt="Sanf" /></p>
+
+<p>Images can be read in Octave using <em>imread</em> function</p>
+
+<figure class="highlight"><pre><code class="language-octave" data-lang="octave">&gt;&gt; im = imread('sf.jpg');</code></pre></figure>
+
+<p>Now, let’s select the green channel of the above image using the below command</p>
+
+<figure class="highlight"><pre><code class="language-octave" data-lang="octave">&gt;&gt; imgreen = im(:,:,2);  // ":" represents all the cells in that row/column</code></pre></figure>
+
+<p>Now, let’s see how this image looks.</p>
+
+<p><strong>Note</strong> : Images are displayed using <em>imshow()</em> function</p>
+
+<figure class="highlight"><pre><code class="language-octave" data-lang="octave">&gt;&gt; imshow(imgreen);</code></pre></figure>
+
+<p><img src="/images/posts/opencv/day2/sfg.jpg" alt="GSanf" /></p>
+
+<p>Now, let us see the intensity values of the 300th row using <em>plot</em> in-built function</p>
+
+<figure class="highlight"><pre><code class="language-octave" data-lang="octave">&gt;&gt; plot(imgreen(300,:));</code></pre></figure>
+
+<p><img src="/images/posts/opencv/day2/plotLine.png" alt="Plot" /></p>
+
+<hr />
+
+<blockquote>
+  <p><strong>How do we find intensity of a particular pixel/row/column?</strong></p>
+</blockquote>
+
+<p>As we know that the image can be represented as matrix, assuming it as an 2D array, we can get the intenisty at xth Row, yth column by <em>im(x, y)</em></p>
+
+<figure class="highlight"><pre><code class="language-octave" data-lang="octave">&gt;&gt; disp(im(23,32));
+156</code></pre></figure>
+
+<p>For an entire row,</p>
+
+<figure class="highlight"><pre><code class="language-octave" data-lang="octave">&gt;&gt; disp(im(23,:));</code></pre></figure>
+
+<p>For an entire column,</p>
+
+<figure class="highlight"><pre><code class="language-octave" data-lang="octave">&gt;&gt; disp(im(:,32));</code></pre></figure>
+
+<p>For rows and columns, the return type is <em>vector</em> of values.</p>
+
+<hr />
+
+<blockquote>
+  <p><strong>Cropping an image</strong></p>
+</blockquote>
+
+<p>The size of the image is 300x300. Let’s say we want to crop an image of size 100x100 ranging from (100-&gt;200)x(200-&gt;300)</p>
+
+<figure class="highlight"><pre><code class="language-octave" data-lang="octave">&gt;&gt; cropped = im(100:200, 200:300);
+
+&gt;&gt; imshow(cropped);</code></pre></figure>
+
+<p><img src="/images/posts/opencv/day2/crop.png" alt="CroppedImage" /></p>
+
+<hr />
+
+<blockquote>
+  <p><strong>What do arithmetic operations on images look like?</strong></p>
+</blockquote>
+
+<p>Let’s start by adding two images. Pixels in one image gets added to corresponding pixels in other image. Since the two images are of same size, we can just sum two images using “+” operator,</p>
+
+<p>I have loaded a new dolphin image.</p>
+
+<figure class="highlight"><pre><code class="language-octave" data-lang="octave">&gt;&gt; dol = imread(dl.jpg);
+&gt;&gt; sum = dol + im;
+&gt;&gt; imshow(sum);</code></pre></figure>
+
+<p>which results in</p>
+
+<p><img src="/images/posts/opencv/day2/sum.png" alt="Sum" /></p>
+
+<p>which looks dirty</p>
+
+<p>That’s because when two corresponding intensities of a pixel is maximum ( i.e., 255 ), both adds up to 2 * 255 = 510, Which will be quantized to 255. So, one way to avoid this is by averaging. Something like below.</p>
+
+<figure class="highlight"><pre><code class="language-octave" data-lang="octave">&gt;&gt; dol = imread(dl.jpg);
+&gt;&gt; avg = dol/2 + im/2;
+&gt;&gt; imshow(avg);</code></pre></figure>
+
+<p><img src="/images/posts/opencv/day2/avg.png" alt="Avg" /></p>
+
+<p><strong>Neat!</strong></p>
+
+
+  <div class="twitter">
+    <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="sukeeshbabu">Tweet</a>
+    <a href="http://twitter.com/sukeeshbabu" class="twitter-follow-button" data-show-count="false">Follow @sukeeshbabu</a>
+  </div>
+
+  <section class="meta">
+    <section class="copy">
+      <p>
+        Some boring lines about the writer: <br>
+      </p>
+      <p>
+        Knows a bit of PHP, JS, Py. Prefers Py. <a href='http://news.ycombinator.com' target='_blank'>HN</a> addict. Watches cricket.
+      </p>
+      <p>
+        Follow him on <a href='http://twitter.com/sukeeshbabu'>twitter</a>. He doesn't tweet a lot. Bummer, right?
+      </p>
+
+      <script src="//platform.twitter.com/widgets.js" type="text/javascript"></script>
+    </section>
+  </section>
+</section>
+
+    </div>
+  </section>
+  
+  
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-73546079-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</body>
+
+</html>
