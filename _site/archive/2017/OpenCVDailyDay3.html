@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <title>
+    
+      OpenCV Daily : Day 3 &ndash;
+    
+    Sukeesh
+  </title>
+
+  <meta name="author" content="Sukeesh" />
+  <meta name="description" content="Software Developer and Metallurgy undergrad at IIT Roorkee" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link href="/favicon.png" rel="shortcut icon">
+  <link rel="alternate" type="application/rss+xml" href="/atom.xml" />
+
+  <link rel="stylesheet" href="/css/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="/css/pure.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="/css/base.css" type="text/css" media="screen, projection" />
+  <script type="text/javascript" src="/js/application.js"></script>
+  <meta name="google-site-verification" content="re_t7ja4IZq6BYH_gOXHam-1xYP0BMy5qiUygvzYW6U" />
+</head>
+
+<body ontouchstart="" class="blog">
+  
+  <section class="pure-g-r">
+    <div class='pure-u-1-2 content'>
+
+      <section class="navigation">
+  <div class="holder">
+    VS
+    <div class="nav">
+      <a href="/">Home</a> <br>
+      <a href="/blog">Blog</a> <br>
+      <a href="/about">About</a> <br>
+      <a href="/projects">Projects</a> <br>
+    </div>
+  </div>
+</section>
+
+
+      <section class="post">
+  <div class="back">
+    <a href="/blog">&larr; Back</a>
+  </div>
+
+
+  <h1 class="title">
+    <a href="/archive/2017/OpenCVDailyDay3.html">OpenCV Daily : Day 3</a>
+  </h1>
+
+  <section class="byline">
+    February 10, 2017
+  </section>
+
+  <blockquote>
+  <p><strong>Generate Gaussian noise</strong></p>
+</blockquote>
+
+<p>A Gaussian distribution has a probability distribution function.</p>
+
+<p>The center or mean, for ‘randn’ is zero, and the standard deviation is one. The standard deviation is a measure of how spread out the distribution is.</p>
+
+<p>Thus, We use ‘randn’ function to generate a gaussian noise.</p>
+
+<p>Let’s take a look at how different random functions (‘randn’, ‘rand’, ‘randi’) plot looks like</p>
+
+<p><img src="/images/posts/opencv/day3/randn.png" alt="randn" />
+<img src="/images/posts/opencv/day3/rand.png" alt="rand" />
+<img src="/images/posts/opencv/day3/randi.png" alt="randi" /></p>
+
+<blockquote>
+  <p><strong>Effect of sigma of Gaussian noise</strong></p>
+</blockquote>
+
+<p>We know that</p>
+
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">noise</span> <span class="o">=</span> <span class="nb">randn</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">im</span><span class="p">))</span><span class="o">.*</span><span class="n">sigma</span><span class="p">;</span></code></pre></figure>
+
+<p>By increasing sigma, more and more noise is being added to the image.</p>
+
+<blockquote>
+  <p><strong>Applying noise to image</strong></p>
+</blockquote>
+
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">img</span> <span class="o">=</span> <span class="nb">imread</span><span class="p">(</span><span class="s1">'hyd.jpg'</span><span class="p">);</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">);</span>
+
+<span class="n">noise</span> <span class="o">=</span> <span class="nb">randn</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">img</span><span class="p">))</span> <span class="o">.*</span> <span class="mi">50</span><span class="p">;</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">img</span> <span class="o">+</span> <span class="n">noise</span><span class="p">;</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">output</span><span class="p">);</span></code></pre></figure>
+
+<p><strong>Before:</strong></p>
+
+<p><img src="/images/posts/opencv/day3/hyd.jpg" height="300" width="440" /></p>
+
+<p><strong>After:</strong></p>
+
+<p><img src="/images/posts/opencv/day3/ghyd.png" alt="ghyd" /></p>
+
+
+
+  <div class="twitter">
+    <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="sukeeshbabu">Tweet</a>
+    <a href="http://twitter.com/sukeeshbabu" class="twitter-follow-button" data-show-count="false">Follow @sukeeshbabu</a>
+  </div>
+
+  <section class="meta">
+    <section class="copy">
+      <p>
+        Some boring lines about the writer: <br>
+      </p>
+      <p>
+        Knows a bit of PHP, JS, Py. Prefers Py. <a href='http://news.ycombinator.com' target='_blank'>HN</a> addict. Watches cricket.
+      </p>
+      <p>
+        Follow him on <a href='http://twitter.com/sukeeshbabu'>twitter</a>. He doesn't tweet a lot. Bummer, right?
+      </p>
+
+      <script src="//platform.twitter.com/widgets.js" type="text/javascript"></script>
+    </section>
+  </section>
+</section>
+
+    </div>
+  </section>
+  
+  
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-73546079-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</body>
+
+</html>
