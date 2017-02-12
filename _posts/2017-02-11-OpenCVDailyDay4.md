@@ -122,6 +122,7 @@ imshow(outim);
 **Note:**
 
 When filtering with a Gaussian,
+
 - The sigma is most important - it defines the blur kernel's scale with respect to the image.
 - Altering the normalization coefficient does not effect the blur, only the brightness.
 
