@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <title>
+    
+      OpenCV, Intro to smoothing &ndash;
+    
+    Sukeesh
+  </title>
+
+  <meta name="author" content="Sukeesh" />
+  <meta name="description" content="Software Developer and Metallurgy undergrad at IIT Roorkee" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link href="/favicon.png" rel="shortcut icon">
+  <link rel="alternate" type="application/rss+xml" href="/atom.xml" />
+
+  <link rel="stylesheet" href="/css/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="/css/pure.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="/css/base.css" type="text/css" media="screen, projection" />
+  <script type="text/javascript" src="/js/application.js"></script>
+  <meta name="google-site-verification" content="re_t7ja4IZq6BYH_gOXHam-1xYP0BMy5qiUygvzYW6U" />
+</head>
+
+<body ontouchstart="" class="blog">
+  
+  <section class="pure-g-r">
+    <div class='pure-u-1-2 content'>
+
+      <section class="navigation">
+  <div class="holder">
+    VS
+    <div class="nav">
+      <a href="/">Home</a> <br>
+      <a href="/blog">Blog</a> <br>
+      <a href="/about">About</a> <br>
+      <a href="/projects">Projects</a> <br>
+    </div>
+  </div>
+</section>
+
+
+      <section class="post">
+  <div class="back">
+    <a href="/blog">&larr; Back</a>
+  </div>
+
+
+  <h1 class="title">
+    <a href="/archive/2017/OpenCVDailyDay4.html">OpenCV, Intro to smoothing</a>
+  </h1>
+
+  <section class="byline">
+    February 11, 2017
+  </section>
+
+  <blockquote>
+  <p><strong>An introduction to smoothing</strong></p>
+</blockquote>
+
+<p><strong>Averaging assumptions</strong></p>
+
+<ul>
+  <li>The true value of pixels are similar to the true value pixels nearby.</li>
+  <li>The noise added to each pixel is done independently.</li>
+</ul>
+
+<p><strong>Weighted Moving Average</strong></p>
+
+<p>The more nearby a pixel is, the more related it is. Using Non-uniform weights smoothens the curve.</p>
+
+<p><strong>Moving average in 2D ( images )</strong></p>
+
+<ul>
+  <li><strong>Correlation filtering - uniform weights</strong></li>
+</ul>
+
+<p>Say the averaging window size is (2k+1)*(2k+1)</p>
+
+<p align="center"><img align="center" src="https://tex.s2cms.ru/svg/G%5Bi%2Cj%5D%20%3D%20%7B1%5Cover%7B(2k%2B1)%5E2%7D%7D%7B%5Csum_%7Bu%3D-k%7D%5E%7Bk%7D%7D%7B%5Csum_%7Bv%3D-k%7D%5E%7Bk%7D%7D%7BF%5Bi%2Bu%2Cj%2Bv%5D%7D" alt="G[i,j] = {1\over{(2k+1)^2}}{\sum_{u=-k}^{k}}{\sum_{v=-k}^{k}}{F[i+u,j+v]}" /></p>
+
+<ul>
+  <li><strong>Correlation filtering - nonuniform weights</strong></li>
+</ul>
+
+<p>Now generalize to allow different weights depending on neighbouring pixel’s relative position:</p>
+
+<p align="center"><img align="center" src="https://tex.s2cms.ru/svg/G%5Bi%2Cj%5D%20%3D%20%7B1%5Cover%7B(2k%2B1)%5E2%7D%7D%7B%5Csum_%7Bu%3D-k%7D%5E%7Bk%7D%7D%7B%5Csum_%7Bv%3D-k%7D%5E%7Bk%7D%7D%7BH%5Bu%2C%20v%5D%7D%7BF%5Bi%2Bu%2Cj%2Bv%5D%7D" alt="G[i,j] = {1\over{(2k+1)^2}}{\sum_{u=-k}^{k}}{\sum_{v=-k}^{k}}{H[u, v]}{F[i+u,j+v]}" /></p>
+
+<p>This is called <strong>cross-correlation</strong>, denoted by</p>
+<p align="center"><img align="center" src="https://tex.s2cms.ru/svg/G%20%3D%20%7BH%5Cotimes%20F%7D" alt="G = {H\otimes F}" /></p>
+
+<p>The filter <strong>kernel</strong> or <strong>mask</strong> H[u,v] is the matrix of weights in the linear combination.</p>
+
+<p><strong>Note :</strong> To blur a single pixel into a “blurry” spot, we would need to filter the spot with higher values in the middle, falling off to the edges.</p>
+
+<hr />
+
+<blockquote>
+  <p><strong>Gaussian filter</strong></p>
+</blockquote>
+
+<ul>
+  <li>Nearest neighbouring pixels have the most influence</li>
+</ul>
+
+<p>The <em>kernel</em> is an approximation of a Gaussian function:</p>
+
+<p align="center"><img align="center" src="https://tex.s2cms.ru/svg/%7Bh(u%2Cv)%7D%20%3D%20%7B1%5Cover2%5Cpi%5Csigma%5E2%7D%7D%20%7Be%5E%7B%7B-(u%5E2%2Bv%5E2)%7D%7D%5Cover%20%5Csigma%5E2%7D%7D" alt="{h(u,v)} = {1\over2\pi\sigma^2}} {e^\over \sigma^2}}" /></p>
+
+<p>Smoothing with Gaussian filter vs Non Gaussian filter</p>
+
+<p><img src="/images/posts/opencv/day4/gaussian.png" alt="im1" />
+<img src="/images/posts/opencv/day4/non.png" alt="im2" /></p>
+
+<p>In non-Gaussian, we can see sharp pixels. whereas, Guassian is smoooth!</p>
+
+<p><strong>Variance or standard deviation</strong> determines extent of smoothing. Size of kernel is not variance.</p>
+
+<hr />
+
+<blockquote>
+  <p><strong>MATLAB</strong></p>
+</blockquote>
+
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">hsize</span> <span class="o">=</span> <span class="mi">31</span><span class="p">;</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+<span class="n">pkg</span> <span class="nb">load</span> <span class="nb">image</span><span class="p">;</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">fspecial</span><span class="p">(</span><span class="s1">'gaussian'</span><span class="p">,</span> <span class="n">hsize</span><span class="p">,</span> <span class="n">sigma</span><span class="p">);</span>
+<span class="nb">surf</span><span class="p">(</span><span class="n">h</span><span class="p">);</span></code></pre></figure>
+
+<p><img src="/images/posts/opencv/day4/fspecial.png" alt="surf" /></p>
+
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">imagesc</span><span class="p">(</span><span class="n">h</span><span class="p">);</span></code></pre></figure>
+
+<p><img src="/images/posts/opencv/day4/imagesc.png" alt="imagesc" /></p>
+
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">im</span> <span class="o">=</span> <span class="nb">imread</span><span class="p">(</span><span class="s1">'panda.jpg'</span><span class="p">);</span></code></pre></figure>
+
+<p><img src="/images/posts/opencv/day4/panda.jpg" height="160" width="236" /></p>
+
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">outim</span> <span class="o">=</span> <span class="n">imfilter</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">h</span><span class="p">);</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">outim</span><span class="p">);</span></code></pre></figure>
+
+<p><img src="/images/posts/opencv/day4/blurpanda.png" alt="bim" /></p>
+
+<p>and again, depending on the size of the sigma we get different amounts of smoothing. More is the sigma, more is the smoothing!</p>
+
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% Apply a Gaussian filter to remove noise</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="nb">imread</span><span class="p">(</span><span class="s1">'panda.jpg'</span><span class="p">);</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">);</span>
+
+<span class="n">noise_sigma</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+
+<span class="n">noise</span> <span class="o">=</span> <span class="nb">randn</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">img</span><span class="p">))</span><span class="o">.*</span><span class="n">noise_sigma</span><span class="p">;</span>
+<span class="n">nimg</span> <span class="o">=</span> <span class="n">img</span> <span class="o">+</span> <span class="n">noise</span><span class="p">;</span>
+
+<span class="n">imshow</span><span class="p">(</span><span class="n">nimg</span><span class="p">);</span>
+
+<span class="c1">% Now apply a Gaussian filter to smooth out the noise</span>
+
+<span class="n">pkg</span> <span class="nb">load</span> <span class="nb">image</span><span class="p">;</span>
+
+<span class="n">hsize</span> <span class="o">=</span> <span class="mi">25</span><span class="p">;</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+<span class="n">h</span> <span class="o">=</span> <span class="n">fspecial</span><span class="p">(</span><span class="s1">'gaussian'</span><span class="p">,</span> <span class="n">hsize</span><span class="p">,</span> <span class="n">sigma</span><span class="p">);</span>
+
+<span class="n">outim</span> <span class="o">=</span> <span class="n">imfilter</span><span class="p">(</span><span class="n">nimg</span><span class="p">,</span> <span class="n">h</span><span class="p">);</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">outim</span><span class="p">);</span></code></pre></figure>
+
+<p><strong>Note:</strong></p>
+
+<p>When filtering with a Gaussian,</p>
+<ul>
+  <li>The sigma is most important - it defines the blur kernel’s scale with respect to the image.</li>
+  <li>Altering the normalization coefficient does not effect the blur, only the brightness.</li>
+</ul>
+
+<p><strong>Alright!!</strong></p>
+
+
+  <div class="twitter">
+    <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="sukeeshbabu">Tweet</a>
+    <a href="http://twitter.com/sukeeshbabu" class="twitter-follow-button" data-show-count="false">Follow @sukeeshbabu</a>
+  </div>
+
+  <section class="meta">
+    <section class="copy">
+      <p>
+        Some boring lines about the writer: <br>
+      </p>
+      <p>
+        Knows a bit of PHP, JS, Py. Prefers Py. <a href='http://news.ycombinator.com' target='_blank'>HN</a> addict. Watches cricket.
+      </p>
+      <p>
+        Follow him on <a href='http://twitter.com/sukeeshbabu'>twitter</a>. He doesn't tweet a lot. Bummer, right?
+      </p>
+
+      <script src="//platform.twitter.com/widgets.js" type="text/javascript"></script>
+    </section>
+  </section>
+</section>
+
+    </div>
+  </section>
+  
+  
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-73546079-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</body>
+
+</html>

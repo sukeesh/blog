@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "OpenCV Daily : Day 2"
+title: "OpenCV, Basics"
 date: 2017-02-09 10:49:20
 categories: [sample]
 comments: true

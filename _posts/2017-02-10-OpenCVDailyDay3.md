@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "OpenCV Daily : Day 3"
+title: "OpenCV, Gaussian Noise"
 date: 2017-02-10 10:49:20
 categories: [sample]
 comments: true
@@ -50,3 +50,4 @@ imshow(output);
 ![ghyd](/images/posts/opencv/day3/ghyd.png)
 
 
+_That's it for the day!_

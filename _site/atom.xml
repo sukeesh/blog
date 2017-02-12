@@ -4,7 +4,7 @@
  <title>Sukeesh</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2017-02-11T19:52:42+05:30</updated>
+ <updated>2017-02-12T12:21:44+05:30</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Sukeesh</name>
@@ -12,7 +12,141 @@
  
  
  <entry>
-   <title>OpenCV Daily : Day 3</title>
+   <title>OpenCV, Intro to smoothing</title>
+   <link href="http://localhost:4000/archive/2017/OpenCVDailyDay4.html"/>
+   <updated>2017-02-11T14:10:00+05:30</updated>
+   <id>http://localhost:4000/archive/2017/OpenCVDailyDay4</id>
+   <content type="html">&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;An introduction to smoothing&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Averaging assumptions&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The true value of pixels are similar to the true value pixels nearby.&lt;/li&gt;
+  &lt;li&gt;The noise added to each pixel is done independently.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Weighted Moving Average&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The more nearby a pixel is, the more related it is. Using Non-uniform weights smoothens the curve.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Moving average in 2D ( images )&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Correlation filtering - uniform weights&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Say the averaging window size is (2k+1)*(2k+1)&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img align=&quot;center&quot; src=&quot;https://tex.s2cms.ru/svg/G%5Bi%2Cj%5D%20%3D%20%7B1%5Cover%7B(2k%2B1)%5E2%7D%7D%7B%5Csum_%7Bu%3D-k%7D%5E%7Bk%7D%7D%7B%5Csum_%7Bv%3D-k%7D%5E%7Bk%7D%7D%7BF%5Bi%2Bu%2Cj%2Bv%5D%7D&quot; alt=&quot;G[i,j] = {1\over{(2k+1)^2}}{\sum_{u=-k}^{k}}{\sum_{v=-k}^{k}}{F[i+u,j+v]}&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Correlation filtering - nonuniform weights&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now generalize to allow different weights depending on neighbouring pixel’s relative position:&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img align=&quot;center&quot; src=&quot;https://tex.s2cms.ru/svg/G%5Bi%2Cj%5D%20%3D%20%7B1%5Cover%7B(2k%2B1)%5E2%7D%7D%7B%5Csum_%7Bu%3D-k%7D%5E%7Bk%7D%7D%7B%5Csum_%7Bv%3D-k%7D%5E%7Bk%7D%7D%7BH%5Bu%2C%20v%5D%7D%7BF%5Bi%2Bu%2Cj%2Bv%5D%7D&quot; alt=&quot;G[i,j] = {1\over{(2k+1)^2}}{\sum_{u=-k}^{k}}{\sum_{v=-k}^{k}}{H[u, v]}{F[i+u,j+v]}&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This is called &lt;strong&gt;cross-correlation&lt;/strong&gt;, denoted by&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img align=&quot;center&quot; src=&quot;https://tex.s2cms.ru/svg/G%20%3D%20%7BH%5Cotimes%20F%7D&quot; alt=&quot;G = {H\otimes F}&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The filter &lt;strong&gt;kernel&lt;/strong&gt; or &lt;strong&gt;mask&lt;/strong&gt; H[u,v] is the matrix of weights in the linear combination.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note :&lt;/strong&gt; To blur a single pixel into a “blurry” spot, we would need to filter the spot with higher values in the middle, falling off to the edges.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Gaussian filter&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Nearest neighbouring pixels have the most influence&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The &lt;em&gt;kernel&lt;/em&gt; is an approximation of a Gaussian function:&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img align=&quot;center&quot; src=&quot;https://tex.s2cms.ru/svg/%7Bh(u%2Cv)%7D%20%3D%20%7B1%5Cover2%5Cpi%5Csigma%5E2%7D%7D%20%7Be%5E%7B%7B-(u%5E2%2Bv%5E2)%7D%7D%5Cover%20%5Csigma%5E2%7D%7D&quot; alt=&quot;{h(u,v)} = {1\over2\pi\sigma^2}} {e^\over \sigma^2}}&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Smoothing with Gaussian filter vs Non Gaussian filter&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/posts/opencv/day4/gaussian.png&quot; alt=&quot;im1&quot; /&gt;
+&lt;img src=&quot;/images/posts/opencv/day4/non.png&quot; alt=&quot;im2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In non-Gaussian, we can see sharp pixels. whereas, Guassian is smoooth!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Variance or standard deviation&lt;/strong&gt; determines extent of smoothing. Size of kernel is not variance.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;MATLAB&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-matlab&quot; data-lang=&quot;matlab&quot;&gt;&lt;span class=&quot;n&quot;&gt;hsize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sigma&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;pkg&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;load&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fspecial&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'gaussian'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hsize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sigma&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;surf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/posts/opencv/day4/fspecial.png&quot; alt=&quot;surf&quot; /&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-matlab&quot; data-lang=&quot;matlab&quot;&gt;&lt;span class=&quot;nb&quot;&gt;imagesc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/posts/opencv/day4/imagesc.png&quot; alt=&quot;imagesc&quot; /&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-matlab&quot; data-lang=&quot;matlab&quot;&gt;&lt;span class=&quot;n&quot;&gt;im&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;imread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'panda.jpg'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/posts/opencv/day4/panda.jpg&quot; height=&quot;160&quot; width=&quot;236&quot; /&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-matlab&quot; data-lang=&quot;matlab&quot;&gt;&lt;span class=&quot;n&quot;&gt;outim&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;imfilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;im&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;imshow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/posts/opencv/day4/blurpanda.png&quot; alt=&quot;bim&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;and again, depending on the size of the sigma we get different amounts of smoothing. More is the sigma, more is the smoothing!&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-matlab&quot; data-lang=&quot;matlab&quot;&gt;&lt;span class=&quot;c1&quot;&gt;% Apply a Gaussian filter to remove noise&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;imread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'panda.jpg'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;imshow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;noise_sigma&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;noise&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;randn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;noise_sigma&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;nimg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;img&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;noise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;imshow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nimg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;% Now apply a Gaussian filter to smooth out the noise&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;pkg&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;load&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;hsize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sigma&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fspecial&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'gaussian'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hsize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sigma&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;outim&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;imfilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nimg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;imshow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;When filtering with a Gaussian,&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;The sigma is most important - it defines the blur kernel’s scale with respect to the image.&lt;/li&gt;
+  &lt;li&gt;Altering the normalization coefficient does not effect the blur, only the brightness.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Alright!!&lt;/strong&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>OpenCV, Gaussian Noise</title>
    <link href="http://localhost:4000/archive/2017/OpenCVDailyDay3.html"/>
    <updated>2017-02-10T16:19:20+05:30</updated>
    <id>http://localhost:4000/archive/2017/OpenCVDailyDay3</id>
@@ -61,11 +195,12 @@
 
 &lt;p&gt;&lt;img src=&quot;/images/posts/opencv/day3/ghyd.png&quot; alt=&quot;ghyd&quot; /&gt;&lt;/p&gt;
 
+&lt;p&gt;&lt;em&gt;That’s it for the day!&lt;/em&gt;&lt;/p&gt;
 </content>
  </entry>
  
  <entry>
-   <title>OpenCV Daily : Day 2</title>
+   <title>OpenCV, Basics</title>
    <link href="http://localhost:4000/archive/2017/OpenCVDailyDay2.html"/>
    <updated>2017-02-09T16:19:20+05:30</updated>
    <id>http://localhost:4000/archive/2017/OpenCVDailyDay2</id>
@@ -246,7 +381,7 @@ This is done because to maintain the same intensity that of original images.&lt;
  </entry>
  
  <entry>
-   <title>OpenCV Daily : Day 1</title>
+   <title>OpenCV, Intro</title>
    <link href="http://localhost:4000/archive/2017/OpenCVDailyDay1.html"/>
    <updated>2017-02-08T16:19:20+05:30</updated>
    <id>http://localhost:4000/archive/2017/OpenCVDailyDay1</id>
