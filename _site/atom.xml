@@ -4,12 +4,76 @@
  <title>Sukeesh</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2017-02-12T12:21:44+05:30</updated>
+ <updated>2017-02-13T20:41:43+05:30</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Sukeesh</name>
  </author>
  
+ 
+ <entry>
+   <title>OpenCV, Linearity and Convolution</title>
+   <link href="http://localhost:4000/archive/2017/OpenCVDailyDay5.html"/>
+   <updated>2017-02-12T15:19:20+05:30</updated>
+   <id>http://localhost:4000/archive/2017/OpenCVDailyDay5</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;Impulse function&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;In the discrete world, an &lt;em&gt;impulse&lt;/em&gt; is a very easy signal to understand: it’s just a value of 1 at a single location.&lt;/li&gt;
+  &lt;li&gt;In continous world, an &lt;em&gt;impulse&lt;/em&gt; is an idealized function that is very narrow and very tall so that it has a unit area.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Impulse response&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;If I have an unknown system and I “put in” an impulse, the response is called the impulse response.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Convolution&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img align=&quot;center&quot; src=&quot;https://tex.s2cms.ru/svg/G%5Bi%2Cj%5D%20%3D%20%7B1%5Cover%7B(2k%2B1)%5E2%7D%7D%7B%5Csum_%7Bu%3D-k%7D%5E%7Bk%7D%7D%7B%5Csum_%7Bv%3D-k%7D%5E%7Bk%7D%7D%7BH%5Bu%2C%20v%5D%7D%7BF%5Bi-u%2Cj-v%5D%7D&quot; alt=&quot;G[i,j] = {1\over{(2k+1)^2}}{\sum_{u=-k}^{k}}{\sum_{v=-k}^{k}}{H[u, v]}{F[i-u,j-v]}&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;(Flip in both dimensions)&lt;/p&gt;
+
+&lt;p&gt;This is called Convolution, &lt;strong&gt;denoted&lt;/strong&gt; by:&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img align=&quot;center&quot; src=&quot;https://tex.s2cms.ru/svg/G%20%3D%20%7BH%20*%20F%7D&quot; alt=&quot;G = {H * F}&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Difference between Cross-correlation and Convolution matters only when the filter is asymmetric.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Shift Invariant&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Operator behaves the same everywhere, i.e. the value of the output depends on the pattern in the image neighbourhood, not the position of the neighbourhood&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Properties of convolution&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Linear &amp;amp; Shift Invariant&lt;/li&gt;
+  &lt;li&gt;Commutative, &lt;em&gt;f * g = g * f&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Associative, &lt;em&gt;(f * g) * h = f * (g * h)&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Identity, 
+    unit inpulse e = […, 0, 0, 1, 0, 0, …]. f * e = f&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Computational complexity&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;If an image is NxN and a kernel is WxW, you need N&lt;em&gt;N&lt;/em&gt;W*W.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Seperability&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;In some cases, filter is seperable, meaning you can get the square kernel H by convolving a single column vector by some row vector. c * r = H.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;G = H * F = (C * R) * F = C * (R * F).&lt;/p&gt;
+
+&lt;p&gt;So, we do two convolutions but each is W * N * N. So this is useful if W is big enough such that 2 * W * N * N « W * W * N * N&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>OpenCV, Intro to smoothing</title>
@@ -136,6 +200,7 @@
 &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;When filtering with a Gaussian,&lt;/p&gt;
+
 &lt;ul&gt;
   &lt;li&gt;The sigma is most important - it defines the blur kernel’s scale with respect to the image.&lt;/li&gt;
   &lt;li&gt;Altering the normalization coefficient does not effect the blur, only the brightness.&lt;/li&gt;

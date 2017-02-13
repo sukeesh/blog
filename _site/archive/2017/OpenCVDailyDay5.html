@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <title>
+    
+      OpenCV, Linearity and Convolution &ndash;
+    
+    Sukeesh
+  </title>
+
+  <meta name="author" content="Sukeesh" />
+  <meta name="description" content="Software Developer and Metallurgy undergrad at IIT Roorkee" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link href="/favicon.png" rel="shortcut icon">
+  <link rel="alternate" type="application/rss+xml" href="/atom.xml" />
+
+  <link rel="stylesheet" href="/css/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="/css/pure.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="/css/base.css" type="text/css" media="screen, projection" />
+  <script type="text/javascript" src="/js/application.js"></script>
+  <meta name="google-site-verification" content="re_t7ja4IZq6BYH_gOXHam-1xYP0BMy5qiUygvzYW6U" />
+</head>
+
+<body ontouchstart="" class="blog">
+  
+  <section class="pure-g-r">
+    <div class='pure-u-1-2 content'>
+
+      <section class="navigation">
+  <div class="holder">
+    VS
+    <div class="nav">
+      <a href="/">Home</a> <br>
+      <a href="/blog">Blog</a> <br>
+      <a href="/about">About</a> <br>
+      <a href="/projects">Projects</a> <br>
+    </div>
+  </div>
+</section>
+
+
+      <section class="post">
+  <div class="back">
+    <a href="/blog">&larr; Back</a>
+  </div>
+
+
+  <h1 class="title">
+    <a href="/archive/2017/OpenCVDailyDay5.html">OpenCV, Linearity and Convolution</a>
+  </h1>
+
+  <section class="byline">
+    February 12, 2017
+  </section>
+
+  <p><strong>Impulse function</strong></p>
+
+<ul>
+  <li>In the discrete world, an <em>impulse</em> is a very easy signal to understand: it’s just a value of 1 at a single location.</li>
+  <li>In continous world, an <em>impulse</em> is an idealized function that is very narrow and very tall so that it has a unit area.</li>
+</ul>
+
+<p><strong>Impulse response</strong></p>
+
+<ul>
+  <li>If I have an unknown system and I “put in” an impulse, the response is called the impulse response.</li>
+</ul>
+
+<p><strong>Convolution</strong></p>
+
+<p align="center"><img align="center" src="https://tex.s2cms.ru/svg/G%5Bi%2Cj%5D%20%3D%20%7B1%5Cover%7B(2k%2B1)%5E2%7D%7D%7B%5Csum_%7Bu%3D-k%7D%5E%7Bk%7D%7D%7B%5Csum_%7Bv%3D-k%7D%5E%7Bk%7D%7D%7BH%5Bu%2C%20v%5D%7D%7BF%5Bi-u%2Cj-v%5D%7D" alt="G[i,j] = {1\over{(2k+1)^2}}{\sum_{u=-k}^{k}}{\sum_{v=-k}^{k}}{H[u, v]}{F[i-u,j-v]}" /></p>
+
+<p>(Flip in both dimensions)</p>
+
+<p>This is called Convolution, <strong>denoted</strong> by:</p>
+
+<p align="center"><img align="center" src="https://tex.s2cms.ru/svg/G%20%3D%20%7BH%20*%20F%7D" alt="G = {H * F}" /></p>
+
+<p>Difference between Cross-correlation and Convolution matters only when the filter is asymmetric.</p>
+
+<p><strong>Shift Invariant</strong></p>
+
+<ul>
+  <li>Operator behaves the same everywhere, i.e. the value of the output depends on the pattern in the image neighbourhood, not the position of the neighbourhood</li>
+</ul>
+
+<p><strong>Properties of convolution</strong></p>
+
+<ul>
+  <li>Linear &amp; Shift Invariant</li>
+  <li>Commutative, <em>f * g = g * f</em></li>
+  <li>Associative, <em>(f * g) * h = f * (g * h)</em></li>
+  <li>Identity, 
+    unit inpulse e = […, 0, 0, 1, 0, 0, …]. f * e = f</li>
+</ul>
+
+<p><strong>Computational complexity</strong></p>
+
+<ul>
+  <li>If an image is NxN and a kernel is WxW, you need N<em>N</em>W*W.</li>
+</ul>
+
+<p><strong>Seperability</strong></p>
+
+<ul>
+  <li>In some cases, filter is seperable, meaning you can get the square kernel H by convolving a single column vector by some row vector. c * r = H.</li>
+</ul>
+
+<p>G = H * F = (C * R) * F = C * (R * F).</p>
+
+<p>So, we do two convolutions but each is W * N * N. So this is useful if W is big enough such that 2 * W * N * N « W * W * N * N</p>
+
+
+  <div class="twitter">
+    <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="sukeeshbabu">Tweet</a>
+    <a href="http://twitter.com/sukeeshbabu" class="twitter-follow-button" data-show-count="false">Follow @sukeeshbabu</a>
+  </div>
+
+  <section class="meta">
+    <section class="copy">
+      <p>
+        Some boring lines about the writer: <br>
+      </p>
+      <p>
+        Knows a bit of PHP, JS, Py. Prefers Py. <a href='http://news.ycombinator.com' target='_blank'>HN</a> addict. Watches cricket.
+      </p>
+      <p>
+        Follow him on <a href='http://twitter.com/sukeeshbabu'>twitter</a>. He doesn't tweet a lot. Bummer, right?
+      </p>
+
+      <script src="//platform.twitter.com/widgets.js" type="text/javascript"></script>
+    </section>
+  </section>
+</section>
+
+    </div>
+  </section>
+  
+  
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-73546079-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</body>
+
+</html>
