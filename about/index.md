@@ -5,6 +5,7 @@ title: About me
 
 > When something is important enough, you do it even if the odds are not in your favor. 
 
+![CoverPic](/images/cover.jpg)
 
 Hi, I'm Sukeesh.
 
