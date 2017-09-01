@@ -1,5 +1,5 @@
 ---
-title: "How Does Dropbox Store Data?"
+title: "Dropbox Deduplication test"
 categories:
   - blog
 tags:
