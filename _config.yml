@@ -78,8 +78,8 @@ analytics:
 # Site Author
 author:
   name             : "Sukeesh"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an amazing person."
+  avatar           : /assets/images/me.jpg
+  bio              : "Programmer"
   location         : "Hyderabad"
   email            : vsukeeshbabu@gmail.com
   uri              :
@@ -92,13 +92,13 @@ author:
   github           : sukeesh
   gitlab           :
   google_plus      :
-  keybase          :
+  keybase          : sukeesh
   instagram        :
   lastfm           :
   linkedin         : # "john-doe-12345678" (the last part of your profile url, e.g. https://www.linkedin.com/in/john-doe-12345678)
   pinterest        :
   soundcloud       :
-  stackoverflow    : # "123456/username" (the last part of your profile url, e.g. http://stackoverflow.com/users/123456/username)
+  stackoverflow    : 5464518/sukeesh
   steam            : # "steamId" (the last part of your profile url, e.g. https://steamcommunity.com/id/steamId/)
   tumblr           :
   twitter          : sukeeshbabu
