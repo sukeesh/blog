@@ -1,19 +1,35 @@
-Sukeesh
-=======
+# NexT
 
-Source code for my static blog cum website generated using Hakyll (Haskell flavored Jekyll ;) ).
+> 精于心，简于形
 
-Has a nice search feature for blog posts, and implements tags and categories as well.
+NexT 是由 [Hexo NexT](https://github.com/iissnan/hexo-theme-next) 移植而来的 Jekyll 主题。<!--commit: f951075d9b739d26b42472431995fa68d08796aa-->
 
-Is basically a static-site-gen aware port of the `portfolio` material design theme from Google.
+<a href="http://simpleyyt.github.io/jekyll-theme-next/" target="_blank">在线预览 Preview</a> | <a href="http://simpleyyt.github.io" target="_blank">Yitao's Blog</a> | <a href="http://theme-next.simpleyyt.com" target="_blank">NexT 使用文档</a> |  [English Documentation](README.en.md)
+
+[![Join the chat at https://gitter.im/simpleyyt/jekyll-theme-next](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jekyll-theme-next/lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+![NexT Schemes](http://iissnan.com/nexus/next/next-schemes.jpg)
 
 
-### Build and Run
+## 浏览器支持 Browser support
 
-I personally prefer to install Hakyll via stack, since it does not mess with your system / cabal installations.
+![Browser support](http://iissnan.com/nexus/next/browser-support.png)
 
-```
-stack setup
-stack build
-stack exec site watch
-```
+
+## 贡献 Contributing
+
+欢迎提交问题与需求，修复代码。
+
+
+## 开发 Development
+
+NexT 主旨在于简洁优雅且易于使用，所以首先要尽量确保 NexT 的简洁易用性。
+
+NexT is built for easily use with elegant appearance. First things first, always keep things simple.
+
+
+## 捐赠
+
+支付宝捐赠链接还是要有的，万一真的有人捐呢。
+
+![支付宝扫码捐赠](http://p1.bpimg.com/567571/9a4a158daee8aa69.png)
