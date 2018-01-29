@@ -1,3 +1,3 @@
 git add --all
-git commit -m "Add codeforces hack post"
+git commit -m "Change config for '/blog'"
 git push origin master
