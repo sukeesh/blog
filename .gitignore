@@ -1,5 +1,5 @@
 _site
 _cache
 .stack-work
-.sass-cache/
+.sass-cache/*
 .DS_Store
