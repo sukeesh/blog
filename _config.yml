@@ -1,8 +1,8 @@
 # Site settings
 title:          Sukeesh
 description:    "Personal blog"
-baseurl:        ""
-url:            "https://sukeesh.github.io"
+baseurl:        "/blog"
+url:            "https://sukeesh.com"
 
 # Google Analytics
 google_analytics: UA-64535283-1
