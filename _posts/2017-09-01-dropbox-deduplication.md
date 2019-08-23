@@ -1,11 +1,7 @@
 ---
+layout: post
 title: "Dropbox Deduplication test"
-categories:
-  - blog
-tags:
-  - cloud storage
-  - system design
-  - architecture
+author: "Sukeesh"
 ---
 
 It works by breaking files into blocks. Each of these blocks is hashed. Only blocks that are not yet known are uploaded to the server when syncing.

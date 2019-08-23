@@ -1,10 +1,7 @@
 ---
+layout: post
 title: "First Post"
-categories:
-  - blog
-tags:
-  - first
-  - random
+author: "Sukeesh"
 ---
 
 Hey there! This is my first post!
