@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Sparse tables | Sukeesh</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Sparse tables" />
+<meta name="author" content="Sukeesh" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="What are sparse tables?" />
+<meta property="og:description" content="What are sparse tables?" />
+<link rel="canonical" href="http://localhost:4000/blog/2016-01-14/sparse-table" />
+<meta property="og:url" content="http://localhost:4000/blog/2016-01-14/sparse-table" />
+<meta property="og:site_name" content="Sukeesh" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-01-14T00:00:00+09:00" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2016-01-14/sparse-table"},"url":"http://localhost:4000/blog/2016-01-14/sparse-table","author":{"@type":"Person","name":"Sukeesh"},"description":"What are sparse tables?","headline":"Sparse tables","dateModified":"2016-01-14T00:00:00+09:00","datePublished":"2016-01-14T00:00:00+09:00","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/blog/assets/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/assets/apple-touch-icon.png">
+
+  <!-- RSS -->
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Sukeesh" />
+
+  <!-- Google Analytics-->
+  
+</head>
+
+
+  <body>
+
+    <nav class="nav">
+  <div class="nav-container">
+    <a href="/blog/">
+      <h2 class="nav-title">Sukeesh</h2>
+    </a>
+    <ul>
+      <li><a href="/blog/about">About</a></li>
+      <li><a href="/blog/">Posts</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+    <main>
+      <div class="post">
+  <div class="post-info">
+    <span>Written by</span>
+    
+        Sukeesh
+    
+
+    
+      <br>
+      <span>on&nbsp;</span><time datetime="2016-01-14 00:00:00 +0900">January 14, 2016</time>
+    
+  </div>
+
+  <h1 class="post-title">Sparse tables</h1>
+  <div class="post-line"></div>
+
+  <p>What are sparse tables?</p>
+
+<ul>
+  <li>Data structure that allows range queries</li>
+  <li>Can answer most queries in O(log N)</li>
+  <li>But can answer Range Minimum Queries in O(1)
+    <ul>
+      <li>An idempotent operation can be repeated an arbitrary number of times and the result will be the same as if it had been    done only once. In arithmetic, adding zero to a number is idempotent.</li>
+    </ul>
+  </li>
+  <li>It can be only used on immutable arrays. If you need any change, whole DS needs to be changed</li>
+</ul>
+
+<p>Intuition</p>
+
+<ul>
+  <li>Any non negative number can be uniquely represented as a sum of decreasing powers of 2. This is just a variant of binary representation of a number. For number x, there can be at most log2(x) summands</li>
+  <li>So, by the same reasoning, any interval can be represented as a union of intervals with lengths that are decreasing powers of two. Eq.. [2, 14] = [2, 9] U [10, 13] U [14, 14]</li>
+  <li>And hence, also here union consists of at most [log2(length of interval)] many intervals.</li>
+  <li>MAIN IDEA: Pre-compute all answers for range queries with power of 2 length. So, afterwards combining all of them to receive a complete answer.</li>
+</ul>
+
+<p>Precomputation</p>
+
+<ul>
+  <li>We will maintain a 2D array</li>
+  <li>Where table[i][j] will store the answer for the range [i, i + 2^j - 1] which can be split nicely into ranges
+    <ul>
+      <li>[i, i + 2^{j-1} - 1] and [i + 2^(j-1), i + 2^j - 1] both of length 2^{j-1}</li>
+      <li>So, we can generate this table with dynamic programming</li>
+    </ul>
+  </li>
+</ul>
+
+<p><code class="highlighter-rouge">K = log2(MAXN) + 1</code></p>
+
+<p>logarithmic values</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">log</span><span class="p">[</span><span class="n">MAXN</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+<span class="n">log</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">MAXN</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="n">log</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">log</span><span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>computing sparse table</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">MAXN</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">K</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">j</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">MAXN</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">table</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]);</span>
+</code></pre></div></div>
+
+<p>Query</p>
+
+<ul>
+  <li>for sum (between L and R)</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">K</span><span class="p">;</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">j</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">R</span> <span class="o">-</span> <span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">sum</span> <span class="o">+=</span> <span class="n">table</span><span class="p">[</span><span class="n">L</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+        <span class="n">L</span> <span class="o">+=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">j</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>for RMQ (Minimum between L and R)</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">log</span><span class="p">[</span><span class="n">R</span> <span class="o">-</span> <span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+<span class="kt">int</span> <span class="n">minimum</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">L</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">table</span><span class="p">[</span><span class="n">R</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]);</span>
+</code></pre></div></div>
+
+
+</div>
+
+<div class="pagination">
+  
+    <a href="/blog/2017-09-01/dropbox-deduplication" class="left arrow">&#8592;</a>
+  
+  
+    <a href="/blog/2015-12-18/codeforces-hack" class="right arrow">&#8594;</a>
+  
+
+  <a href="#" class="top">Top</a>
+</div>
+
+    </main>
+
+    <footer>
+  <span>
+    &copy; <time datetime="2019-08-23 16:03:50 +0900">2019</time> Sukeesh. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+  </span>
+</footer>
+
+  </body>
+</html>
