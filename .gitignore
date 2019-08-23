@@ -1,5 +1,7 @@
 _site
 _cache
 .stack-work
-.sass-cache/*
+.sass-cache
+
+# Ignore these mac generated files
 .DS_Store
