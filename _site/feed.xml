@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-08-23T15:22:34+09:00</updated><id>http://localhost:4000/</id><title type="html">Sukeesh</title><subtitle>Personal blog</subtitle><author><name>Sukeesh</name><email>vsukeeshbabu@gmail.com</email></author><entry><title type="html">Installing helm chart</title><link href="http://localhost:4000/2019-07-02/helm-init" rel="alternate" type="text/html" title="Installing helm chart" /><published>2019-07-02T00:00:00+09:00</published><updated>2019-07-02T00:00:00+09:00</updated><id>http://localhost:4000/2019-07-02/helm-init</id><content type="html" xml:base="http://localhost:4000/2019-07-02/helm-init">&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ helm init&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ helm create test-sukeesh&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;This will create all the files necessary, We are only interested in &lt;code class=&quot;highlighter-rouge&quot;&gt;Chart.yaml&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;values.yaml&lt;/code&gt; files.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ helm lint&lt;/code&gt; this would lint all the files&lt;/p&gt;
+
+&lt;p&gt;Once you are done with all the changes, then go back to the root dir and do &lt;code class=&quot;highlighter-rouge&quot;&gt;helm install&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ cd ..&lt;/code&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;$ helm install test-sukeesh-0.1.0.tgz&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;But, when you try above command, you might see some error related to invalid permissions.&lt;/p&gt;
+
+&lt;p&gt;So, when you try to tail the logs of tiller pod in &lt;code class=&quot;highlighter-rouge&quot;&gt;kube-system&lt;/code&gt; namespace which is installed when we did &lt;code class=&quot;highlighter-rouge&quot;&gt;helm init&lt;/code&gt;
+We see these errors like these&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tiller-deploy-c78f4c8d9-2q4jz tiller [tiller] 2019/07/02 07:56:00 preparing install for
+tiller-deploy-c78f4c8d9-2q4jz tiller [storage] 2019/07/02 07:56:00 getting release &quot;orbiting-hog.v1&quot;
+tiller-deploy-c78f4c8d9-2q4jz tiller [storage/driver] 2019/07/02 07:56:00 get: failed to get &quot;orbiting-hog.v1&quot;: configmaps &quot;orbiting-hog.v1&quot; is forbidden: User &quot;system:serviceaccount:kube-system:default&quot; cannot get resource &quot;configmaps&quot; in API group &quot;&quot; in the namespace &quot;kube-system&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;So, by default when we don’t specify a service account in the service, this uses &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;system:serviceaccount:kube-system:default&quot;&lt;/code&gt; service account but then this has no permissions.
+So, create a Role-based access control file
+&lt;code class=&quot;highlighter-rouge&quot;&gt;rbac-config.yaml&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ServiceAccount&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;tiller&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kube-system&lt;/span&gt;
+&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;rbac.authorization.k8s.io/v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ClusterRoleBinding&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;tiller&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;roleRef&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;apiGroup&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;rbac.authorization.k8s.io&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ClusterRole&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;cluster-admin&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;subjects&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ServiceAccount&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;tiller&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kube-system&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Apply this &lt;code class=&quot;highlighter-rouge&quot;&gt;rbac-config.yaml&lt;/code&gt; file&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ kubectl create -f rbac-config.yaml
+serviceaccount &quot;tiller&quot; created
+clusterrolebinding &quot;tiller&quot; created
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;You can see serviceaccount and clusterrolebinding “tiller” has been created successfully.
+Verify with the following&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ kubectl get serviceaccounts | grep tiller
+tiller                               1         30s
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;But, when you try installing the helm, you might again get the same error because we created a service account but did not associate it with our tiller deployment.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ kubectl get deploy | grep tiller
+tiller-deploy            1         1         1            1           91m
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ kubectl edit deploy tiller-deploy
+deployment.extensions/tiller-deploy edited
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Edit the &lt;code class=&quot;highlighter-rouge&quot;&gt;tiller-deploy&lt;/code&gt; deployment and add serviceAccountName to spec.template.spec as below&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;...
+serviceAccountName: tiller
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now, helm is able to install with no error&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ helm install test-sukeesh-0.1.0.tgz --debug
+
+[debug] Created tunnel using local port: '52030'
+
+[debug] SERVER: &quot;127.0.0.1:52030&quot;
+
+[debug] Original chart version: &quot;&quot;
+[debug] CHART PATH: /Users/sukeesh/Documents/helm/test-sukeesh-0.1.0.tgz
+
+NAME:   alliterating-wildebeest
+REVISION: 1
+RELEASED: Tue Jul  2 21:27:15 2019
+CHART: test-sukeesh-0.1.0
+USER-SUPPLIED VALUES:
+{}
+
+COMPUTED VALUES:
+affinity: {}
+image:
+  pullPolicy: IfNotPresent
+  repository: daemonza/testapi
+  tag: latest
+ingress:
+  annotations: {}
+  enabled: false
+  hosts:
+  - chart-example.local
+  path: /
+  tls: []
+nodeSelector: {}
+replicaCount: 2
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+service:
+  externalPort: 80
+  internalPort: 80
+  name: test-sukeesh
+  port: 9000
+  type: ClusterIP
+tolerations: []
+
+HOOKS:
+MANIFEST:
+
+---
+# Source: test-sukeesh/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: alliterating-wildebeest-test-sukeesh
+  labels:
+    app: test-sukeesh
+    chart: test-sukeesh-0.1.0
+    release: alliterating-wildebeest
+    heritage: Tiller
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9000
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: test-sukeesh
+    release: alliterating-wildebeest
+---
+# Source: test-sukeesh/templates/deployment.yaml
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: alliterating-wildebeest-test-sukeesh
+  labels:
+    app: test-sukeesh
+    chart: test-sukeesh-0.1.0
+    release: alliterating-wildebeest
+    heritage: Tiller
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: test-sukeesh
+      release: alliterating-wildebeest
+  template:
+    metadata:
+      labels:
+        app: test-sukeesh
+        release: alliterating-wildebeest
+    spec:
+      containers:
+        - name: test-sukeesh
+          image: &quot;daemonza/testapi:latest&quot;
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+LAST DEPLOYED: Tue Jul  2 21:27:15 2019
+NAMESPACE: kube-system
+STATUS: DEPLOYED
+
+RESOURCES:
+==&amp;gt; v1/Service
+NAME                                  TYPE       CLUSTER-IP     EXTERNAL-IP  PORT(S)   AGE
+alliterating-wildebeest-test-sukeesh  ClusterIP  10.59.245.130  &amp;lt;none&amp;gt;       9000/TCP  1s
+
+==&amp;gt; v1beta2/Deployment
+NAME                                  DESIRED  CURRENT  UP-TO-DATE  AVAILABLE  AGE
+alliterating-wildebeest-test-sukeesh  2        2        2           0          0s
+
+==&amp;gt; v1/Pod(related)
+NAME                                                   READY  STATUS             RESTARTS  AGE
+alliterating-wildebeest-test-sukeesh-6d577d4888-bftnq  0/1    ContainerCreating  0         0s
+alliterating-wildebeest-test-sukeesh-6d577d4888-ntmzz  0/1    ContainerCreating  0         0s
+
+
+NOTES:
+1. Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace kube-system -l &quot;app=test-sukeesh,release=alliterating-wildebeest&quot; -o jsonpath=&quot;{.items[0].metadata.name}&quot;)
+  echo &quot;Visit http://127.0.0.1:8080 to use your application&quot;
+  kubectl port-forward $POD_NAME 8080:80
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Sukeesh</name></author><summary type="html">$ helm init</summary></entry><entry><title type="html">Dropbox Deduplication test</title><link href="http://localhost:4000/2017-09-01/dropbox-deduplication" rel="alternate" type="text/html" title="Dropbox Deduplication test" /><published>2017-09-01T00:00:00+09:00</published><updated>2017-09-01T00:00:00+09:00</updated><id>http://localhost:4000/2017-09-01/dropbox-deduplication</id><content type="html" xml:base="http://localhost:4000/2017-09-01/dropbox-deduplication">&lt;p&gt;It works by breaking files into blocks. Each of these blocks is hashed. Only blocks that are not yet known are uploaded to the server when syncing.&lt;/p&gt;
+
+&lt;p&gt;Check : &lt;a href=&quot;https://blogs.dropbox.com/dropbox/2011/07/changes-to-our-policies/&quot;&gt;Dropbox blog&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;test&quot;&gt;Test&lt;/h3&gt;
+
+&lt;p&gt;I used this &lt;a href=&quot;https://www.youtube.com/watch?v=FBCmIFCpJBU&quot;&gt;video&lt;/a&gt; for testing which is &lt;code class=&quot;highlighter-rouge&quot;&gt;21.8 MB&lt;/code&gt; in size.
+The freshly downloaded file took 27 seconds ( approx ) to sync. Then, I renamed the file. This duplicate file took 4 seconds( approx )!&lt;/p&gt;
+
+&lt;h3 id=&quot;video&quot;&gt;Video&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=dDvfkiUxS-A&quot;&gt;&lt;img src=&quot;https://img.youtube.com/vi/dDvfkiUxS-A/0.jpg&quot; alt=&quot;some random&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Sukeesh</name></author><summary type="html">It works by breaking files into blocks. Each of these blocks is hashed. Only blocks that are not yet known are uploaded to the server when syncing.</summary></entry><entry><title type="html">Simple script to hack during contests</title><link href="http://localhost:4000/2015-12-18/codeforces-hack" rel="alternate" type="text/html" title="Simple script to hack during contests" /><published>2015-12-18T00:00:00+09:00</published><updated>2015-12-18T00:00:00+09:00</updated><id>http://localhost:4000/2015-12-18/codeforces-hack</id><content type="html" xml:base="http://localhost:4000/2015-12-18/codeforces-hack">&lt;p&gt;This is a simple shell script to hack during codeforces/topcoder rounds. &lt;code class=&quot;highlighter-rouge&quot;&gt;your_code.cpp&lt;/code&gt; should be your code, &lt;code class=&quot;highlighter-rouge&quot;&gt;victim_code.cpp&lt;/code&gt; should be victim’s code. Write test case generator in &lt;code class=&quot;highlighter-rouge&quot;&gt;test.py&lt;/code&gt; and run this bash file by &lt;code class=&quot;highlighter-rouge&quot;&gt;bash hack.sh&lt;/code&gt;. This script keeps on iterating until it finds a test case where your_code.cpp and victim_code.cpp gives a different output. Once it finds a hack test case, this stops iterating. Now, you can copy the test case and hack.&lt;/p&gt;
+
+&lt;h3 id=&quot;happy-hacking&quot;&gt;Happy Hacking!&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;while &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;true
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;do
+&lt;/span&gt;python test.py &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in
+&lt;/span&gt;g++ your_code.cpp
+./a.out &amp;lt;&lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; sukeesh
+g++ victim_code.cpp
+./a.out &amp;lt;&lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; victim
+diff &lt;span class=&quot;nt&quot;&gt;--brief&lt;/span&gt; &amp;lt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sort &lt;/span&gt;victim&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &amp;lt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sort &lt;/span&gt;sukeesh&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null
+&lt;span class=&quot;nv&quot;&gt;comp_value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$comp_value&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-eq&lt;/span&gt; 1 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;then
+	&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot; &quot;&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;--------- HACK! --------&quot;&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot; Input : &quot;&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; ./in
+	&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot; Expected : &quot;&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; ./sukeesh
+	&lt;span class=&quot;nb&quot;&gt;printf&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot; Recieved : &quot;&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; ./victim
+	&lt;span class=&quot;nb&quot;&gt;printf&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;break
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else
+	&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot; &quot;&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;----------Same----------&quot;&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot; Input : &quot;&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; ./in
+	&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot; Expected : &quot;&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; ./sukeesh
+	&lt;span class=&quot;nb&quot;&gt;printf&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot; Recieved : &quot;&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; ./victim
+	&lt;span class=&quot;nb&quot;&gt;printf&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;fi
+done&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This is the script&lt;/p&gt;</content><author><name>Sukeesh</name><email>vsukeeshbabu@gmail.com</email></author><summary type="html">This is a simple shell script to hack during codeforces/topcoder rounds. your_code.cpp should be your code, victim_code.cpp should be victim’s code. Write test case generator in test.py and run this bash file by bash hack.sh. This script keeps on iterating until it finds a test case where your_code.cpp and victim_code.cpp gives a different output. Once it finds a hack test case, this stops iterating. Now, you can copy the test case and hack.</summary></entry><entry><title type="html">Save a file in vim without root permission</title><link href="http://localhost:4000/2015-12-10/save-file-without-root" rel="alternate" type="text/html" title="Save a file in vim without root permission" /><published>2015-12-10T00:00:00+09:00</published><updated>2015-12-10T00:00:00+09:00</updated><id>http://localhost:4000/2015-12-10/save-file-without-root</id><content type="html" xml:base="http://localhost:4000/2015-12-10/save-file-without-root">&lt;p&gt;This happens lot of times. You open Vim to edit a system file, do some changes, and &lt;code class=&quot;highlighter-rouge&quot;&gt;:wq&lt;/code&gt;.
+We won’t be able to save a file due to permission issues.&lt;/p&gt;
+
+&lt;p&gt;To save a file, simply type the following command.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:w !sudo tee %&lt;/code&gt; and enter the password as prompted. Voila.&lt;/p&gt;
+
+&lt;h2 id=&quot;add-this-to-your-vimrc-file&quot;&gt;Add this to your ~/.vimrc file&lt;/h2&gt;
+&lt;p&gt;Edit &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.vimrc&lt;/code&gt; and append the following code:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;command W :execute ':silent w !sudo tee % &amp;gt; /dev/null' | :edit!&lt;/code&gt;
+Save and close the file. Now, try to edit a privileged file. Now, write a privileged file with custom command &lt;code class=&quot;highlighter-rouge&quot;&gt;:W&lt;/code&gt;&lt;/p&gt;</content><author><name>Sukeesh</name></author><summary type="html">This happens lot of times. You open Vim to edit a system file, do some changes, and :wq. We won’t be able to save a file due to permission issues.</summary></entry><entry><title type="html">First Post</title><link href="http://localhost:4000/2015-01-03/first-post" rel="alternate" type="text/html" title="First Post" /><published>2015-01-03T00:00:00+09:00</published><updated>2015-01-03T00:00:00+09:00</updated><id>http://localhost:4000/2015-01-03/first-post</id><content type="html" xml:base="http://localhost:4000/2015-01-03/first-post">&lt;p&gt;Hey there! This is my first post!&lt;/p&gt;</content><author><name>Sukeesh</name></author><summary type="html">Hey there! This is my first post!</summary></entry><entry><title type="html">Example Content</title><link href="http://localhost:4000/2011-03-16/example-content" rel="alternate" type="text/html" title="Example Content" /><published>2011-03-16T00:00:00+09:00</published><updated>2011-03-16T00:00:00+09:00</updated><id>http://localhost:4000/2011-03-16/example-content</id><content type="html" xml:base="http://localhost:4000/2011-03-16/example-content">&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tincidunt ornare nibh, non elementum augue tempus eget. Pellentesque tempus scelerisque iaculis. Nullam interdum ultricies nibh quis sollicitudin. Donec ornare fermentum facilisis. Ut at sem ac sem imperdiet varius a eget tortor. Nam eu augue eget orci semper maximus in eget augue. Mauris ornare, nisl ut suscipit consectetur, mi quam interdum tellus, at rutrum quam eros ultrices mi.&lt;/p&gt;
+
+&lt;h1 id=&quot;headers&quot;&gt;Headers&lt;/h1&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-markdown&quot; data-lang=&quot;markdown&quot;&gt;&lt;span class=&quot;gh&quot;&gt;# H1&lt;/span&gt;
+&lt;span class=&quot;gu&quot;&gt;## H2&lt;/span&gt;
+&lt;span class=&quot;gu&quot;&gt;### H3&lt;/span&gt;
+&lt;span class=&quot;gu&quot;&gt;#### H4&lt;/span&gt;
+&lt;span class=&quot;gu&quot;&gt;##### H5&lt;/span&gt;
+&lt;span class=&quot;gu&quot;&gt;###### H6&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h1 id=&quot;h1&quot;&gt;H1&lt;/h1&gt;
+&lt;h2 id=&quot;h2&quot;&gt;H2&lt;/h2&gt;
+&lt;h3 id=&quot;h3&quot;&gt;H3&lt;/h3&gt;
+&lt;h4 id=&quot;h4&quot;&gt;H4&lt;/h4&gt;
+&lt;h5 id=&quot;h5&quot;&gt;H5&lt;/h5&gt;
+&lt;h6 id=&quot;h6&quot;&gt;H6&lt;/h6&gt;
+
+&lt;h1 id=&quot;text-formatting&quot;&gt;Text formatting&lt;/h1&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-markdown&quot; data-lang=&quot;markdown&quot;&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;gs&quot;&gt;**Bold**&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; _Italics_
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; ~~Strikethrough~~
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;ins&amp;gt;&lt;/span&gt;Underline&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ins&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;sup&amp;gt;&lt;/span&gt;Superscript&lt;span class=&quot;nt&quot;&gt;&amp;lt;/sup&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;sub&amp;gt;&lt;/span&gt;Subscript&lt;span class=&quot;nt&quot;&gt;&amp;lt;/sub&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; Abbreviation: &lt;span class=&quot;nt&quot;&gt;&amp;lt;abbr&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;HyperText Markup Language&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;HTML&lt;span class=&quot;nt&quot;&gt;&amp;lt;/abbr&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; Citation: &lt;span class=&quot;nt&quot;&gt;&amp;lt;cite&amp;gt;&lt;/span&gt;&lt;span class=&quot;ni&quot;&gt;&amp;amp;mdash;&lt;/span&gt; Chester How&lt;span class=&quot;nt&quot;&gt;&amp;lt;/cite&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Bold&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Italics&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;del&gt;Strikethrough&lt;/del&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;ins&gt;Underline&lt;/ins&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;sup&gt;Superscript&lt;/sup&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;sub&gt;Subscript&lt;/sub&gt;&lt;/li&gt;
+  &lt;li&gt;Abbreviation: &lt;abbr title=&quot;HyperText Markup Language&quot;&gt;HTML&lt;/abbr&gt;&lt;/li&gt;
+  &lt;li&gt;Citation: &lt;cite&gt;— Chester How&lt;/cite&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;lists&quot;&gt;Lists&lt;/h1&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-markdown&quot; data-lang=&quot;markdown&quot;&gt;&lt;span class=&quot;p&quot;&gt;1.&lt;/span&gt; Ordered list item 1
+&lt;span class=&quot;p&quot;&gt;2.&lt;/span&gt; Ordered list item 2
+&lt;span class=&quot;p&quot;&gt;3.&lt;/span&gt; Ordered list item 3
+&lt;span class=&quot;p&quot;&gt;
+*&lt;/span&gt; Unordered list item 1
+&lt;span class=&quot;p&quot;&gt;*&lt;/span&gt; Unordered list item 2
+&lt;span class=&quot;p&quot;&gt;*&lt;/span&gt; Unordered list item 3&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Ordered list item 1&lt;/li&gt;
+  &lt;li&gt;Ordered list item 2&lt;/li&gt;
+  &lt;li&gt;Ordered list item 3&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Unordered list item 1&lt;/li&gt;
+  &lt;li&gt;Unordered list item 2&lt;/li&gt;
+  &lt;li&gt;Unordered list item 3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;links&quot;&gt;Links&lt;/h1&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-markdown&quot; data-lang=&quot;markdown&quot;&gt;Check out tale on &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GitHub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;](&lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;https://github.com/chesterhow/tale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;.&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Check out tale on &lt;a href=&quot;https://github.com/chesterhow/tale&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;images&quot;&gt;Images&lt;/h1&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-markdown&quot; data-lang=&quot;markdown&quot;&gt;&lt;span class=&quot;p&quot;&gt;![&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;Placeholder image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;](&lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;https://placehold.it/800x400&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;&quot;Placeholder image&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;![&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;Image with caption&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;](&lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;https://placehold.it/700x400&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;&quot;Image with caption&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;ge&quot;&gt;_This is an image with a caption_&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://placehold.it/800x400&quot; alt=&quot;Placeholder image&quot; title=&quot;Placeholder image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://placehold.it/700x400&quot; alt=&quot;Image with caption&quot; title=&quot;Image with caption&quot; /&gt;
+&lt;em&gt;This is an image with a caption&lt;/em&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;code-and-syntax-highlighting&quot;&gt;Code and Syntax Highlighting&lt;/h1&gt;
+&lt;p&gt;Use back-ticks for &lt;code class=&quot;highlighter-rouge&quot;&gt;inline code&lt;/code&gt;. Multi-line code snippets are supported too through Pygments.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Sample javascript code&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;JavaScript syntax highlighting&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Sample python code
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Python syntax highlighting&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Adding &lt;code class=&quot;highlighter-rouge&quot;&gt;linenos&lt;/code&gt; to the Pygments tag enables line numbers.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c1&quot;&gt;// Sample javascript code&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;JavaScript syntax highlighting&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h1 id=&quot;blockquotes&quot;&gt;Blockquotes&lt;/h1&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-markdown&quot; data-lang=&quot;markdown&quot;&gt;&lt;span class=&quot;gt&quot;&gt;&amp;gt; Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;horizontal-rule--line-break&quot;&gt;Horizontal Rule &amp;amp; Line Break&lt;/h1&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-markdown&quot; data-lang=&quot;markdown&quot;&gt;Use &lt;span class=&quot;sb&quot;&gt;`&amp;lt;hr&amp;gt;`&lt;/span&gt; for horizontal rules
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;hr&amp;gt;&lt;/span&gt;
+
+and &lt;span class=&quot;sb&quot;&gt;`&amp;lt;br&amp;gt;`&lt;/span&gt; for line breaks.
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;br&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Use &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;hr&amp;gt;&lt;/code&gt; for horizontal rules&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;and &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;br&amp;gt;&lt;/code&gt; for line breaks.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;The end&lt;/em&gt;&lt;/p&gt;</content><author><name>God</name></author><summary type="html">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tincidunt ornare nibh, non elementum augue tempus eget. Pellentesque tempus scelerisque iaculis. Nullam interdum ultricies nibh quis sollicitudin. Donec ornare fermentum facilisis. Ut at sem ac sem imperdiet varius a eget tortor. Nam eu augue eget orci semper maximus in eget augue. Mauris ornare, nisl ut suscipit consectetur, mi quam interdum tellus, at rutrum quam eros ultrices mi.</summary></entry></feed>

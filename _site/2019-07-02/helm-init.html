@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Installing helm chart | Sukeesh</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Installing helm chart" />
+<meta name="author" content="Sukeesh" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="$ helm init" />
+<meta property="og:description" content="$ helm init" />
+<link rel="canonical" href="http://localhost:4000/2019-07-02/helm-init" />
+<meta property="og:url" content="http://localhost:4000/2019-07-02/helm-init" />
+<meta property="og:site_name" content="Sukeesh" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-07-02T00:00:00+09:00" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019-07-02/helm-init"},"url":"http://localhost:4000/2019-07-02/helm-init","author":{"@type":"Person","name":"Sukeesh"},"description":"$ helm init","headline":"Installing helm chart","dateModified":"2019-07-02T00:00:00+09:00","datePublished":"2019-07-02T00:00:00+09:00","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+
+  <!-- RSS -->
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Sukeesh" />
+
+  <!-- Google Analytics-->
+  
+</head>
+
+
+  <body>
+
+    <nav class="nav">
+  <div class="nav-container">
+    <a href="/">
+      <h2 class="nav-title">Sukeesh</h2>
+    </a>
+    <ul>
+      <li><a href="/about">About</a></li>
+      <li><a href="/">Posts</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+    <main>
+      <div class="post">
+  <div class="post-info">
+    <span>Written by</span>
+    
+        Sukeesh
+    
+
+    
+      <br>
+      <span>on&nbsp;</span><time datetime="2019-07-02 00:00:00 +0900">July 02, 2019</time>
+    
+  </div>
+
+  <h1 class="post-title">Installing helm chart</h1>
+  <div class="post-line"></div>
+
+  <p><code class="highlighter-rouge">$ helm init</code></p>
+
+<p><code class="highlighter-rouge">$ helm create test-sukeesh</code></p>
+
+<p>This will create all the files necessary, We are only interested in <code class="highlighter-rouge">Chart.yaml</code>, <code class="highlighter-rouge">values.yaml</code> files.</p>
+
+<p><code class="highlighter-rouge">$ helm lint</code> this would lint all the files</p>
+
+<p>Once you are done with all the changes, then go back to the root dir and do <code class="highlighter-rouge">helm install</code></p>
+
+<p><code class="highlighter-rouge">$ cd ..</code>
+<code class="highlighter-rouge">$ helm install test-sukeesh-0.1.0.tgz</code></p>
+
+<p>But, when you try above command, you might see some error related to invalid permissions.</p>
+
+<p>So, when you try to tail the logs of tiller pod in <code class="highlighter-rouge">kube-system</code> namespace which is installed when we did <code class="highlighter-rouge">helm init</code>
+We see these errors like these</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tiller-deploy-c78f4c8d9-2q4jz tiller [tiller] 2019/07/02 07:56:00 preparing install for
+tiller-deploy-c78f4c8d9-2q4jz tiller [storage] 2019/07/02 07:56:00 getting release "orbiting-hog.v1"
+tiller-deploy-c78f4c8d9-2q4jz tiller [storage/driver] 2019/07/02 07:56:00 get: failed to get "orbiting-hog.v1": configmaps "orbiting-hog.v1" is forbidden: User "system:serviceaccount:kube-system:default" cannot get resource "configmaps" in API group "" in the namespace "kube-system"
+</code></pre></div></div>
+<p>So, by default when we don’t specify a service account in the service, this uses <code class="highlighter-rouge">"system:serviceaccount:kube-system:default"</code> service account but then this has no permissions.
+So, create a Role-based access control file
+<code class="highlighter-rouge">rbac-config.yaml</code></p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ServiceAccount</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">tiller</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+<span class="nn">---</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">rbac.authorization.k8s.io/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ClusterRoleBinding</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">tiller</span>
+<span class="na">roleRef</span><span class="pi">:</span>
+  <span class="na">apiGroup</span><span class="pi">:</span> <span class="s">rbac.authorization.k8s.io</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">ClusterRole</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">cluster-admin</span>
+<span class="na">subjects</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">kind</span><span class="pi">:</span> <span class="s">ServiceAccount</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">tiller</span>
+    <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+</code></pre></div></div>
+<p>Apply this <code class="highlighter-rouge">rbac-config.yaml</code> file</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ kubectl create -f rbac-config.yaml
+serviceaccount "tiller" created
+clusterrolebinding "tiller" created
+</code></pre></div></div>
+<p>You can see serviceaccount and clusterrolebinding “tiller” has been created successfully.
+Verify with the following</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ kubectl get serviceaccounts | grep tiller
+tiller                               1         30s
+</code></pre></div></div>
+<p>But, when you try installing the helm, you might again get the same error because we created a service account but did not associate it with our tiller deployment.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ kubectl get deploy | grep tiller
+tiller-deploy            1         1         1            1           91m
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ kubectl edit deploy tiller-deploy
+deployment.extensions/tiller-deploy edited
+</code></pre></div></div>
+<p>Edit the <code class="highlighter-rouge">tiller-deploy</code> deployment and add serviceAccountName to spec.template.spec as below</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+serviceAccountName: tiller
+...
+</code></pre></div></div>
+
+<p>Now, helm is able to install with no error</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ helm install test-sukeesh-0.1.0.tgz --debug
+
+[debug] Created tunnel using local port: '52030'
+
+[debug] SERVER: "127.0.0.1:52030"
+
+[debug] Original chart version: ""
+[debug] CHART PATH: /Users/sukeesh/Documents/helm/test-sukeesh-0.1.0.tgz
+
+NAME:   alliterating-wildebeest
+REVISION: 1
+RELEASED: Tue Jul  2 21:27:15 2019
+CHART: test-sukeesh-0.1.0
+USER-SUPPLIED VALUES:
+{}
+
+COMPUTED VALUES:
+affinity: {}
+image:
+  pullPolicy: IfNotPresent
+  repository: daemonza/testapi
+  tag: latest
+ingress:
+  annotations: {}
+  enabled: false
+  hosts:
+  - chart-example.local
+  path: /
+  tls: []
+nodeSelector: {}
+replicaCount: 2
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+service:
+  externalPort: 80
+  internalPort: 80
+  name: test-sukeesh
+  port: 9000
+  type: ClusterIP
+tolerations: []
+
+HOOKS:
+MANIFEST:
+
+---
+# Source: test-sukeesh/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: alliterating-wildebeest-test-sukeesh
+  labels:
+    app: test-sukeesh
+    chart: test-sukeesh-0.1.0
+    release: alliterating-wildebeest
+    heritage: Tiller
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9000
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: test-sukeesh
+    release: alliterating-wildebeest
+---
+# Source: test-sukeesh/templates/deployment.yaml
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: alliterating-wildebeest-test-sukeesh
+  labels:
+    app: test-sukeesh
+    chart: test-sukeesh-0.1.0
+    release: alliterating-wildebeest
+    heritage: Tiller
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: test-sukeesh
+      release: alliterating-wildebeest
+  template:
+    metadata:
+      labels:
+        app: test-sukeesh
+        release: alliterating-wildebeest
+    spec:
+      containers:
+        - name: test-sukeesh
+          image: "daemonza/testapi:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+LAST DEPLOYED: Tue Jul  2 21:27:15 2019
+NAMESPACE: kube-system
+STATUS: DEPLOYED
+
+RESOURCES:
+==&gt; v1/Service
+NAME                                  TYPE       CLUSTER-IP     EXTERNAL-IP  PORT(S)   AGE
+alliterating-wildebeest-test-sukeesh  ClusterIP  10.59.245.130  &lt;none&gt;       9000/TCP  1s
+
+==&gt; v1beta2/Deployment
+NAME                                  DESIRED  CURRENT  UP-TO-DATE  AVAILABLE  AGE
+alliterating-wildebeest-test-sukeesh  2        2        2           0          0s
+
+==&gt; v1/Pod(related)
+NAME                                                   READY  STATUS             RESTARTS  AGE
+alliterating-wildebeest-test-sukeesh-6d577d4888-bftnq  0/1    ContainerCreating  0         0s
+alliterating-wildebeest-test-sukeesh-6d577d4888-ntmzz  0/1    ContainerCreating  0         0s
+
+
+NOTES:
+1. Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace kube-system -l "app=test-sukeesh,release=alliterating-wildebeest" -o jsonpath="{.items[0].metadata.name}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl port-forward $POD_NAME 8080:80
+</code></pre></div></div>
+
+
+</div>
+
+<div class="pagination">
+  
+  
+    <a href="/2017-09-01/dropbox-deduplication" class="right arrow">&#8594;</a>
+  
+
+  <a href="#" class="top">Top</a>
+</div>
+
+    </main>
+
+    <footer>
+  <span>
+    &copy; <time datetime="2019-08-23 15:22:34 +0900">2019</time> Sukeesh. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+  </span>
+</footer>
+
+  </body>
+</html>
