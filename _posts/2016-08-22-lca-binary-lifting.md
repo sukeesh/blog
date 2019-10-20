@@ -4,7 +4,7 @@ title: "Lowest Common Ancestor | Binary Lifting"
 author: "Sukeesh"
 ---
 
-What is LCA?
+<b>What is LCA?</b>
 
 In graph theory and computer science, the lowest common ancestor (LCA) of two nodes v and w in a tree or directed acyclic graph (DAG) T is the lowest (i.e. deepest) node that has both v and w as descendants, where we define each node to be a descendant of itself (so if v has a direct connection from w, w is the lowest common ancestor).
 
@@ -23,7 +23,7 @@ _LCA[i][j]_ | 2<sup>j -th</sup> ancestor of node _i_
 
 ## Preprocessing
 
-* Finding level and parent of each node using simple dfs
+<b>Finding level and parent of each node using simple dfs</b>
 
 ```cpp
 void dfs(int node, int par){
@@ -36,7 +36,7 @@ void dfs(int node, int par){
 }
 ```
 
-* Filling in LCA array
+<b>Filling in LCA array</b>
 
 > Note: Any non negative number can be uniquely represented as a sum of decreasing powers of 2. This is just a variant of binary representation of a number. For number x, there can be at most log2(x) summands
 

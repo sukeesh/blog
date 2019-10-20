@@ -19,7 +19,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2016-08-22T00:00:00+09:00" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2016-08-22/lca-binary-lifting"},"url":"http://localhost:4000/blog/2016-08-22/lca-binary-lifting","author":{"@type":"Person","name":"Sukeesh"},"description":"What is LCA?","headline":"Lowest Common Ancestor Binary Lifting","dateModified":"2016-08-22T00:00:00+09:00","datePublished":"2016-08-22T00:00:00+09:00","@context":"http://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2016-08-22/lca-binary-lifting"},"url":"http://localhost:4000/blog/2016-08-22/lca-binary-lifting","author":{"@type":"Person","name":"Sukeesh"},"description":"What is LCA?","headline":"Lowest Common Ancestor Binary Lifting","dateModified":"2016-08-22T00:00:00+09:00","datePublished":"2016-08-22T00:00:00+09:00","@type":"BlogPosting","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -79,7 +79,7 @@
   <a href="https://twitter.com/sukeeshbabu?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-count="true">Follow @sukeeshbabu</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   <br> <br>
   
-  <p>What is LCA?</p>
+  <p><b>What is LCA?</b></p>
 
 <p>In graph theory and computer science, the lowest common ancestor (LCA) of two nodes v and w in a tree or directed acyclic graph (DAG) T is the lowest (i.e. deepest) node that has both v and w as descendants, where we define each node to be a descendant of itself (so if v has a direct connection from w, w is the lowest common ancestor).</p>
 
@@ -114,9 +114,7 @@
 
 <h2 id="preprocessing">Preprocessing</h2>
 
-<ul>
-  <li>Finding level and parent of each node using simple dfs</li>
-</ul>
+<p><b>Finding level and parent of each node using simple dfs</b></p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span> <span class="n">node</span><span class="p">,</span> <span class="kt">int</span> <span class="n">par</span><span class="p">){</span>
     <span class="n">L</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">L</span><span class="p">[</span><span class="n">par</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
@@ -128,9 +126,7 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<ul>
-  <li>Filling in LCA array</li>
-</ul>
+<p><b>Filling in LCA array</b></p>
 
 <blockquote>
   <p>Note: Any non negative number can be uniquely represented as a sum of decreasing powers of 2. This is just a variant of binary representation of a number. For number x, there can be at most log2(x) summands</p>
@@ -247,7 +243,7 @@
 
     <footer>
   <span>
-    &copy; <time datetime="2019-10-20 12:21:59 +0900">2019</time> Sukeesh. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    &copy; <time datetime="2019-10-20 12:25:03 +0900">2019</time> Sukeesh. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span>
 </footer>
 
