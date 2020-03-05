@@ -5,7 +5,7 @@ title: "Setting up and Troubleshooting Prometheus in Kubernetes"
 ---
 
 ----------
-## Prometheus
+### Prometheus
 
 Prometheus is an open-source systems monitoring and alerting toolkit. It scrapes metrics from instrumented jobs, either directly or via an intermediary push gateway for short-lived jobs. It stores all scraped samples locally and runs rules over this data to either aggregate and record new time series from existing data or generate alerts. [link](https://prometheus.io/docs/introduction/overview/)
 
@@ -14,7 +14,7 @@ I tried to make this blog post as simple as possible and it has all the basic co
 
 ----
 
-## Architecture
+### Architecture
 
 Ignore this section if it's too confusing to understand
 
@@ -22,7 +22,7 @@ Ignore this section if it's too confusing to understand
 
 ----
 
-## Prometheus Client (Python)
+### Prometheus Client (Python)
 
 ```py
 from prometheus_client import start_http_server, Counter
@@ -34,8 +34,8 @@ c = Counter('count', 'Description of counter')
 if __name__ == '__main__':
     start_http_server(8000)
     while True:
-    	c.inc(0.1)
-    	time.sleep(random.random())
+      c.inc(0.1)
+      time.sleep(random.random())
 ```
 
 Above is a simple http server which has a Prometheus Counter implemented. Counter is incremented by `0.1` everytime `c.inc(0.1)` is called. Run the above program and try to curl `localhost:8000/metrics` and you should see the following metrics being served.
@@ -70,6 +70,19 @@ $ curl localhost:8000/metrics | promtool check metrics
 ```
 -----------------------
 
+### Storage
+
+Prometheus includes a local on-disk time series database, but also optionally integrates with remote storage systems.
+
+Here, let's focus on local storage and we need to provide some dir path to Prometheus to write metrics to and for that to write, we need to set environment variable `prometheus_multiproc_dir` (default) to some temporary dir like `/tmp`.
+
+
+Some examples of remote storage include [Prometheus Pushgateway](https://github.com/prometheus/pushgateway). Used to allow ephemeral and batch jobs to expose their metrics to Prometheus. Since these kinds of jobs may not exist long enough to be scraped, they can instead push their metrics to a Pushgateway. The Pushgateway then exposes these metrics to Prometheus.
+
+-------------------
+
+### Prometheus scrape
+
 Now, that these metrics are being served, we somehow need to tell Prometheus server to scrape these metrics from these pods.
 
 For the above purpose, we need to have per pod Prometheus annotations which allow a fine control of the scraping process. These annotations need to be part of pod metadata. 
@@ -80,10 +93,12 @@ Annotations required:
 - `prometheus.io/path` If the metrics path is not /metrics, define it with this annotation.
 - `prometheus.io/port`
 
-In our case, config will look like below
+-------
+### Example
+
+In our case, K8s config will look like below
 
 ```yaml
-apiVersion: apps/v1beta2
 ...
 spec:
   template:
@@ -91,8 +106,16 @@ spec:
       annotations:
         prometheus.io/scrape: 'true'
         prometheus.io/port: '8000'
+  containers:
+    env:
+    - name: prometheus_multiproc_dir
+      value: /tmp
 ...
 ```
+-----
+
+### Conclusion
+
 Above should export all the metrics on pods to prometheus server. You can check on Prometheus targets and verify if these are being exported.
 
 Now, this data can be consumed to show visualizations like on Grafana. :tada:

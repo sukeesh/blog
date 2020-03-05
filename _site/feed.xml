@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/blog/" rel="alternate" type="text/html" /><updated>2020-03-05T21:00:34+05:30</updated><id>http://localhost:4000/blog/</id><title type="html">Sukeesh</title><subtitle>Personal blog</subtitle><author><name>Sukeesh</name><email>vsukeeshbabu@gmail.com</email></author><entry><title type="html">Setting up and Troubleshooting Prometheus in Kubernetes</title><link href="http://localhost:4000/blog/2020-03-05/prometheus" rel="alternate" type="text/html" title="Setting up and Troubleshooting Prometheus in Kubernetes" /><published>2020-03-05T00:00:00+05:30</published><updated>2020-03-05T00:00:00+05:30</updated><id>http://localhost:4000/blog/2020-03-05/prometheus</id><content type="html" xml:base="http://localhost:4000/blog/2020-03-05/prometheus">&lt;hr /&gt;
-&lt;h2 id=&quot;prometheus&quot;&gt;Prometheus&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/blog/" rel="alternate" type="text/html" /><updated>2020-03-05T21:16:10+05:30</updated><id>http://localhost:4000/blog/</id><title type="html">Sukeesh</title><subtitle>Personal blog</subtitle><author><name>Sukeesh</name><email>vsukeeshbabu@gmail.com</email></author><entry><title type="html">Setting up and Troubleshooting Prometheus in Kubernetes</title><link href="http://localhost:4000/blog/2020-03-05/prometheus" rel="alternate" type="text/html" title="Setting up and Troubleshooting Prometheus in Kubernetes" /><published>2020-03-05T00:00:00+05:30</published><updated>2020-03-05T00:00:00+05:30</updated><id>http://localhost:4000/blog/2020-03-05/prometheus</id><content type="html" xml:base="http://localhost:4000/blog/2020-03-05/prometheus">&lt;hr /&gt;
+&lt;h3 id=&quot;prometheus&quot;&gt;Prometheus&lt;/h3&gt;
 
 &lt;p&gt;Prometheus is an open-source systems monitoring and alerting toolkit. It scrapes metrics from instrumented jobs, either directly or via an intermediary push gateway for short-lived jobs. It stores all scraped samples locally and runs rules over this data to either aggregate and record new time series from existing data or generate alerts. &lt;a href=&quot;https://prometheus.io/docs/introduction/overview/&quot;&gt;link&lt;/a&gt;&lt;/p&gt;
 
@@ -7,7 +7,7 @@
 
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;architecture&quot;&gt;Architecture&lt;/h2&gt;
+&lt;h3 id=&quot;architecture&quot;&gt;Architecture&lt;/h3&gt;
 
 &lt;p&gt;Ignore this section if it’s too confusing to understand&lt;/p&gt;
 
@@ -15,7 +15,7 @@
 
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;prometheus-client-python&quot;&gt;Prometheus Client (Python)&lt;/h2&gt;
+&lt;h3 id=&quot;prometheus-client-python&quot;&gt;Prometheus Client (Python)&lt;/h3&gt;
 
 &lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;prometheus_client&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start_http_server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Counter&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;random&lt;/span&gt;
@@ -26,8 +26,8 @@
 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'__main__'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;start_http_server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    	&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    	&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Above is a simple http server which has a Prometheus Counter implemented. Counter is incremented by &lt;code class=&quot;highlighter-rouge&quot;&gt;0.1&lt;/code&gt; everytime &lt;code class=&quot;highlighter-rouge&quot;&gt;c.inc(0.1)&lt;/code&gt; is called. Run the above program and try to curl &lt;code class=&quot;highlighter-rouge&quot;&gt;localhost:8000/metrics&lt;/code&gt; and you should see the following metrics being served.&lt;/p&gt;
@@ -59,6 +59,18 @@ count_created 1583416778.013898
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;hr /&gt;
 
+&lt;h3 id=&quot;storage&quot;&gt;Storage&lt;/h3&gt;
+
+&lt;p&gt;Prometheus includes a local on-disk time series database, but also optionally integrates with remote storage systems.&lt;/p&gt;
+
+&lt;p&gt;Here, let’s focus on local storage and we need to provide some dir path to Prometheus to write metrics to and for that to write, we need to set environment variable &lt;code class=&quot;highlighter-rouge&quot;&gt;prometheus_multiproc_dir&lt;/code&gt; (default) to some temporary dir like &lt;code class=&quot;highlighter-rouge&quot;&gt;/tmp&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Some examples of remote storage include &lt;a href=&quot;https://github.com/prometheus/pushgateway&quot;&gt;Prometheus Pushgateway&lt;/a&gt;. Used to allow ephemeral and batch jobs to expose their metrics to Prometheus. Since these kinds of jobs may not exist long enough to be scraped, they can instead push their metrics to a Pushgateway. The Pushgateway then exposes these metrics to Prometheus.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;prometheus-scrape&quot;&gt;Prometheus scrape&lt;/h3&gt;
+
 &lt;p&gt;Now, that these metrics are being served, we somehow need to tell Prometheus server to scrape these metrics from these pods.&lt;/p&gt;
 
 &lt;p&gt;For the above purpose, we need to have per pod Prometheus annotations which allow a fine control of the scraping process. These annotations need to be part of pod metadata.&lt;/p&gt;
@@ -71,18 +83,28 @@ count_created 1583416778.013898
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;prometheus.io/port&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;In our case, config will look like below&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3 id=&quot;example&quot;&gt;Example&lt;/h3&gt;
 
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;apps/v1beta2&lt;/span&gt;
-&lt;span class=&quot;nn&quot;&gt;...&lt;/span&gt;
+&lt;p&gt;In our case, K8s config will look like below&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;...&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
       &lt;span class=&quot;na&quot;&gt;annotations&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
         &lt;span class=&quot;s&quot;&gt;prometheus.io/scrape&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;true'&lt;/span&gt;
         &lt;span class=&quot;s&quot;&gt;prometheus.io/port&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;8000'&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;prometheus_multiproc_dir&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/tmp&lt;/span&gt;
 &lt;span class=&quot;nn&quot;&gt;...&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
 &lt;p&gt;Above should export all the metrics on pods to prometheus server. You can check on Prometheus targets and verify if these are being exported.&lt;/p&gt;
 
 &lt;p&gt;Now, this data can be consumed to show visualizations like on Grafana. :tada:&lt;/p&gt;
