@@ -18,7 +18,7 @@
 <meta property="og:site_name" content="Sukeesh" />
 <link rel="next" href="http://localhost:4000/blog/page2" />
 <script type="application/ld+json">
-{"@type":"WebSite","url":"http://localhost:4000/blog/","name":"Sukeesh","author":{"@type":"Person","name":"Sukeesh"},"description":"Personal blog","headline":"Home","@context":"http://schema.org"}</script>
+{"description":"Personal blog","headline":"Home","@type":"WebSite","url":"http://localhost:4000/blog/","name":"Sukeesh","author":{"@type":"Person","name":"Sukeesh"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -60,9 +60,22 @@
     <main>
       <div class="catalogue">
   
+    <a href="/blog/2020-03-05/prometheus" class="catalogue-item">
+      <div>
+        <time datetime="2020-03-05 00:00:00 +0530" class="catalogue-time">March 05, 2020</time>
+        <h1 class="catalogue-title">Setting up Prometheus Client in Kubernetes(Python)</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+          Installing the client and running from prometheus_client import start_http_server, Counter import random import time c = Counter('count', 'Description of counter') if __name__ == '__main__': start_http_server(8000) while True: c.inc(0.1) time.sleep(random.random()) Above...
+        </p>
+
+      </div>
+    </a>
+  
     <a href="/blog/2019-08-01/started-kubernetes" class="catalogue-item">
       <div>
-        <time datetime="2019-08-01 00:00:00 +0900" class="catalogue-time">August 01, 2019</time>
+        <time datetime="2019-08-01 00:00:00 +0530" class="catalogue-time">August 01, 2019</time>
         <h1 class="catalogue-title">Started Contributing to Kubernetes</h1>
         <div class="catalogue-line"></div>
 
@@ -75,7 +88,7 @@
   
     <a href="/blog/2019-07-02/helm-init" class="catalogue-item">
       <div>
-        <time datetime="2019-07-02 00:00:00 +0900" class="catalogue-time">July 02, 2019</time>
+        <time datetime="2019-07-02 00:00:00 +0530" class="catalogue-time">July 02, 2019</time>
         <h1 class="catalogue-title">Installing helm chart</h1>
         <div class="catalogue-line"></div>
 
@@ -88,7 +101,7 @@
   
     <a href="/blog/2017-09-01/dropbox-deduplication" class="catalogue-item">
       <div>
-        <time datetime="2017-09-01 00:00:00 +0900" class="catalogue-time">September 01, 2017</time>
+        <time datetime="2017-09-01 00:00:00 +0530" class="catalogue-time">September 01, 2017</time>
         <h1 class="catalogue-title">Dropbox Deduplication test</h1>
         <div class="catalogue-line"></div>
 
@@ -101,25 +114,12 @@
   
     <a href="/blog/2016-08-22/lca-binary-lifting" class="catalogue-item">
       <div>
-        <time datetime="2016-08-22 00:00:00 +0900" class="catalogue-time">August 22, 2016</time>
-        <h1 class="catalogue-title">Lowest Common Ancestor | Binary Lifting | LCA</h1>
+        <time datetime="2016-08-22 00:00:00 +0530" class="catalogue-time">August 22, 2016</time>
+        <h1 class="catalogue-title">Lowest Common Ancestor | Binary Lifting</h1>
         <div class="catalogue-line"></div>
 
         <p>
           What is LCA? In graph theory and computer science, the lowest common ancestor (LCA) of two nodes v and w in a tree or directed acyclic graph (DAG) T is...
-        </p>
-
-      </div>
-    </a>
-  
-    <a href="/blog/2016-01-14/sparse-table" class="catalogue-item">
-      <div>
-        <time datetime="2016-01-14 00:00:00 +0900" class="catalogue-time">January 14, 2016</time>
-        <h1 class="catalogue-title">Sparse tables</h1>
-        <div class="catalogue-line"></div>
-
-        <p>
-          What are sparse tables? Data structure that allows range queries Can answer most queries in O(log N) But can answer Range Minimum Queries in O(1) An idempotent operation can be...
         </p>
 
       </div>
@@ -140,7 +140,7 @@
 
     <footer>
   <span>
-    &copy; <time datetime="2019-10-20 11:25:29 +0900">2019</time> Sukeesh. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    &copy; <time datetime="2020-03-05 20:46:49 +0530">2020</time> Sukeesh. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span>
 </footer>
 

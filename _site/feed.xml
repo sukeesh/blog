@@ -1,4 +1,93 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/blog/" rel="alternate" type="text/html" /><updated>2019-10-20T12:25:03+09:00</updated><id>http://localhost:4000/blog/</id><title type="html">Sukeesh</title><subtitle>Personal blog</subtitle><author><name>Sukeesh</name><email>vsukeeshbabu@gmail.com</email></author><entry><title type="html">Started Contributing to Kubernetes</title><link href="http://localhost:4000/blog/2019-08-01/started-kubernetes" rel="alternate" type="text/html" title="Started Contributing to Kubernetes" /><published>2019-08-01T00:00:00+09:00</published><updated>2019-08-01T00:00:00+09:00</updated><id>http://localhost:4000/blog/2019-08-01/started-kubernetes</id><content type="html" xml:base="http://localhost:4000/blog/2019-08-01/started-kubernetes">So, finally started [contributing to the Kubernetes source code on github](https://github.com/kubernetes/kubernetes/pulls/sukeesh). At first, I was really worried after looking at the source code as It was too huge. But finally, I made up my mind to start with [good first issues](https://github.com/kubernetes/kubernetes/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22). 
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/blog/" rel="alternate" type="text/html" /><updated>2020-03-05T21:00:34+05:30</updated><id>http://localhost:4000/blog/</id><title type="html">Sukeesh</title><subtitle>Personal blog</subtitle><author><name>Sukeesh</name><email>vsukeeshbabu@gmail.com</email></author><entry><title type="html">Setting up and Troubleshooting Prometheus in Kubernetes</title><link href="http://localhost:4000/blog/2020-03-05/prometheus" rel="alternate" type="text/html" title="Setting up and Troubleshooting Prometheus in Kubernetes" /><published>2020-03-05T00:00:00+05:30</published><updated>2020-03-05T00:00:00+05:30</updated><id>http://localhost:4000/blog/2020-03-05/prometheus</id><content type="html" xml:base="http://localhost:4000/blog/2020-03-05/prometheus">&lt;hr /&gt;
+&lt;h2 id=&quot;prometheus&quot;&gt;Prometheus&lt;/h2&gt;
+
+&lt;p&gt;Prometheus is an open-source systems monitoring and alerting toolkit. It scrapes metrics from instrumented jobs, either directly or via an intermediary push gateway for short-lived jobs. It stores all scraped samples locally and runs rules over this data to either aggregate and record new time series from existing data or generate alerts. &lt;a href=&quot;https://prometheus.io/docs/introduction/overview/&quot;&gt;link&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I tried to make this blog post as simple as possible and it has all the basic components required to setup Prometheus successfully in your microservice.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;architecture&quot;&gt;Architecture&lt;/h2&gt;
+
+&lt;p&gt;Ignore this section if it’s too confusing to understand&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://prometheus.io/assets/architecture.png&quot; alt=&quot;Prom&quot; title=&quot;Architecture&quot; /&gt; &lt;a href=&quot;https://prometheus.io/docs/introduction/overview/&quot;&gt;ref&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;prometheus-client-python&quot;&gt;Prometheus Client (Python)&lt;/h2&gt;
+
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;prometheus_client&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start_http_server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Counter&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;random&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;time&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Counter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'count'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Description of counter'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'__main__'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;start_http_server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Above is a simple http server which has a Prometheus Counter implemented. Counter is incremented by &lt;code class=&quot;highlighter-rouge&quot;&gt;0.1&lt;/code&gt; everytime &lt;code class=&quot;highlighter-rouge&quot;&gt;c.inc(0.1)&lt;/code&gt; is called. Run the above program and try to curl &lt;code class=&quot;highlighter-rouge&quot;&gt;localhost:8000/metrics&lt;/code&gt; and you should see the following metrics being served.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ curl localhost:8000/metrics
+
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation=&quot;CPython&quot;,major=&quot;3&quot;,minor=&quot;7&quot;,patchlevel=&quot;6&quot;,version=&quot;3.7.6&quot;} 1.0
+# HELP python_gc_collected_objects Objects collected during gc
+# TYPE python_gc_collected_objects histogram
+# HELP python_gc_uncollectable_objects Uncollectable object found during GC
+# TYPE python_gc_uncollectable_objects histogram
+# HELP python_gc_duration_seconds Time spent in garbage collection
+# TYPE python_gc_duration_seconds histogram
+# HELP count_total Some description
+# TYPE count_total counter
+count_total 0.7
+# TYPE count_created gauge
+count_created 1583416778.013898
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+&lt;h3 id=&quot;tip&quot;&gt;Tip&lt;/h3&gt;
+
+&lt;p&gt;To check if above metrics are in valid format, you can use &lt;code class=&quot;highlighter-rouge&quot;&gt;promtool&lt;/code&gt; to validate&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;s&quot;&gt;$ curl localhost:8000/metrics | promtool check metrics&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;Now, that these metrics are being served, we somehow need to tell Prometheus server to scrape these metrics from these pods.&lt;/p&gt;
+
+&lt;p&gt;For the above purpose, we need to have per pod Prometheus annotations which allow a fine control of the scraping process. These annotations need to be part of pod metadata.&lt;/p&gt;
+
+&lt;p&gt;Annotations required:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;prometheus.io/scrape&lt;/code&gt; Default config will scrape all pods (true/false)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;prometheus.io/path&lt;/code&gt; If the metrics path is not /metrics, define it with this annotation.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;prometheus.io/port&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In our case, config will look like below&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;apps/v1beta2&lt;/span&gt;
+&lt;span class=&quot;nn&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;annotations&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;prometheus.io/scrape&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;true'&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;prometheus.io/port&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;8000'&lt;/span&gt;
+&lt;span class=&quot;nn&quot;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Above should export all the metrics on pods to prometheus server. You can check on Prometheus targets and verify if these are being exported.&lt;/p&gt;
+
+&lt;p&gt;Now, this data can be consumed to show visualizations like on Grafana. :tada:&lt;/p&gt;
+
+&lt;p&gt;If still stuck while setting up, Hire me on &lt;a href=&quot;http://codementor.io/sukeesh&quot;&gt;Codementor.io&lt;/a&gt; :wink:&lt;/p&gt;</content><author><name>Sukeesh</name></author><summary type="html">Prometheus</summary></entry><entry><title type="html">Started Contributing to Kubernetes</title><link href="http://localhost:4000/blog/2019-08-01/started-kubernetes" rel="alternate" type="text/html" title="Started Contributing to Kubernetes" /><published>2019-08-01T00:00:00+05:30</published><updated>2019-08-01T00:00:00+05:30</updated><id>http://localhost:4000/blog/2019-08-01/started-kubernetes</id><content type="html" xml:base="http://localhost:4000/blog/2019-08-01/started-kubernetes">So, finally started [contributing to the Kubernetes source code on github](https://github.com/kubernetes/kubernetes/pulls/sukeesh). At first, I was really worried after looking at the source code as It was too huge. But finally, I made up my mind to start with [good first issues](https://github.com/kubernetes/kubernetes/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22). 
 
 Most of the good first issues were to cleanup the source code, add docs in the code kind of stuff and seemed really easy to me. So, came up with this PR [#79367](https://github.com/kubernetes/kubernetes/pull/79367) to start off. The code review flow was really good (even though took a bit time) and this PR was finally merged by the bot. :wink:
 
@@ -29,7 +118,7 @@ So, was thinking of my next contribution and came up with the feature of flushin
 
 I made these contributions in under a month and looking forward to contributing more to CNCF Projects.
 
-I have also made a habit of reading the source code, If I have a doubt regarding anything related to kubernetes and I feel like this is the best way to learn.</content><author><name>Sukeesh</name></author><summary type="html">So, finally started contributing to the Kubernetes source code on github. At first, I was really worried after looking at the source code as It was too huge. But finally, I made up my mind to start with good first issues.</summary></entry><entry><title type="html">Installing helm chart</title><link href="http://localhost:4000/blog/2019-07-02/helm-init" rel="alternate" type="text/html" title="Installing helm chart" /><published>2019-07-02T00:00:00+09:00</published><updated>2019-07-02T00:00:00+09:00</updated><id>http://localhost:4000/blog/2019-07-02/helm-init</id><content type="html" xml:base="http://localhost:4000/blog/2019-07-02/helm-init">`$ helm init`
+I have also made a habit of reading the source code, If I have a doubt regarding anything related to kubernetes and I feel like this is the best way to learn.</content><author><name>Sukeesh</name></author><summary type="html">So, finally started contributing to the Kubernetes source code on github. At first, I was really worried after looking at the source code as It was too huge. But finally, I made up my mind to start with good first issues.</summary></entry><entry><title type="html">Installing helm chart</title><link href="http://localhost:4000/blog/2019-07-02/helm-init" rel="alternate" type="text/html" title="Installing helm chart" /><published>2019-07-02T00:00:00+05:30</published><updated>2019-07-02T00:00:00+05:30</updated><id>http://localhost:4000/blog/2019-07-02/helm-init</id><content type="html" xml:base="http://localhost:4000/blog/2019-07-02/helm-init">`$ helm init`
 
 `$ helm create test-sukeesh`
 
@@ -249,7 +338,7 @@ NOTES:
   export POD_NAME=$(kubectl get pods --namespace kube-system -l &quot;app=test-sukeesh,release=alliterating-wildebeest&quot; -o jsonpath=&quot;{.items[0].metadata.name}&quot;)
   echo &quot;Visit http://127.0.0.1:8080 to use your application&quot;
   kubectl port-forward $POD_NAME 8080:80
-```</content><author><name>Sukeesh</name></author><summary type="html">$ helm init</summary></entry><entry><title type="html">Dropbox Deduplication test</title><link href="http://localhost:4000/blog/2017-09-01/dropbox-deduplication" rel="alternate" type="text/html" title="Dropbox Deduplication test" /><published>2017-09-01T00:00:00+09:00</published><updated>2017-09-01T00:00:00+09:00</updated><id>http://localhost:4000/blog/2017-09-01/dropbox-deduplication</id><content type="html" xml:base="http://localhost:4000/blog/2017-09-01/dropbox-deduplication">It works by breaking files into blocks. Each of these blocks is hashed. Only blocks that are not yet known are uploaded to the server when syncing.
+```</content><author><name>Sukeesh</name></author><summary type="html">$ helm init</summary></entry><entry><title type="html">Dropbox Deduplication test</title><link href="http://localhost:4000/blog/2017-09-01/dropbox-deduplication" rel="alternate" type="text/html" title="Dropbox Deduplication test" /><published>2017-09-01T00:00:00+05:30</published><updated>2017-09-01T00:00:00+05:30</updated><id>http://localhost:4000/blog/2017-09-01/dropbox-deduplication</id><content type="html" xml:base="http://localhost:4000/blog/2017-09-01/dropbox-deduplication">It works by breaking files into blocks. Each of these blocks is hashed. Only blocks that are not yet known are uploaded to the server when syncing.
 
 Check : [Dropbox blog](https://blogs.dropbox.com/dropbox/2011/07/changes-to-our-policies/)
 ### Test
@@ -259,122 +348,110 @@ The freshly downloaded file took 27 seconds ( approx ) to sync. Then, I renamed 
 
 ### Video
 
-[![some random](https://img.youtube.com/vi/dDvfkiUxS-A/0.jpg)](https://www.youtube.com/watch?v=dDvfkiUxS-A)</content><author><name>Sukeesh</name></author><summary type="html">It works by breaking files into blocks. Each of these blocks is hashed. Only blocks that are not yet known are uploaded to the server when syncing.</summary></entry><entry><title type="html">Lowest Common Ancestor | Binary Lifting</title><link href="http://localhost:4000/blog/2016-08-22/lca-binary-lifting" rel="alternate" type="text/html" title="Lowest Common Ancestor | Binary Lifting" /><published>2016-08-22T00:00:00+09:00</published><updated>2016-08-22T00:00:00+09:00</updated><id>http://localhost:4000/blog/2016-08-22/lca-binary-lifting</id><content type="html" xml:base="http://localhost:4000/blog/2016-08-22/lca-binary-lifting">&lt;p&gt;&lt;b&gt;What is LCA?&lt;/b&gt;&lt;/p&gt;
+[![some random](https://img.youtube.com/vi/dDvfkiUxS-A/0.jpg)](https://www.youtube.com/watch?v=dDvfkiUxS-A)</content><author><name>Sukeesh</name></author><summary type="html">It works by breaking files into blocks. Each of these blocks is hashed. Only blocks that are not yet known are uploaded to the server when syncing.</summary></entry><entry><title type="html">Lowest Common Ancestor | Binary Lifting</title><link href="http://localhost:4000/blog/2016-08-22/lca-binary-lifting" rel="alternate" type="text/html" title="Lowest Common Ancestor | Binary Lifting" /><published>2016-08-22T00:00:00+05:30</published><updated>2016-08-22T00:00:00+05:30</updated><id>http://localhost:4000/blog/2016-08-22/lca-binary-lifting</id><content type="html" xml:base="http://localhost:4000/blog/2016-08-22/lca-binary-lifting">&lt;b&gt;What is LCA?&lt;/b&gt;
 
-&lt;p&gt;In graph theory and computer science, the lowest common ancestor (LCA) of two nodes v and w in a tree or directed acyclic graph (DAG) T is the lowest (i.e. deepest) node that has both v and w as descendants, where we define each node to be a descendant of itself (so if v has a direct connection from w, w is the lowest common ancestor).&lt;/p&gt;
+In graph theory and computer science, the lowest common ancestor (LCA) of two nodes v and w in a tree or directed acyclic graph (DAG) T is the lowest (i.e. deepest) node that has both v and w as descendants, where we define each node to be a descendant of itself (so if v has a direct connection from w, w is the lowest common ancestor).
 
-&lt;p&gt;LCA can be found in &lt;em&gt;logN&lt;/em&gt; time with &lt;em&gt;N * logN&lt;/em&gt; preprocessing.&lt;/p&gt;
+LCA can be found in _logN_ time with _N * logN_ preprocessing.
 
-&lt;hr /&gt;
+---------
 
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Variable&lt;/th&gt;
-      &lt;th&gt;Description&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;em&gt;L[i]&lt;/em&gt;&lt;/td&gt;
-      &lt;td&gt;Level of node &lt;em&gt;i&lt;/em&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;em&gt;P[i]&lt;/em&gt;&lt;/td&gt;
-      &lt;td&gt;Parent of node &lt;em&gt;i&lt;/em&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;em&gt;LCA[i][j]&lt;/em&gt;&lt;/td&gt;
-      &lt;td&gt;2&lt;sup&gt;j -th&lt;/sup&gt; ancestor of node &lt;em&gt;i&lt;/em&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
+Variable | Description
+------------- |---------
+_L[i]_    | Level of node _i_ 
+_P[i]_    | Parent of node _i_
+_LCA[i][j]_ | 2&lt;sup&gt;j -th&lt;/sup&gt; ancestor of node _i_
 
-&lt;hr /&gt;
 
-&lt;h2 id=&quot;preprocessing&quot;&gt;Preprocessing&lt;/h2&gt;
+----------
 
-&lt;p&gt;&lt;b&gt;Finding level and parent of each node using simple dfs&lt;/b&gt;&lt;/p&gt;
+## Preprocessing
 
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;par&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;par&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;par&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;par&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;adj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;adj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;par&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;b&gt;Finding level and parent of each node using simple dfs&lt;/b&gt;
 
-&lt;p&gt;&lt;b&gt;Filling in LCA array&lt;/b&gt;&lt;/p&gt;
+```cpp
+void dfs(int node, int par){
+    L[node] = L[par] + 1;
+    par[node] = par;
+    for ( int j = 0 ; j &lt; adj[node].size() ; j ++ ){
+        int to = adj[node][j];
+        if(to != par) dfs(to, node);
+    }
+}
+```
 
-&lt;blockquote&gt;
-  &lt;p&gt;Note: Any non negative number can be uniquely represented as a sum of decreasing powers of 2. This is just a variant of binary representation of a number. For number x, there can be at most log2(x) summands&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;b&gt;Filling in LCA array&lt;/b&gt;
 
-&lt;p&gt;We need to compute &lt;code class=&quot;highlighter-rouge&quot;&gt;LCA&lt;/code&gt; table. For computing this value we may use following recursion&lt;/p&gt;
+&gt; Note: Any non negative number can be uniquely represented as a sum of decreasing powers of 2. This is just a variant of binary representation of a number. For number x, there can be at most log2(x) summands
 
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;LCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;----&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;LCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+We need to compute `LCA` table. For computing this value we may use following recursion
 
-&lt;p&gt;if j &amp;gt; 0,&lt;br /&gt; &lt;em&gt;LCA[i][j]&lt;/em&gt; means 2&lt;sup&gt;j -th&lt;/sup&gt; ancestor of node &lt;em&gt;i&lt;/em&gt;, which is nothing but 2&lt;sup&gt;(j-1) -th&lt;/sup&gt; ancestor of node &lt;em&gt;LCA[i][j-1]&lt;/em&gt;&lt;/p&gt;
+```cpp
+LCA[i][j] = LCA[LCA[i][j-1]][j-1],  if j &gt; 0
+----
+LCA[i][j] = P[i],  if j = 0
+```
 
-&lt;p&gt;By using above recursion, we build LCA array as following&lt;/p&gt;
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ConstructLCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;lg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ceil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;par&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+if j &gt; 0,&lt;br&gt; _LCA[i][j]_ means 2&lt;sup&gt;j -th&lt;/sup&gt; ancestor of node _i_, which is nothing but 2&lt;sup&gt;(j-1) -th&lt;/sup&gt; ancestor of node _LCA[i][j-1]_
 
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lg&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;LCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+By using above recursion, we build LCA array as following
+```cpp
+void ConstructLCA(int n){
+    lg = ceil(log2(n));
+    int i, j;
+    for ( i = 1 ; i &lt;= n ; i ++ ) LCA[i][0] = par[i];
 
-&lt;h2 id=&quot;query&quot;&gt;Query&lt;/h2&gt;
+    for ( i = 1 ; i &lt;= lg ; i ++ ) {
+        for( j = 1 ; j &lt;= n ; j ++ ) {
+            if( LCA[j][i-1] ) {
+                LCA[j][i] = LCA[ LCA[j][i-1] ] [i-1];
+            }
+        }
+    }
+}
+```
 
-&lt;p&gt;So, for every power j of 2, if &lt;code class=&quot;highlighter-rouge&quot;&gt;LCA[x][j] != LCA[y][j]&lt;/code&gt; then we know that LCA(x, y) is on a higher level and we will continue searching for &lt;code class=&quot;highlighter-rouge&quot;&gt;LCA(x = LCA[x][j], y = LCA[y][j])&lt;/code&gt;. At the end, both x and y will have the same father, so return P[x]. Let’s see what happens if &lt;code class=&quot;highlighter-rouge&quot;&gt;L[x] != L[y]&lt;/code&gt;. Assume, without loss of generality, that L[p] &amp;lt; L[q]. We can use the same meta-binary search for finding the ancestor of p situated on the same level with q, and then we can compute the LCA as described below.&lt;/p&gt;
+## Query
 
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getLca&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+So, for every power j of 2, if `LCA[x][j] != LCA[y][j]` then we know that LCA(x, y) is on a higher level and we will continue searching for `LCA(x = LCA[x][j], y = LCA[y][j])`. At the end, both x and y will have the same father, so return P[x]. Let’s see what happens if `L[x] != L[y]`. Assume, without loss of generality, that L[p] &lt; L[q]. We can use the same meta-binary search for finding the ancestor of p situated on the same level with q, and then we can compute the LCA as described below.
+
+```cpp
+int getLca(int x, int y){
     
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]){&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;swap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    if(L[x] &lt; L[y]){
+        swap(x, y);
+    }
 
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    for(int i=lg; i &gt;= 0; i--){
+        if( LCA[x][i] != 0 &amp;&amp; L[LCA[x][i]] &gt;= L[y] ){
+            x = LCA[x][i];
+        }
+    }
     
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    if( x == y ){
+        return x;
+    }
 
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lg&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    for(int i = lg ; i &gt;= 0 ; i--){
+        if( LCA[x][i] != 0 &amp;&amp; LCA[x][i] != LCA[y][i] ){
+            x = LCA[x][i];
+            y = LCA[y][i];
+        }
+    }
 
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+    return LCA[x][0];
+}
+```
 
-&lt;p&gt;We can observe that this function makes at most &lt;code class=&quot;highlighter-rouge&quot;&gt;2 * log(H)&lt;/code&gt; operations (H is the height of the tree).&lt;/p&gt;
+We can observe that this function makes at most `2 * log(H)` operations (H is the height of the tree).
 
-&lt;p&gt;&lt;b&gt;My Implementation in C++&lt;/b&gt;&lt;br /&gt;
-&lt;a href=&quot;https://github.com/sukeesh/Algorithm-Implementations/blame/master/graphs/LCA/LCAbinarylifting.cpp&quot;&gt;github/sukeesh/Algorithm-Implementations/graphs/LCA/LCAbinarylifting.cpp&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;b&gt;Reference&lt;/b&gt;
-&lt;a href=&quot;https://www.topcoder.com/community/competitive-programming/tutorials/range-minimum-query-and-lowest-common-ancestor/&quot;&gt;Topcoder tutorial&lt;/a&gt;&lt;/p&gt;</content><author><name>Sukeesh</name></author><summary type="html">What is LCA?</summary></entry><entry><title type="html">Sparse tables</title><link href="http://localhost:4000/blog/2016-01-14/sparse-table" rel="alternate" type="text/html" title="Sparse tables" /><published>2016-01-14T00:00:00+09:00</published><updated>2016-01-14T00:00:00+09:00</updated><id>http://localhost:4000/blog/2016-01-14/sparse-table</id><content type="html" xml:base="http://localhost:4000/blog/2016-01-14/sparse-table">What are sparse tables? 
+
+&lt;b&gt;My Implementation in C++&lt;/b&gt;&lt;br&gt;
+[github/sukeesh/Algorithm-Implementations/graphs/LCA/LCAbinarylifting.cpp](https://github.com/sukeesh/Algorithm-Implementations/blame/master/graphs/LCA/LCAbinarylifting.cpp)
+
+&lt;b&gt;Reference&lt;/b&gt;
+[Topcoder tutorial](https://www.topcoder.com/community/competitive-programming/tutorials/range-minimum-query-and-lowest-common-ancestor/)</content><author><name>Sukeesh</name></author><summary type="html">What is LCA?</summary></entry><entry><title type="html">Sparse tables</title><link href="http://localhost:4000/blog/2016-01-14/sparse-table" rel="alternate" type="text/html" title="Sparse tables" /><published>2016-01-14T00:00:00+05:30</published><updated>2016-01-14T00:00:00+05:30</updated><id>http://localhost:4000/blog/2016-01-14/sparse-table</id><content type="html" xml:base="http://localhost:4000/blog/2016-01-14/sparse-table">What are sparse tables? 
 
 - Data structure that allows range queries
 - Can answer most queries in O(log N)
@@ -438,7 +515,7 @@ for (int j = K; j &gt;= 0; j--) {
 ```cpp
 int j = log[R - L + 1];
 int minimum = min(table[L][j], table[R - (1 &lt;&lt; j) + 1][j]);
-```</content><author><name>Sukeesh</name></author><summary type="html">What are sparse tables?</summary></entry><entry><title type="html">Simple script to hack during contests</title><link href="http://localhost:4000/blog/2015-12-18/codeforces-hack" rel="alternate" type="text/html" title="Simple script to hack during contests" /><published>2015-12-18T00:00:00+09:00</published><updated>2015-12-18T00:00:00+09:00</updated><id>http://localhost:4000/blog/2015-12-18/codeforces-hack</id><content type="html" xml:base="http://localhost:4000/blog/2015-12-18/codeforces-hack">This is a simple shell script to hack during codeforces/topcoder rounds. `your_code.cpp` should be your code, `victim_code.cpp` should be victim's code. Write test case generator in `test.py` and run this bash file by `bash hack.sh`. This script keeps on iterating until it finds a test case where your_code.cpp and victim_code.cpp gives a different output. Once it finds a hack test case, this stops iterating. Now, you can copy the test case and hack.
+```</content><author><name>Sukeesh</name></author><summary type="html">What are sparse tables?</summary></entry><entry><title type="html">Simple script to hack during contests</title><link href="http://localhost:4000/blog/2015-12-18/codeforces-hack" rel="alternate" type="text/html" title="Simple script to hack during contests" /><published>2015-12-18T00:00:00+05:30</published><updated>2015-12-18T00:00:00+05:30</updated><id>http://localhost:4000/blog/2015-12-18/codeforces-hack</id><content type="html" xml:base="http://localhost:4000/blog/2015-12-18/codeforces-hack">This is a simple shell script to hack during codeforces/topcoder rounds. `your_code.cpp` should be your code, `victim_code.cpp` should be victim's code. Write test case generator in `test.py` and run this bash file by `bash hack.sh`. This script keeps on iterating until it finds a test case where your_code.cpp and victim_code.cpp gives a different output. Once it finds a hack test case, this stops iterating. Now, you can copy the test case and hack.
 
 ### Happy Hacking!
 
@@ -482,7 +559,7 @@ done
 
 ```
 
-This is the script</content><author><name>Sukeesh</name><email>vsukeeshbabu@gmail.com</email></author><summary type="html">This is a simple shell script to hack during codeforces/topcoder rounds. your_code.cpp should be your code, victim_code.cpp should be victim’s code. Write test case generator in test.py and run this bash file by bash hack.sh. This script keeps on iterating until it finds a test case where your_code.cpp and victim_code.cpp gives a different output. Once it finds a hack test case, this stops iterating. Now, you can copy the test case and hack.</summary></entry><entry><title type="html">Save a file in vim without root permission</title><link href="http://localhost:4000/blog/2015-12-10/save-file-without-root" rel="alternate" type="text/html" title="Save a file in vim without root permission" /><published>2015-12-10T00:00:00+09:00</published><updated>2015-12-10T00:00:00+09:00</updated><id>http://localhost:4000/blog/2015-12-10/save-file-without-root</id><content type="html" xml:base="http://localhost:4000/blog/2015-12-10/save-file-without-root">This happens lot of times. You open Vim to edit a system file, do some changes, and `:wq`.
+This is the script</content><author><name>Sukeesh</name><email>vsukeeshbabu@gmail.com</email></author><summary type="html">This is a simple shell script to hack during codeforces/topcoder rounds. your_code.cpp should be your code, victim_code.cpp should be victim’s code. Write test case generator in test.py and run this bash file by bash hack.sh. This script keeps on iterating until it finds a test case where your_code.cpp and victim_code.cpp gives a different output. Once it finds a hack test case, this stops iterating. Now, you can copy the test case and hack.</summary></entry><entry><title type="html">Save a file in vim without root permission</title><link href="http://localhost:4000/blog/2015-12-10/save-file-without-root" rel="alternate" type="text/html" title="Save a file in vim without root permission" /><published>2015-12-10T00:00:00+05:30</published><updated>2015-12-10T00:00:00+05:30</updated><id>http://localhost:4000/blog/2015-12-10/save-file-without-root</id><content type="html" xml:base="http://localhost:4000/blog/2015-12-10/save-file-without-root">This happens lot of times. You open Vim to edit a system file, do some changes, and `:wq`.
 We won't be able to save a file due to permission issues. 
 
 To save a file, simply type the following command.
@@ -492,7 +569,7 @@ To save a file, simply type the following command.
 ## Add this to your ~/.vimrc file
 Edit `~/.vimrc` and append the following code:
 `command W :execute ':silent w !sudo tee % &gt; /dev/null' | :edit!`
-Save and close the file. Now, try to edit a privileged file. Now, write a privileged file with custom command `:W`</content><author><name>Sukeesh</name></author><summary type="html">This happens lot of times. You open Vim to edit a system file, do some changes, and :wq. We won’t be able to save a file due to permission issues.</summary></entry><entry><title type="html">First Post</title><link href="http://localhost:4000/blog/2015-01-03/first-post" rel="alternate" type="text/html" title="First Post" /><published>2015-01-03T00:00:00+09:00</published><updated>2015-01-03T00:00:00+09:00</updated><id>http://localhost:4000/blog/2015-01-03/first-post</id><content type="html" xml:base="http://localhost:4000/blog/2015-01-03/first-post">Hey there! This is my first post!</content><author><name>Sukeesh</name></author><summary type="html">Hey there! This is my first post!</summary></entry><entry><title type="html">Example Content</title><link href="http://localhost:4000/blog/2011-03-16/example-content" rel="alternate" type="text/html" title="Example Content" /><published>2011-03-16T00:00:00+09:00</published><updated>2011-03-16T00:00:00+09:00</updated><id>http://localhost:4000/blog/2011-03-16/example-content</id><content type="html" xml:base="http://localhost:4000/blog/2011-03-16/example-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tincidunt ornare nibh, non elementum augue tempus eget. Pellentesque tempus scelerisque iaculis. Nullam interdum ultricies nibh quis sollicitudin. Donec ornare fermentum facilisis. Ut at sem ac sem imperdiet varius a eget tortor. Nam eu augue eget orci semper maximus in eget augue. Mauris ornare, nisl ut suscipit consectetur, mi quam interdum tellus, at rutrum quam eros ultrices mi.
+Save and close the file. Now, try to edit a privileged file. Now, write a privileged file with custom command `:W`</content><author><name>Sukeesh</name></author><summary type="html">This happens lot of times. You open Vim to edit a system file, do some changes, and :wq. We won’t be able to save a file due to permission issues.</summary></entry><entry><title type="html">First Post</title><link href="http://localhost:4000/blog/2015-01-03/first-post" rel="alternate" type="text/html" title="First Post" /><published>2015-01-03T00:00:00+05:30</published><updated>2015-01-03T00:00:00+05:30</updated><id>http://localhost:4000/blog/2015-01-03/first-post</id><content type="html" xml:base="http://localhost:4000/blog/2015-01-03/first-post">Hey there! This is my first post!</content><author><name>Sukeesh</name></author><summary type="html">Hey there! This is my first post!</summary></entry><entry><title type="html">Example Content</title><link href="http://localhost:4000/blog/2011-03-16/example-content" rel="alternate" type="text/html" title="Example Content" /><published>2011-03-16T00:00:00+05:30</published><updated>2011-03-16T00:00:00+05:30</updated><id>http://localhost:4000/blog/2011-03-16/example-content</id><content type="html" xml:base="http://localhost:4000/blog/2011-03-16/example-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tincidunt ornare nibh, non elementum augue tempus eget. Pellentesque tempus scelerisque iaculis. Nullam interdum ultricies nibh quis sollicitudin. Donec ornare fermentum facilisis. Ut at sem ac sem imperdiet varius a eget tortor. Nam eu augue eget orci semper maximus in eget augue. Mauris ornare, nisl ut suscipit consectetur, mi quam interdum tellus, at rutrum quam eros ultrices mi.
 
 # Headers
 {% highlight markdown %}
