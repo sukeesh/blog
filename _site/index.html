@@ -18,7 +18,7 @@
 <meta property="og:site_name" content="Sukeesh" />
 <link rel="next" href="http://localhost:4000/blog/page2" />
 <script type="application/ld+json">
-{"description":"Personal blog","headline":"Home","@type":"WebSite","url":"http://localhost:4000/blog/","name":"Sukeesh","author":{"@type":"Person","name":"Sukeesh"},"@context":"http://schema.org"}</script>
+{"author":{"@type":"Person","name":"Sukeesh"},"headline":"Home","description":"Personal blog","@type":"WebSite","url":"http://localhost:4000/blog/","name":"Sukeesh","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -59,6 +59,19 @@
 
     <main>
       <div class="catalogue">
+  
+    <a href="/blog/2020-03-13/covid" class="catalogue-item">
+      <div>
+        <time datetime="2020-03-13 00:00:00 +0530" class="catalogue-time">March 13, 2020</time>
+        <h1 class="catalogue-title">Exploring Kaggle CoVid-19 Data</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+          import pandas as pd import plotly.express as px time_series_confirmed = pd.read_csv('time_series_covid_19_confirmed.csv') dates = [] from datetime import date, timedelta start_date = date(2020, 2, 14) end_date = date(2020, 3, 10) delta...
+        </p>
+
+      </div>
+    </a>
   
     <a href="/blog/2020-03-05/prometheus" class="catalogue-item">
       <div>
@@ -112,19 +125,6 @@
       </div>
     </a>
   
-    <a href="/blog/2016-08-22/lca-binary-lifting" class="catalogue-item">
-      <div>
-        <time datetime="2016-08-22 00:00:00 +0530" class="catalogue-time">August 22, 2016</time>
-        <h1 class="catalogue-title">Lowest Common Ancestor | Binary Lifting</h1>
-        <div class="catalogue-line"></div>
-
-        <p>
-          What is LCA? In graph theory and computer science, the lowest common ancestor (LCA) of two nodes v and w in a tree or directed acyclic graph (DAG) T is...
-        </p>
-
-      </div>
-    </a>
-  
 </div>
 
 <div class="pagination">
@@ -138,9 +138,10 @@
 
     </main>
 
-    <footer>
+    
+<footer>
   <span>
-    &copy; <time datetime="2020-03-05 21:03:09 +0530">2020</time> Sukeesh. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    &copy; <time datetime="2020-05-09 22:38:48 +0530">2020</time> Sukeesh. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span>
 </footer>
 
