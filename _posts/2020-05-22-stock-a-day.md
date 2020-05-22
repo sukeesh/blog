@@ -98,6 +98,6 @@ You would have made a LOSS of around <span style="color:red">INR 3100</span>!!
 
 This is how exactly an SIP works!
 
-You buy right and sit tight. Always accumulate slowly (not daily)!
+You buy right and sit tight. Always accumulate slowly (not daily :wink: )!
 
 --------------
