@@ -1,7 +1,7 @@
 ---
 layout: post
 author: "Sukeesh"
-title: "What would have happened if you brought these stocks daily?"
+title: "What would have happened if you would have brought these stocks daily?"
 ---
 
 
