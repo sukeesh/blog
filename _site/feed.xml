@@ -1,4 +1,100 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/blog/" rel="alternate" type="text/html" /><updated>2020-05-09T22:56:30+05:30</updated><id>http://localhost:4000/blog/</id><title type="html">Sukeesh</title><subtitle>Personal blog</subtitle><author><name>Sukeesh</name><email>vsukeeshbabu@gmail.com</email></author><entry><title type="html">Setting up and Troubleshooting Prometheus in Kubernetes</title><link href="http://localhost:4000/blog/2020-03-05/prometheus" rel="alternate" type="text/html" title="Setting up and Troubleshooting Prometheus in Kubernetes" /><published>2020-03-05T00:00:00+05:30</published><updated>2020-03-05T00:00:00+05:30</updated><id>http://localhost:4000/blog/2020-03-05/prometheus</id><content type="html" xml:base="http://localhost:4000/blog/2020-03-05/prometheus">----------
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/blog/" rel="alternate" type="text/html" /><updated>2020-05-22T18:14:52+05:30</updated><id>http://localhost:4000/blog/</id><title type="html">Sukeesh</title><subtitle>Personal blog</subtitle><author><name>Sukeesh</name><email>vsukeeshbabu@gmail.com</email></author><entry><title type="html">What would have happened if you brought these stocks daily?</title><link href="http://localhost:4000/blog/2020-05-22/stock-a-day" rel="alternate" type="text/html" title="What would have happened if you brought these stocks daily?" /><published>2020-05-22T00:00:00+05:30</published><updated>2020-05-22T00:00:00+05:30</updated><id>http://localhost:4000/blog/2020-05-22/stock-a-day</id><content type="html" xml:base="http://localhost:4000/blog/2020-05-22/stock-a-day">&lt;p&gt;&lt;img src=&quot;../assets/images/may2020/bse.jpg&quot; alt=&quot;BSE&quot; title=&quot;Bombay Stock Exchange&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;disclaimer&quot;&gt;Disclaimer&lt;/h2&gt;
+
+&lt;p&gt;“I am NOT a SEBI registered advisor or a financial adviser. Any of my investment or trades I share on my blog are provided for educational purposes only and do not constitute specific financial, trading or investment advice”&lt;/p&gt;
+
+&lt;p&gt;You should discuss your specific requirements and situation with a qualified financial adviser&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;I tried to see how much Profit/Loss one would have made if he/she brought a unit of stock &lt;b&gt;daily&lt;/b&gt; in the following Instruments.&lt;/p&gt;
+
+&lt;p&gt;I picked the following randomly from the &lt;a href=&quot;https://www1.nseindia.com/live_market/dynaContent/live_watch/equities_stock_watch.htm&quot;&gt;NIFTY50 Index&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
+
+&lt;p&gt;&lt;i&gt;Burton Malkiel&lt;/i&gt; famously wrote in &lt;a href=&quot;https://amzn.to/2zXGVdu&quot;&gt;A Random Walk Down Wall Street&lt;/a&gt; that&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;A blindfolded monkey throwing darts at a newspaper’s financial pages could select a portfolio that would do just as well as one carefully selected by the experts.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;assumptions&quot;&gt;Assumptions&lt;/h2&gt;
+
+&lt;p&gt;For each day, there is a low price and a high price. I have chosen the average value of these two as the buy price on that day.&lt;/p&gt;
+
+&lt;h3 id=&quot;why-average&quot;&gt;Why average?&lt;/h3&gt;
+
+&lt;p&gt;It’s impossible for anyone to predict the bottom of the chart in the stock market. So, anyone who has chosen the lowest price traded on that day is very lucky and anyone who has chosen the highest price traded on that day is very unlucky.&lt;/p&gt;
+
+&lt;p&gt;In the following charts, “Cum cost” represents the cumulative cost of all the units you brought so far and “Cum value” represents the current value of all the units you brought so far.&lt;/p&gt;
+
+&lt;p&gt;Let’s explore!&lt;/p&gt;
+
+&lt;h2 id=&quot;tata-consultancy-services-limited&quot;&gt;&lt;a href=&quot;https://www1.nseindia.com/live_market/dynaContent/live_watch/get_quote/GetQuote.jsp?symbol=TCS&quot;&gt;Tata Consultancy Services Limited&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/may2020/tcs_cum.png&quot; alt=&quot;TCS Cum&quot; title=&quot;TCS&quot; /&gt;
+&lt;img src=&quot;../assets/images/may2020/tcs_pl.png&quot; alt=&quot;TCS PL&quot; title=&quot;TCS&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You would have made a profit of &lt;span style=&quot;color:green&quot;&gt;INR 5700&lt;/span&gt;!!.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;reliance-industries-limited&quot;&gt;&lt;a href=&quot;https://www1.nseindia.com/live_market/dynaContent/live_watch/get_quote/GetQuote.jsp?symbol=RELIANCE&quot;&gt;Reliance Industries Limited&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/may2020/ril_cum.png&quot; alt=&quot;RIL Cum&quot; title=&quot;RIL&quot; /&gt;
+&lt;img src=&quot;../assets/images/may2020/ril_pl.png&quot; alt=&quot;RIL PL&quot; title=&quot;RIL&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You would have made a profit of around &lt;span style=&quot;color:green&quot;&gt;INR 10000&lt;/span&gt;!!&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;hdfc-bank-limited&quot;&gt;&lt;a href=&quot;https://www1.nseindia.com/live_market/dynaContent/live_watch/get_quote/GetQuote.jsp?symbol=HDFCBANK&quot;&gt;HDFC Bank Limited&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/may2020/hdfc_cum.png&quot; alt=&quot;HDFC Cum&quot; title=&quot;hdfc&quot; /&gt;
+&lt;img src=&quot;../assets/images/may2020/hdfc_pl.png&quot; alt=&quot;HDFC PL&quot; title=&quot;hdfc&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You would have made a LOSS of around &lt;span style=&quot;color:red&quot;&gt;INR 5300&lt;/span&gt;!!&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;dr-reddys-laboratories-limited&quot;&gt;&lt;a href=&quot;https://www1.nseindia.com/live_market/dynaContent/live_watch/get_quote/GetQuote.jsp?symbol=DRREDDY&quot;&gt;Dr. Reddy’s Laboratories Limited&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/may2020/dr_cum.png&quot; alt=&quot;DR Cum&quot; title=&quot;DR&quot; /&gt;
+&lt;img src=&quot;../assets/images/may2020/ril_pl.png&quot; alt=&quot;DR PL&quot; title=&quot;DR&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You would have made a profit of around &lt;span style=&quot;color:green&quot;&gt;INR 26000&lt;/span&gt;!!&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;state-bank-of-india&quot;&gt;&lt;a href=&quot;https://www1.nseindia.com/live_market/dynaContent/live_watch/get_quote/GetQuote.jsp?symbol=SBIN&quot;&gt;State Bank of India&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/may2020/sbi_cum.png&quot; alt=&quot;SBIN Cum&quot; title=&quot;SBIN&quot; /&gt;
+&lt;img src=&quot;../assets/images/may2020/sbi_pl.png&quot; alt=&quot;SBIN PL&quot; title=&quot;SBIN&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You would have made a LOSS of around &lt;span style=&quot;color:red&quot;&gt;INR 3100&lt;/span&gt;!!&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;This is how exactly an SIP works!&lt;/p&gt;
+
+&lt;p&gt;You buy right and sit tight. Always accumulate slowly (not daily)!&lt;/p&gt;
+
+&lt;hr /&gt;</content><author><name>Sukeesh</name></author><summary type="html"></summary></entry><entry><title type="html">Setting up and Troubleshooting Prometheus in Kubernetes</title><link href="http://localhost:4000/blog/2020-03-05/prometheus" rel="alternate" type="text/html" title="Setting up and Troubleshooting Prometheus in Kubernetes" /><published>2020-03-05T00:00:00+05:30</published><updated>2020-03-05T00:00:00+05:30</updated><id>http://localhost:4000/blog/2020-03-05/prometheus</id><content type="html" xml:base="http://localhost:4000/blog/2020-03-05/prometheus">----------
 ### Prometheus
 
 Prometheus is an open-source systems monitoring and alerting toolkit. It scrapes metrics from instrumented jobs, either directly or via an intermediary push gateway for short-lived jobs. It stores all scraped samples locally and runs rules over this data to either aggregate and record new time series from existing data or generate alerts. [link](https://prometheus.io/docs/introduction/overview/)
@@ -597,133 +693,4 @@ To save a file, simply type the following command.
 ## Add this to your ~/.vimrc file
 Edit `~/.vimrc` and append the following code:
 `command W :execute ':silent w !sudo tee % &gt; /dev/null' | :edit!`
-Save and close the file. Now, try to edit a privileged file. Now, write a privileged file with custom command `:W`</content><author><name>Sukeesh</name></author><summary type="html">This happens lot of times. You open Vim to edit a system file, do some changes, and :wq. We won’t be able to save a file due to permission issues.</summary></entry><entry><title type="html">First Post</title><link href="http://localhost:4000/blog/2015-01-03/first-post" rel="alternate" type="text/html" title="First Post" /><published>2015-01-03T00:00:00+05:30</published><updated>2015-01-03T00:00:00+05:30</updated><id>http://localhost:4000/blog/2015-01-03/first-post</id><content type="html" xml:base="http://localhost:4000/blog/2015-01-03/first-post">Hey there! This is my first post!</content><author><name>Sukeesh</name></author><summary type="html">Hey there! This is my first post!</summary></entry><entry><title type="html">Example Content</title><link href="http://localhost:4000/blog/2011-03-16/example-content" rel="alternate" type="text/html" title="Example Content" /><published>2011-03-16T00:00:00+05:30</published><updated>2011-03-16T00:00:00+05:30</updated><id>http://localhost:4000/blog/2011-03-16/example-content</id><content type="html" xml:base="http://localhost:4000/blog/2011-03-16/example-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tincidunt ornare nibh, non elementum augue tempus eget. Pellentesque tempus scelerisque iaculis. Nullam interdum ultricies nibh quis sollicitudin. Donec ornare fermentum facilisis. Ut at sem ac sem imperdiet varius a eget tortor. Nam eu augue eget orci semper maximus in eget augue. Mauris ornare, nisl ut suscipit consectetur, mi quam interdum tellus, at rutrum quam eros ultrices mi.
-
-# Headers
-{% highlight markdown %}
-# H1
-## H2
-### H3
-#### H4
-##### H5
-###### H6
-{% endhighlight %}
-
-# H1
-## H2
-### H3
-#### H4
-##### H5
-###### H6
-
-# Text formatting
-{% highlight markdown %}
-- **Bold**
-- _Italics_
-- ~~Strikethrough~~
-- &lt;ins&gt;Underline&lt;/ins&gt;
-- &lt;sup&gt;Superscript&lt;/sup&gt;
-- &lt;sub&gt;Subscript&lt;/sub&gt;
-- Abbreviation: &lt;abbr title=&quot;HyperText Markup Language&quot;&gt;HTML&lt;/abbr&gt;
-- Citation: &lt;cite&gt;&amp;mdash; Chester How&lt;/cite&gt;
-{% endhighlight %}
-
-- **Bold**
-- _Italics_
-- ~~Strikethrough~~
-- &lt;ins&gt;Underline&lt;/ins&gt;
-- &lt;sup&gt;Superscript&lt;/sup&gt;
-- &lt;sub&gt;Subscript&lt;/sub&gt;
-- Abbreviation: &lt;abbr title=&quot;HyperText Markup Language&quot;&gt;HTML&lt;/abbr&gt;
-- Citation: &lt;cite&gt;&amp;mdash; Chester How&lt;/cite&gt;
-
-# Lists
-{% highlight markdown %}
-1. Ordered list item 1
-2. Ordered list item 2
-3. Ordered list item 3
-
-* Unordered list item 1
-* Unordered list item 2
-* Unordered list item 3
-{% endhighlight %}
-
-1. Ordered list item 1
-2. Ordered list item 2
-3. Ordered list item 3
-
-* Unordered list item 1
-* Unordered list item 2
-* Unordered list item 3
-
-# Links
-{% highlight markdown %}
-Check out tale on [GitHub](https://github.com/chesterhow/tale).
-{% endhighlight %}
-
-Check out tale on [GitHub](https://github.com/chesterhow/tale).
-
-# Images
-{% highlight markdown %}
-![Placeholder image](https://placehold.it/800x400 &quot;Placeholder image&quot;)
-
-![Image with caption](https://placehold.it/700x400 &quot;Image with caption&quot;)
-_This is an image with a caption_
-{% endhighlight %}
-
-![Placeholder image](https://placehold.it/800x400 &quot;Placeholder image&quot;)
-
-![Image with caption](https://placehold.it/700x400 &quot;Image with caption&quot;)
-_This is an image with a caption_
-
-# Code and Syntax Highlighting
-Use back-ticks for `inline code`. Multi-line code snippets are supported too through Pygments.
-
-{% highlight js %}
-// Sample javascript code
-var s = &quot;JavaScript syntax highlighting&quot;;
-alert(s);
-{% endhighlight %}
-
-{% highlight python %}
-# Sample python code
-s = &quot;Python syntax highlighting&quot;
-print s
-{% endhighlight %}
-
-Adding `linenos` to the Pygments tag enables line numbers.
-
-{% highlight js  linenos %}
-// Sample javascript code
-var s = &quot;JavaScript syntax highlighting&quot;;
-alert(s);
-{% endhighlight %}
-
-# Blockquotes
-{% highlight markdown %}
-&gt; Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.
-
-{% endhighlight %}
-
-&gt; Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.
-
-# Horizontal Rule &amp; Line Break
-{% highlight markdown %}
-Use `&lt;hr&gt;` for horizontal rules
-
-&lt;hr&gt;
-
-and `&lt;br&gt;` for line breaks.
-
-&lt;br&gt;
-{% endhighlight %}
-
-Use `&lt;hr&gt;` for horizontal rules
-
-&lt;hr&gt;
-
-and `&lt;br&gt;` for line breaks.
-
-&lt;br&gt;
-
-_The end_</content><author><name>God</name></author><summary type="html">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tincidunt ornare nibh, non elementum augue tempus eget. Pellentesque tempus scelerisque iaculis. Nullam interdum ultricies nibh quis sollicitudin. Donec ornare fermentum facilisis. Ut at sem ac sem imperdiet varius a eget tortor. Nam eu augue eget orci semper maximus in eget augue. Mauris ornare, nisl ut suscipit consectetur, mi quam interdum tellus, at rutrum quam eros ultrices mi.</summary></entry></feed>
+Save and close the file. Now, try to edit a privileged file. Now, write a privileged file with custom command `:W`</content><author><name>Sukeesh</name></author><summary type="html">This happens lot of times. You open Vim to edit a system file, do some changes, and :wq. We won’t be able to save a file due to permission issues.</summary></entry><entry><title type="html">First Post</title><link href="http://localhost:4000/blog/2015-01-03/first-post" rel="alternate" type="text/html" title="First Post" /><published>2015-01-03T00:00:00+05:30</published><updated>2015-01-03T00:00:00+05:30</updated><id>http://localhost:4000/blog/2015-01-03/first-post</id><content type="html" xml:base="http://localhost:4000/blog/2015-01-03/first-post">Hey there! This is my first post!</content><author><name>Sukeesh</name></author><summary type="html">Hey there! This is my first post!</summary></entry></feed>
