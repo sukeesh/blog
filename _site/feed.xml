@@ -1,48 +1,205 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/blog/" rel="alternate" type="text/html" /><updated>2020-05-25T00:38:48+05:30</updated><id>http://localhost:4000/blog/</id><title type="html">Sukeesh</title><subtitle>Personal blog</subtitle><author><name>Sukeesh</name><email>vsukeeshbabu@gmail.com</email></author><entry><title type="html">Go vs C++ | Which is faster? | Sieve of Eratosthenes</title><link href="http://localhost:4000/blog/2020-05-24/cpp-vs-go" rel="alternate" type="text/html" title="Go vs C++ | Which is faster? | Sieve of Eratosthenes" /><published>2020-05-24T00:00:00+05:30</published><updated>2020-05-24T00:00:00+05:30</updated><id>http://localhost:4000/blog/2020-05-24/cpp-vs-go</id><content type="html" xml:base="http://localhost:4000/blog/2020-05-24/cpp-vs-go">&lt;p&gt;&lt;a href=&quot;https://amzn.to/2ZJNefN&quot;&gt;&lt;img src=&quot;../assets/images/may2020/gocbanner.png&quot; alt=&quot;Image&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/blog/" rel="alternate" type="text/html" /><updated>2020-08-15T23:59:29+05:30</updated><id>http://localhost:4000/blog/</id><title type="html">Sukeesh</title><subtitle>Personal blog</subtitle><author><name>Sukeesh</name><email>vsukeeshbabu@gmail.com</email></author><entry><title type="html">Looking back; two years after graduation</title><link href="http://localhost:4000/blog/2020-08-14/software" rel="alternate" type="text/html" title="Looking back; two years after graduation" /><published>2020-08-14T00:00:00+05:30</published><updated>2020-08-14T00:00:00+05:30</updated><id>http://localhost:4000/blog/2020-08-14/software</id><content type="html" xml:base="http://localhost:4000/blog/2020-08-14/software">It’s been more than 2 years since I graduated and started working as a Software Engineer at Mercari. So, I thought of putting down everything I did in the past 2 years after I moved to Tokyo, Japan in September 2018.
 
-&lt;p&gt;Comparing a Sieve of Eratosthenes in Golang vs C++! (Two of my most favourite programming languages)&lt;/p&gt;
+&lt;br&gt;
+My Journey so far has been good at Mercari.
 
-&lt;h2 id=&quot;sieve-of-eratosthenes&quot;&gt;Sieve of Eratosthenes&lt;/h2&gt;
+![Image](../assets/images/aug2020/mori.png)
 
-&lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/b/b9/Sieve_of_Eratosthenes_animation.gif&quot; alt=&quot;SOE&quot; /&gt;&lt;/p&gt;
+The first month was mostly orientation and at the end of October, I joined the &lt;b&gt;US@Tokyo&lt;/b&gt; team as a Backend Engineer.
 
-&lt;p&gt;The intention of this post is not to explain the algorithm. You can read more about &lt;a href=&quot;http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes&quot;&gt;it here&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h2 id=&quot;code&quot;&gt;Code&lt;/h2&gt;
+## Initial days
 
-&lt;p&gt;Code Implementation in both the languages&lt;/p&gt;
+In the first quarter, I worked on Home API (Golang) in the Backend team. Integrating ML services to the backend. Setting up Prometheus and Grafana for ML Services written in Python Flask.
 
-&lt;h3 id=&quot;golang&quot;&gt;&lt;a href=&quot;https://amzn.to/3cZ9sOD&quot;&gt;Golang&lt;/a&gt;&lt;/h3&gt;
+```diff
++ Golang
++ Prometheus
++ Grafana
++ Kubernetes
++ Docker
+```
+
+Below are the &lt;b&gt;few&lt;/b&gt; of the components I added on the home screen of mercari in my first quarter&lt;br&gt;
+
+![Image](../assets/images/aug2020/octdec18.png)
+
+This was very rewarding since everything I write was visible on the home screen of the application.
+&lt;br&gt;&lt;br&gt;
+
+## (Personal) Hackathon in Tokyo
+
+![Tokyo Big Sight](https://upload.wikimedia.org/wikipedia/commons/b/b9/Tokyo_Big_Sight_at_Night.jpg)
+I participated in a hackathon for the first time in Tokyo and the atmosphere was completely different compared to that of India. Here is the link to my [submission for the Hackathon](https://devpost.com/software/smart-offline-ads).
+
+
+## Code.. Code.. Code
+&lt;p&gt;Later year (2019) in the beginning, I spent time mostly on the Home screen API of the mercari. I worked on adding many many components on Home screen of the application. Here is one of &lt;b&gt;many&lt;/b&gt; components I developed. This particular component below gave me experience of working with Search backend.&lt;/p&gt;
+
+![Image](../assets/images/aug2020/janjun18.png){:height=&quot;50%&quot; width=&quot;50%&quot;}
+
+```diff
++ Redis
+```
+
+## New microservice :tada:
+
+and then, I finally started working on co-creating a new microservice for saved search. During this first microservice of mine, My learning rate was exponential.
+
+
+```diff
++ Microservices
++ Cloud Spanner
+```
+
+## (Personal) Kubernetes
+
+And also this is when I started to deep dive into Kubernetes. I was super enthusiastic about Cloud native applications and I spent most of my free time reading code of the core [Kubernetes](https://github.com/kubernetes/kubernetes/).
+
+![Image](../assets/images/aug2020/kubernetes.png)
+
+I also started contributing to the Kubernetes open source on GitHub. Here, you can read on [how I started contributing to Kubernetes](https://sukeesh.com/blog/2019-08-01/started-kubernetes).
+
+```diff
++ Istio
+```
+
+## Second microservice
+
+In mid-2019, I started working on Price suggestion project which suggests a price range when an user is listing an item on the app.
+
+![Image](../assets/images/aug2020/ps.png){:height=&quot;40%&quot; width=&quot;40%&quot;}
+
+I designed and developed a new backend microservice (written in Golang) for the Price suggestion Machine Learning model.
+
+&lt;!-- ![SOE](https://upload.wikimedia.org/wikipedia/commons/b/b9/Sieve_of_Eratosthenes_animation.gif) --&gt;
+
+We released many many various features around this Price suggestion project and I was the backend engineer initially for all of the projects in this team.
+
+## Payments
+
+![Image](../assets/images/aug2020/enoshima.png)
+
+During this phase, I also worked parallelly with the Payments team briefly for a feature required in [Mercari GG](https://www.mercari.com/us/digital/).
+
+```diff
++ PHP
+```
+
+## (Personal) Project, Kubernetes Job Notifier
+
+![Image](../assets/images/aug2020/k8sjob.png){:height=&quot;60%&quot; width=&quot;60%&quot;}
+
+Monitoring Kubernetes cronjob was little tricky and instantaneous updates are hard. So, I thought of solving this problem. I made use of Kubernetes API and Slack API to create a slack notifier for Kubernetes cronjob failures/success. This project as usual :wink:, gathered few stars and I still keep getting &quot;Thank you&quot; emails from those who are using this tool of mine. [Here is the link to repository on GitHub](https://github.com/sukeesh/k8s-job-notify).
+
+## 2020
+
+Later in January and February of 2020, I worked on various Backend projects including [Mercari Pro seller](https://www.mercari.com/us/become-a-pro-seller/).
+
+```diff
++ BigQuery
+```
+
+# Backend -&gt; Machine Learning
+
+In &lt;b&gt;March 2020&lt;/b&gt;, I took a decision to move to Machine learning team from Backend team. A complete new vertical and I had literally zero professional experience in Machine learning at this point.
+
+&lt;br&gt;Even after joining ML team, I was still working on Backend only tasks.
+
+&lt;br&gt;So, this is when I decided to gain more theoretical and practical knowledge on ML. I took up the specialization on [deeplearning.ai](deeplearning.ai). I worked hard for about a month to achieve this.
+
+![Image](../assets/images/aug2020/dlcert.png){:height=&quot;70%&quot; width=&quot;70%&quot;}
+
+This gave me so many insights. It was very practical and I completely recommend this to anyone who is interested in starting their career with ML. &lt;br&gt;
+
+## My First Machine learning model :rocket:
+
+Soon after this, I started working on developing a new Machine learning model for price suggestion. I took up the challenge and was able to train, develop and deploy onto Production in about 1.5 months.
+
+&lt;!-- ![Image](../assets/images/may2020/go_cpp.png) --&gt;
+```diff
++ Polyaxon
++ Many many ML frameworks
+```
+
+## (Personal) Finalist in a Hackathon
+
+Again, time for some personal. &lt;br&gt;&lt;br&gt;
+This time I participated in a Hackathon instead of working on a personal project. Generally, whenever I participate in a Hackathon, winning projects are mostly related to Machine Learning. &lt;br&gt;&lt;br&gt;
+So, at this point of time since I knew ML and had practical knowledge. I thought of applying ML for the Hackathon project and Surprisingly, I was a &lt;b&gt;finalist&lt;/b&gt; and was &lt;b&gt;offered&lt;/b&gt; an opportunity for pre-incubation by an Indian Venture Capital firm.
+
+![Image](../assets/images/aug2020/hackathon.png)
+
+The idea was simple. I developed a WhatsApp bot which fact checks messages related to the Coronavirus.
+
+
+## Image Recognition
+
+Working with Images has taught me a lot of patience. This is already a running model. My role is more like maintaining the project. &lt;br&gt;
+
+This project is the most interesting because I knew nothing before starting!!
+
+```diff
++ Kubeflow
+```
+
+-------
+
+
+These are **only few** of many projects which I worked on in the past two years. I learnt so many things as a Software engineer. I always tried to take over tasks which are hard/completely unknown to me because later when I look back, I always learnt many things by doing so. 
+
+&gt; Anything which aint hard, isnt worth doing it.
+
+------
+
+## Some links
+
+1. [What can I learn/know right now in 10 minutes that will be useful for the rest of my life?](https://qr.ae/TUtVDd)</content><author><name>Sukeesh</name></author><summary type="html">It’s been more than 2 years since I graduated and started working as a Software Engineer at Mercari. So, I thought of putting down everything I did in the past 2 years after I moved to Tokyo, Japan in September 2018.</summary></entry><entry><title type="html">Go vs C++ | Which is faster? | Sieve of Eratosthenes</title><link href="http://localhost:4000/blog/2020-05-24/cpp-vs-go" rel="alternate" type="text/html" title="Go vs C++ | Which is faster? | Sieve of Eratosthenes" /><published>2020-05-24T00:00:00+05:30</published><updated>2020-05-24T00:00:00+05:30</updated><id>http://localhost:4000/blog/2020-05-24/cpp-vs-go</id><content type="html" xml:base="http://localhost:4000/blog/2020-05-24/cpp-vs-go">[![Image](../assets/images/may2020/gocbanner.png)](https://amzn.to/2ZJNefN)
+
+Comparing a Sieve of Eratosthenes in Golang vs C++! (Two of my most favourite programming languages)
+
+## Sieve of Eratosthenes
+
+![SOE](https://upload.wikimedia.org/wikipedia/commons/b/b9/Sieve_of_Eratosthenes_animation.gif)
+
+The intention of this post is not to explain the algorithm. You can read more about [it here](http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes).
+
+## Code
+
+Code Implementation in both the languages
+
+### &lt;a href=&quot;https://amzn.to/3cZ9sOD&quot;&gt;Golang&lt;/a&gt;
 
 &lt;script src=&quot;https://gist.github.com/sukeesh/3fec59b9025978dbf92b6b6e66b92e6e.js&quot;&gt;&lt;/script&gt;
 
-&lt;h3 id=&quot;c&quot;&gt;&lt;a href=&quot;https://amzn.to/2ARSPGc&quot;&gt;C++&lt;/a&gt;&lt;/h3&gt;
+### &lt;a href=&quot;https://amzn.to/2ARSPGc&quot;&gt;C++&lt;/a&gt;
 
 &lt;script src=&quot;https://gist.github.com/sukeesh/b9edbcba43f707fbefd9cb49e55d6926.js&quot;&gt;&lt;/script&gt;
 
-&lt;h2 id=&quot;hardware&quot;&gt;Hardware&lt;/h2&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;MacBook Pro (15-inch, 2018)&lt;/li&gt;
-  &lt;li&gt;Processor 2.9 GHz 6-Core Intel Core i9&lt;/li&gt;
-  &lt;li&gt;Memory 32 GB 2400 MHz DDR4&lt;/li&gt;
-&lt;/ul&gt;
+## Hardware
 
-&lt;h2 id=&quot;results&quot;&gt;Results!&lt;/h2&gt;
+- MacBook Pro (15-inch, 2018)
+- Processor 2.9 GHz 6-Core Intel Core i9
+- Memory 32 GB 2400 MHz DDR4
 
-&lt;p&gt;I tested this code using the time function in a zsh shell.&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;b&gt;Example usage of time function&lt;/b&gt;&lt;/p&gt;
+## Results!
 
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt; ./a.out 4194304
+I tested this code using the time function in a zsh shell.&lt;br&gt;
+
+&lt;b&gt;Example usage of time function&lt;/b&gt;
+
+```bash
+$ time ./a.out 4194304
 ./a.out 4194304  0.05s user 0.00s system 95% cpu 0.057 total
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+```
 
-&lt;p&gt;I tested by generating [2, 4, 8, 16, 32, …. , 4194304] Prime numbers in both the programming languages. Here is how they performed.&lt;/p&gt;
+I tested by generating [2, 4, 8, 16, 32, .... , 4194304] Prime numbers in both the programming languages. Here is how they performed. 
 
-&lt;p&gt;Until 131072, C++ was performing slightly better than Go. But, later Go started dominating and the curve went exponential.&lt;/p&gt;
+Until 131072, C++ was performing slightly better than Go. But, later Go started dominating and the curve went exponential.
 
-&lt;p&gt;&lt;img src=&quot;../assets/images/may2020/go_cpp.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;</content><author><name>Sukeesh</name></author><summary type="html"></summary></entry><entry><title type="html">What would have happened if you would have brought these stocks daily?</title><link href="http://localhost:4000/blog/2020-05-22/stock-a-day" rel="alternate" type="text/html" title="What would have happened if you would have brought these stocks daily?" /><published>2020-05-22T00:00:00+05:30</published><updated>2020-05-22T00:00:00+05:30</updated><id>http://localhost:4000/blog/2020-05-22/stock-a-day</id><content type="html" xml:base="http://localhost:4000/blog/2020-05-22/stock-a-day">![BSE](../assets/images/may2020/bse.jpg &quot;Bombay Stock Exchange&quot;)
+![Image](../assets/images/may2020/go_cpp.png)</content><author><name>Sukeesh</name></author><summary type="html"></summary></entry><entry><title type="html">What would have happened if you would have brought these stocks daily?</title><link href="http://localhost:4000/blog/2020-05-22/stock-a-day" rel="alternate" type="text/html" title="What would have happened if you would have brought these stocks daily?" /><published>2020-05-22T00:00:00+05:30</published><updated>2020-05-22T00:00:00+05:30</updated><id>http://localhost:4000/blog/2020-05-22/stock-a-day</id><content type="html" xml:base="http://localhost:4000/blog/2020-05-22/stock-a-day">![BSE](../assets/images/may2020/bse.jpg &quot;Bombay Stock Exchange&quot;)
 
 &lt;br&gt;&lt;br&gt;
 
@@ -726,14 +883,4 @@ done
 
 ```
 
-This is the script</content><author><name>Sukeesh</name><email>vsukeeshbabu@gmail.com</email></author><summary type="html">This is a simple shell script to hack during codeforces/topcoder rounds. your_code.cpp should be your code, victim_code.cpp should be victim’s code. Write test case generator in test.py and run this bash file by bash hack.sh. This script keeps on iterating until it finds a test case where your_code.cpp and victim_code.cpp gives a different output. Once it finds a hack test case, this stops iterating. Now, you can copy the test case and hack.</summary></entry><entry><title type="html">Save a file in vim without root permission</title><link href="http://localhost:4000/blog/2015-12-10/save-file-without-root" rel="alternate" type="text/html" title="Save a file in vim without root permission" /><published>2015-12-10T00:00:00+05:30</published><updated>2015-12-10T00:00:00+05:30</updated><id>http://localhost:4000/blog/2015-12-10/save-file-without-root</id><content type="html" xml:base="http://localhost:4000/blog/2015-12-10/save-file-without-root">This happens lot of times. You open Vim to edit a system file, do some changes, and `:wq`.
-We won't be able to save a file due to permission issues. 
-
-To save a file, simply type the following command.
-
-`:w !sudo tee %` and enter the password as prompted. Voila.
-
-## Add this to your ~/.vimrc file
-Edit `~/.vimrc` and append the following code:
-`command W :execute ':silent w !sudo tee % &gt; /dev/null' | :edit!`
-Save and close the file. Now, try to edit a privileged file. Now, write a privileged file with custom command `:W`</content><author><name>Sukeesh</name></author><summary type="html">This happens lot of times. You open Vim to edit a system file, do some changes, and :wq. We won’t be able to save a file due to permission issues.</summary></entry></feed>
+This is the script</content><author><name>Sukeesh</name><email>vsukeeshbabu@gmail.com</email></author><summary type="html">This is a simple shell script to hack during codeforces/topcoder rounds. your_code.cpp should be your code, victim_code.cpp should be victim’s code. Write test case generator in test.py and run this bash file by bash hack.sh. This script keeps on iterating until it finds a test case where your_code.cpp and victim_code.cpp gives a different output. Once it finds a hack test case, this stops iterating. Now, you can copy the test case and hack.</summary></entry></feed>
