@@ -1,160 +1,151 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/blog/" rel="alternate" type="text/html" /><updated>2020-08-15T23:59:29+05:30</updated><id>http://localhost:4000/blog/</id><title type="html">Sukeesh</title><subtitle>Personal blog</subtitle><author><name>Sukeesh</name><email>vsukeeshbabu@gmail.com</email></author><entry><title type="html">Looking back; two years after graduation</title><link href="http://localhost:4000/blog/2020-08-14/software" rel="alternate" type="text/html" title="Looking back; two years after graduation" /><published>2020-08-14T00:00:00+05:30</published><updated>2020-08-14T00:00:00+05:30</updated><id>http://localhost:4000/blog/2020-08-14/software</id><content type="html" xml:base="http://localhost:4000/blog/2020-08-14/software">It’s been more than 2 years since I graduated and started working as a Software Engineer at Mercari. So, I thought of putting down everything I did in the past 2 years after I moved to Tokyo, Japan in September 2018.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/blog/" rel="alternate" type="text/html" /><updated>2020-08-16T00:03:05+05:30</updated><id>http://localhost:4000/blog/</id><title type="html">Sukeesh</title><subtitle>Personal blog</subtitle><author><name>Sukeesh</name><email>vsukeeshbabu@gmail.com</email></author><entry><title type="html">Looking back; two years after graduation</title><link href="http://localhost:4000/blog/2020-08-14/software" rel="alternate" type="text/html" title="Looking back; two years after graduation" /><published>2020-08-14T00:00:00+05:30</published><updated>2020-08-14T00:00:00+05:30</updated><id>http://localhost:4000/blog/2020-08-14/software</id><content type="html" xml:base="http://localhost:4000/blog/2020-08-14/software">&lt;p&gt;It’s been more than 2 years since I graduated and started working as a Software Engineer at Mercari. So, I thought of putting down everything I did in the past 2 years after I moved to Tokyo, Japan in September 2018.&lt;/p&gt;
 
-&lt;br&gt;
-My Journey so far has been good at Mercari.
+&lt;p&gt;&lt;br /&gt;
+My Journey so far has been good at Mercari.&lt;/p&gt;
 
-![Image](../assets/images/aug2020/mori.png)
+&lt;p&gt;&lt;img src=&quot;../assets/images/aug2020/mori.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
 
-The first month was mostly orientation and at the end of October, I joined the &lt;b&gt;US@Tokyo&lt;/b&gt; team as a Backend Engineer.
+&lt;p&gt;The first month was mostly orientation and at the end of October, I joined the &lt;b&gt;US@Tokyo&lt;/b&gt; team as a Backend Engineer.&lt;/p&gt;
 
+&lt;h2 id=&quot;initial-days&quot;&gt;Initial days&lt;/h2&gt;
 
-## Initial days
+&lt;p&gt;In the first quarter, I worked on Home API (Golang) in the Backend team. Integrating ML services to the backend. Setting up Prometheus and Grafana for ML Services written in Python Flask.&lt;/p&gt;
 
-In the first quarter, I worked on Home API (Golang) in the Backend team. Integrating ML services to the backend. Setting up Prometheus and Grafana for ML Services written in Python Flask.
-
-```diff
-+ Golang
+&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gi&quot;&gt;+ Golang
 + Prometheus
 + Grafana
 + Kubernetes
 + Docker
-```
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-Below are the &lt;b&gt;few&lt;/b&gt; of the components I added on the home screen of mercari in my first quarter&lt;br&gt;
+&lt;p&gt;Below are the &lt;b&gt;few&lt;/b&gt; of the components I added on the home screen of mercari in my first quarter&lt;br /&gt;&lt;/p&gt;
 
-![Image](../assets/images/aug2020/octdec18.png)
+&lt;p&gt;&lt;img src=&quot;../assets/images/aug2020/octdec18.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
 
-This was very rewarding since everything I write was visible on the home screen of the application.
-&lt;br&gt;&lt;br&gt;
+&lt;p&gt;This was very rewarding since everything I write was visible on the home screen of the application.
+&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
-## (Personal) Hackathon in Tokyo
+&lt;h2 id=&quot;personal-hackathon-in-tokyo&quot;&gt;(Personal) Hackathon in Tokyo&lt;/h2&gt;
 
-![Tokyo Big Sight](https://upload.wikimedia.org/wikipedia/commons/b/b9/Tokyo_Big_Sight_at_Night.jpg)
-I participated in a hackathon for the first time in Tokyo and the atmosphere was completely different compared to that of India. Here is the link to my [submission for the Hackathon](https://devpost.com/software/smart-offline-ads).
+&lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/b/b9/Tokyo_Big_Sight_at_Night.jpg&quot; alt=&quot;Tokyo Big Sight&quot; /&gt;
+I participated in a hackathon for the first time in Tokyo and the atmosphere was completely different compared to that of India. Here is the link to my &lt;a href=&quot;https://devpost.com/software/smart-offline-ads&quot;&gt;submission for the Hackathon&lt;/a&gt;.&lt;/p&gt;
 
-
-## Code.. Code.. Code
+&lt;h2 id=&quot;code-code-code&quot;&gt;Code.. Code.. Code&lt;/h2&gt;
 &lt;p&gt;Later year (2019) in the beginning, I spent time mostly on the Home screen API of the mercari. I worked on adding many many components on Home screen of the application. Here is one of &lt;b&gt;many&lt;/b&gt; components I developed. This particular component below gave me experience of working with Search backend.&lt;/p&gt;
 
-![Image](../assets/images/aug2020/janjun18.png){:height=&quot;50%&quot; width=&quot;50%&quot;}
+&lt;p&gt;&lt;img src=&quot;../assets/images/aug2020/janjun18.png&quot; alt=&quot;Image&quot; height=&quot;50%&quot; width=&quot;50%&quot; /&gt;&lt;/p&gt;
 
-```diff
-+ Redis
-```
+&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gi&quot;&gt;+ Redis
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-## New microservice :tada:
+&lt;h2 id=&quot;new-microservice-tada&quot;&gt;New microservice :tada:&lt;/h2&gt;
 
-and then, I finally started working on co-creating a new microservice for saved search. During this first microservice of mine, My learning rate was exponential.
+&lt;p&gt;and then, I finally started working on co-creating a new microservice for saved search. During this first microservice of mine, My learning rate was exponential.&lt;/p&gt;
 
-
-```diff
-+ Microservices
+&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gi&quot;&gt;+ Microservices
 + Cloud Spanner
-```
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-## (Personal) Kubernetes
+&lt;h2 id=&quot;personal-kubernetes&quot;&gt;(Personal) Kubernetes&lt;/h2&gt;
 
-And also this is when I started to deep dive into Kubernetes. I was super enthusiastic about Cloud native applications and I spent most of my free time reading code of the core [Kubernetes](https://github.com/kubernetes/kubernetes/).
+&lt;p&gt;And also this is when I started to deep dive into Kubernetes. I was super enthusiastic about Cloud native applications and I spent most of my free time reading code of the core &lt;a href=&quot;https://github.com/kubernetes/kubernetes/&quot;&gt;Kubernetes&lt;/a&gt;.&lt;/p&gt;
 
-![Image](../assets/images/aug2020/kubernetes.png)
+&lt;p&gt;&lt;img src=&quot;../assets/images/aug2020/kubernetes.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
 
-I also started contributing to the Kubernetes open source on GitHub. Here, you can read on [how I started contributing to Kubernetes](https://sukeesh.com/blog/2019-08-01/started-kubernetes).
+&lt;p&gt;I also started contributing to the Kubernetes open source on GitHub. Here, you can read on &lt;a href=&quot;https://sukeesh.com/blog/2019-08-01/started-kubernetes&quot;&gt;how I started contributing to Kubernetes&lt;/a&gt;.&lt;/p&gt;
 
-```diff
-+ Istio
-```
+&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gi&quot;&gt;+ Istio
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-## Second microservice
+&lt;h2 id=&quot;second-microservice&quot;&gt;Second microservice&lt;/h2&gt;
 
-In mid-2019, I started working on Price suggestion project which suggests a price range when an user is listing an item on the app.
+&lt;p&gt;In mid-2019, I started working on Price suggestion project which suggests a price range when an user is listing an item on the app.&lt;/p&gt;
 
-![Image](../assets/images/aug2020/ps.png){:height=&quot;40%&quot; width=&quot;40%&quot;}
+&lt;p&gt;&lt;img src=&quot;../assets/images/aug2020/ps.png&quot; alt=&quot;Image&quot; height=&quot;40%&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
 
-I designed and developed a new backend microservice (written in Golang) for the Price suggestion Machine Learning model.
+&lt;p&gt;I designed and developed a new backend microservice (written in Golang) for the Price suggestion Machine Learning model.&lt;/p&gt;
 
 &lt;!-- ![SOE](https://upload.wikimedia.org/wikipedia/commons/b/b9/Sieve_of_Eratosthenes_animation.gif) --&gt;
 
-We released many many various features around this Price suggestion project and I was the backend engineer initially for all of the projects in this team.
+&lt;p&gt;We released many many various features around this Price suggestion project and I was the backend engineer initially for all of the projects in this team.&lt;/p&gt;
 
-## Payments
+&lt;h2 id=&quot;payments&quot;&gt;Payments&lt;/h2&gt;
 
-![Image](../assets/images/aug2020/enoshima.png)
+&lt;p&gt;&lt;img src=&quot;../assets/images/aug2020/enoshima.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
 
-During this phase, I also worked parallelly with the Payments team briefly for a feature required in [Mercari GG](https://www.mercari.com/us/digital/).
+&lt;p&gt;During this phase, I also worked parallelly with the Payments team briefly for a feature required in &lt;a href=&quot;https://www.mercari.com/us/digital/&quot;&gt;Mercari GG&lt;/a&gt;.&lt;/p&gt;
 
-```diff
-+ PHP
-```
+&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gi&quot;&gt;+ PHP
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-## (Personal) Project, Kubernetes Job Notifier
+&lt;h2 id=&quot;personal-project-kubernetes-job-notifier&quot;&gt;(Personal) Project, Kubernetes Job Notifier&lt;/h2&gt;
 
-![Image](../assets/images/aug2020/k8sjob.png){:height=&quot;60%&quot; width=&quot;60%&quot;}
+&lt;p&gt;&lt;img src=&quot;../assets/images/aug2020/k8sjob.png&quot; alt=&quot;Image&quot; height=&quot;60%&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
 
-Monitoring Kubernetes cronjob was little tricky and instantaneous updates are hard. So, I thought of solving this problem. I made use of Kubernetes API and Slack API to create a slack notifier for Kubernetes cronjob failures/success. This project as usual :wink:, gathered few stars and I still keep getting &quot;Thank you&quot; emails from those who are using this tool of mine. [Here is the link to repository on GitHub](https://github.com/sukeesh/k8s-job-notify).
+&lt;p&gt;Monitoring Kubernetes cronjob was little tricky and instantaneous updates are hard. So, I thought of solving this problem. I made use of Kubernetes API and Slack API to create a slack notifier for Kubernetes cronjob failures/success. This project as usual :wink:, gathered few stars and I still keep getting “Thank you” emails from those who are using this tool of mine. &lt;a href=&quot;https://github.com/sukeesh/k8s-job-notify&quot;&gt;Here is the link to repository on GitHub&lt;/a&gt;.&lt;/p&gt;
 
-## 2020
+&lt;h2 id=&quot;2020&quot;&gt;2020&lt;/h2&gt;
 
-Later in January and February of 2020, I worked on various Backend projects including [Mercari Pro seller](https://www.mercari.com/us/become-a-pro-seller/).
+&lt;p&gt;Later in January and February of 2020, I worked on various Backend projects including &lt;a href=&quot;https://www.mercari.com/us/become-a-pro-seller/&quot;&gt;Mercari Pro seller&lt;/a&gt;.&lt;/p&gt;
 
-```diff
-+ BigQuery
-```
+&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gi&quot;&gt;+ BigQuery
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-# Backend -&gt; Machine Learning
+&lt;h1 id=&quot;backend---machine-learning&quot;&gt;Backend -&amp;gt; Machine Learning&lt;/h1&gt;
 
-In &lt;b&gt;March 2020&lt;/b&gt;, I took a decision to move to Machine learning team from Backend team. A complete new vertical and I had literally zero professional experience in Machine learning at this point.
+&lt;p&gt;In &lt;b&gt;March 2020&lt;/b&gt;, I took a decision to move to Machine learning team from Backend team. A complete new vertical and I had literally zero professional experience in Machine learning at this point.&lt;/p&gt;
 
-&lt;br&gt;Even after joining ML team, I was still working on Backend only tasks.
+&lt;p&gt;&lt;br /&gt;Even after joining ML team, I was still working on Backend only tasks.&lt;/p&gt;
 
-&lt;br&gt;So, this is when I decided to gain more theoretical and practical knowledge on ML. I took up the specialization on [deeplearning.ai](deeplearning.ai). I worked hard for about a month to achieve this.
+&lt;p&gt;&lt;br /&gt;So, this is when I decided to gain more theoretical and practical knowledge on ML. I took up the specialization on &lt;a href=&quot;deeplearning.ai&quot;&gt;deeplearning.ai&lt;/a&gt;. I worked hard for about a month to achieve this.&lt;/p&gt;
 
-![Image](../assets/images/aug2020/dlcert.png){:height=&quot;70%&quot; width=&quot;70%&quot;}
+&lt;p&gt;&lt;img src=&quot;../assets/images/aug2020/dlcert.png&quot; alt=&quot;Image&quot; height=&quot;70%&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
 
-This gave me so many insights. It was very practical and I completely recommend this to anyone who is interested in starting their career with ML. &lt;br&gt;
+&lt;p&gt;This gave me so many insights. It was very practical and I completely recommend this to anyone who is interested in starting their career with ML. &lt;br /&gt;&lt;/p&gt;
 
-## My First Machine learning model :rocket:
+&lt;h2 id=&quot;my-first-machine-learning-model-rocket&quot;&gt;My First Machine learning model :rocket:&lt;/h2&gt;
 
-Soon after this, I started working on developing a new Machine learning model for price suggestion. I took up the challenge and was able to train, develop and deploy onto Production in about 1.5 months.
+&lt;p&gt;Soon after this, I started working on developing a new Machine learning model for price suggestion. I took up the challenge and was able to train, develop and deploy onto Production in about 1.5 months.&lt;/p&gt;
 
 &lt;!-- ![Image](../assets/images/may2020/go_cpp.png) --&gt;
-```diff
-+ Polyaxon
+&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gi&quot;&gt;+ Polyaxon
 + Many many ML frameworks
-```
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-## (Personal) Finalist in a Hackathon
+&lt;h2 id=&quot;personal-finalist-in-a-hackathon&quot;&gt;(Personal) Finalist in a Hackathon&lt;/h2&gt;
 
-Again, time for some personal. &lt;br&gt;&lt;br&gt;
-This time I participated in a Hackathon instead of working on a personal project. Generally, whenever I participate in a Hackathon, winning projects are mostly related to Machine Learning. &lt;br&gt;&lt;br&gt;
-So, at this point of time since I knew ML and had practical knowledge. I thought of applying ML for the Hackathon project and Surprisingly, I was a &lt;b&gt;finalist&lt;/b&gt; and was &lt;b&gt;offered&lt;/b&gt; an opportunity for pre-incubation by an Indian Venture Capital firm.
+&lt;p&gt;Again, time for some personal. &lt;br /&gt;&lt;br /&gt;
+This time I participated in a Hackathon instead of working on a personal project. Generally, whenever I participate in a Hackathon, winning projects are mostly related to Machine Learning. &lt;br /&gt;&lt;br /&gt;
+So, at this point of time since I knew ML and had practical knowledge. I thought of applying ML for the Hackathon project and Surprisingly, I was a &lt;b&gt;finalist&lt;/b&gt; and was &lt;b&gt;offered&lt;/b&gt; an opportunity for pre-incubation by an Indian Venture Capital firm.&lt;/p&gt;
 
-![Image](../assets/images/aug2020/hackathon.png)
+&lt;p&gt;&lt;img src=&quot;../assets/images/aug2020/hackathon.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
 
-The idea was simple. I developed a WhatsApp bot which fact checks messages related to the Coronavirus.
+&lt;p&gt;The idea was simple. I developed a WhatsApp bot which fact checks messages related to the Coronavirus.&lt;/p&gt;
 
+&lt;h2 id=&quot;image-recognition&quot;&gt;Image Recognition&lt;/h2&gt;
 
-## Image Recognition
+&lt;p&gt;Working with Images has taught me a lot of patience. This is already a running model. My role is more like maintaining the project. &lt;br /&gt;&lt;/p&gt;
 
-Working with Images has taught me a lot of patience. This is already a running model. My role is more like maintaining the project. &lt;br&gt;
+&lt;p&gt;This project is the most interesting because I knew nothing before starting!!&lt;/p&gt;
 
-This project is the most interesting because I knew nothing before starting!!
+&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gi&quot;&gt;+ Kubeflow
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-```diff
-+ Kubeflow
-```
+&lt;hr /&gt;
 
--------
+&lt;p&gt;These are &lt;strong&gt;only few&lt;/strong&gt; of many projects which I worked on in the past two years. I learnt so many things as a Software engineer. I always tried to take over tasks which are hard/completely unknown to me because later when I look back, I always learnt many things by doing so.&lt;/p&gt;
 
+&lt;blockquote&gt;
+  &lt;p&gt;Anything which aint hard, isnt worth doing it.&lt;/p&gt;
+&lt;/blockquote&gt;
 
-These are **only few** of many projects which I worked on in the past two years. I learnt so many things as a Software engineer. I always tried to take over tasks which are hard/completely unknown to me because later when I look back, I always learnt many things by doing so. 
+&lt;hr /&gt;
 
-&gt; Anything which aint hard, isnt worth doing it.
+&lt;h2 id=&quot;some-useful-tips&quot;&gt;Some useful tips&lt;/h2&gt;
 
-------
-
-## Some links
-
-1. [What can I learn/know right now in 10 minutes that will be useful for the rest of my life?](https://qr.ae/TUtVDd)</content><author><name>Sukeesh</name></author><summary type="html">It’s been more than 2 years since I graduated and started working as a Software Engineer at Mercari. So, I thought of putting down everything I did in the past 2 years after I moved to Tokyo, Japan in September 2018.</summary></entry><entry><title type="html">Go vs C++ | Which is faster? | Sieve of Eratosthenes</title><link href="http://localhost:4000/blog/2020-05-24/cpp-vs-go" rel="alternate" type="text/html" title="Go vs C++ | Which is faster? | Sieve of Eratosthenes" /><published>2020-05-24T00:00:00+05:30</published><updated>2020-05-24T00:00:00+05:30</updated><id>http://localhost:4000/blog/2020-05-24/cpp-vs-go</id><content type="html" xml:base="http://localhost:4000/blog/2020-05-24/cpp-vs-go">[![Image](../assets/images/may2020/gocbanner.png)](https://amzn.to/2ZJNefN)
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://qr.ae/TUtVDd&quot;&gt;What can I learn/know right now in 10 minutes that will be useful for the rest of my life?&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</content><author><name>Sukeesh</name></author><summary type="html">It’s been more than 2 years since I graduated and started working as a Software Engineer at Mercari. So, I thought of putting down everything I did in the past 2 years after I moved to Tokyo, Japan in September 2018.</summary></entry><entry><title type="html">Go vs C++ | Which is faster? | Sieve of Eratosthenes</title><link href="http://localhost:4000/blog/2020-05-24/cpp-vs-go" rel="alternate" type="text/html" title="Go vs C++ | Which is faster? | Sieve of Eratosthenes" /><published>2020-05-24T00:00:00+05:30</published><updated>2020-05-24T00:00:00+05:30</updated><id>http://localhost:4000/blog/2020-05-24/cpp-vs-go</id><content type="html" xml:base="http://localhost:4000/blog/2020-05-24/cpp-vs-go">[![Image](../assets/images/may2020/gocbanner.png)](https://amzn.to/2ZJNefN)
 
 Comparing a Sieve of Eratosthenes in Golang vs C++! (Two of my most favourite programming languages)
 
