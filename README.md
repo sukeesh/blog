@@ -1,1 +1,1 @@
-# Sukeesh/blog
+# sukeesh.com/blog
